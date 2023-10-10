@@ -14,6 +14,11 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors(corsOptions));
 
+// Imports rutas
+const indexRoutes = require("./routes/indexr.js")
+
+app.use("/", indexRoutes)
+
 
 // DEFAULT
 app.use((req, res, next) => {
@@ -22,3 +27,4 @@ app.use((req, res, next) => {
 
 module.exports = app;
   
+

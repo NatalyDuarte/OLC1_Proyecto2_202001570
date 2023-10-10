@@ -1,19 +1,20 @@
-//Base de la Api https://github.com/AlexIngGuerra/OLC1-2S2023
-const parser = require("../Analizador/Gramatica.js")
+const parser = require("../analizador/Gramatica.js")
 
 
 const index = (req, res) =>{
-    res.status(200).json({message: 'Bienvenido a la api'});
+    res.status(200).json({message: 'Api funcionando correctamte'});
 }
 
 const analizar = (req, res) => {
     const {entrada} = req.body;
-    let resultado = parser.parse(entrada);
-    
+    const resultado = parser.parse(entrada);
+    resultado.forEach(element => {
+        element.interpretar();
+    });
+
     res.status(200).json({
-        message: 'Analisis Realizado', 
-        entrada: entrada, 
-        resultado: resultado
+        message: 'Analisis Realizado Correctamente', 
+        entrada: entrada
     });
 }
 

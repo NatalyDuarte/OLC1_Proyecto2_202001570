@@ -72,39 +72,90 @@
   }
 */
 var Gramatica = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,5],$V1=[1,6],$V2=[2,5,9];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,6],$V1=[1,4],$V2=[1,9],$V3=[2,5,7,15],$V4=[2,5,7,13,15],$V5=[1,16],$V6=[1,17],$V7=[1,18],$V8=[1,19],$V9=[1,20],$Va=[1,21],$Vb=[1,22],$Vc=[2,5,7,10,13,15],$Vd=[2,9];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"inicio":3,"lista_instrucciones":4,"EOF":5,"instruccion":6,"declaracion":7,"PYC":8,"DECLARE":9,"VARIABLE":10,"tipovari":11,"PUNTOYCOMA":12,"INT":13,"DOUBLE":14,"DATE":15,"VARCHAR":16,"TRUE":17,"FALSE":18,"NULL":19,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",8:"PYC",9:"DECLARE",10:"VARIABLE",12:"PUNTOYCOMA",13:"INT",14:"DOUBLE",15:"DATE",16:"VARCHAR",17:"TRUE",18:"FALSE",19:"NULL"},
-productions_: [0,[3,2],[4,2],[4,1],[6,1],[6,2],[7,4],[11,1],[11,1],[11,1],[11,1],[11,1],[11,1],[11,1]],
+symbols_: {"error":2,"inicio":3,"lista_instrucciones":4,"EOF":5,"instruccion":6,"DECLARE":7,"var":8,"tipo":9,"PUNTOYCOMA":10,"multiple":11,"PYC":12,"COMA":13,"decVar":14,"VARIABLE":15,"INT":16,"DOUBLE":17,"DATE":18,"VARCHAR":19,"TRUE":20,"FALSE":21,"NULL":22,"DEFAULT":23,"REALES":24,"DATEN":25,"CADENA":26,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",7:"DECLARE",10:"PUNTOYCOMA",12:"PYC",13:"COMA",15:"VARIABLE",16:"INT",17:"DOUBLE",18:"DATE",19:"VARCHAR",20:"TRUE",21:"FALSE",22:"NULL",23:"DEFAULT",24:"REALES",25:"DATEN",26:"CADENA"},
+productions_: [0,[3,2],[4,2],[4,1],[6,4],[6,1],[6,2],[11,3],[11,1],[14,3],[14,2],[8,1],[9,1],[9,1],[9,1],[9,1],[9,1],[9,1],[9,1],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
- return $$[$0-1]; 
+this.$ = $$[$0-1]; return this.$;
 break;
 case 2:
- $$[$0-1].push($$[$0]); this.$ =$$[$0-1]; 
+this.$ = $$[$0-1]; this.$.push($$[$0]);
 break;
 case 3:
- this.$ = [$$[$0]] 
+this.$ = []; this.$.push($$[$0])
 break;
-case 4: case 7: case 8: case 9: case 10: case 11: case 12: case 13:
+case 4:
+this.$ = new Declara($$[$0-2], $$[$0-1]);
+break;
+case 5: case 8:
  this.$ = $$[$0]; 
 break;
-case 5:
+case 6:
 console.error('Error sintáctico: ' + yytext + ',  linea: ' + this._$.first_line + ', columna: ' + this._$.first_column);
 break;
-case 6:
- this.$ = new Declaracion($$[$0-3],$$[$0-2],_$[$0-3].first_line,_$[$0-3].first_column);
+case 7:
+ this.$ = $$[$0-2]; 
+break;
+case 9: case 10:
+this.$ = new Declara($$[$0-1], $$[$0]);
+break;
+case 11:
+this.$ = new Variable($$[$0]);
+break;
+case 12:
+this.$ = new  Dato('INT',null);
+break;
+case 13:
+this.$ = new  Dato('DOUBLE',null);
+break;
+case 14:
+this.$ = new  Dato('DATE',null);
+break;
+case 15:
+this.$ = new  Dato('VARCHAR',null);
+break;
+case 16:
+this.$ = new  Dato('TRUE',null);
+break;
+case 17:
+this.$ = new  Dato('FALSE',null);
+break;
+case 18:
+this.$ = new  Dato('NULL',null);
+break;
+case 19:
+this.$ = new Dato('INT',$$[$0]);
+break;
+case 20:
+this.$ = new Dato('DATE',$$[$0]);
+break;
+case 21:
+this.$ = new Dato('DOUBLE',$$[$0]);
+break;
+case 22:
+this.$ = new Dato('VARCHAR',$$[$0]);
+break;
+case 23:
+this.$ = new Dato('TRUE',$$[$0]);
+break;
+case 24:
+this.$ = new Dato('FALSE',$$[$0]);
+break;
+case 25:
+this.$ = new Dato('NULL',$$[$0]);
 break;
 }
 },
-table: [{2:$V0,3:1,4:2,6:3,7:4,9:$V1},{1:[3]},{2:$V0,5:[1,7],6:8,7:4,9:$V1},o($V2,[2,3]),o($V2,[2,4]),{8:[1,9]},{10:[1,10]},{1:[2,1]},o($V2,[2,2]),o($V2,[2,5]),{11:11,13:[1,12],14:[1,13],15:[1,14],16:[1,15],17:[1,16],18:[1,17],19:[1,18]},{12:[1,19]},{12:[2,7]},{12:[2,8]},{12:[2,9]},{12:[2,10]},{12:[2,11]},{12:[2,12]},{12:[2,13]},o($V2,[2,6])],
-defaultActions: {7:[2,1],12:[2,7],13:[2,8],14:[2,9],15:[2,10],16:[2,11],17:[2,12],18:[2,13]},
+table: [{2:$V0,3:1,4:2,6:3,7:$V1,8:8,11:5,14:7,15:$V2},{1:[3]},{2:$V0,5:[1,10],6:11,7:$V1,8:8,11:5,14:7,15:$V2},o($V3,[2,3]),{8:12,15:$V2},o($V3,[2,5],{13:[1,13]}),{12:[1,14]},o($V4,[2,8]),{9:15,16:$V5,17:$V6,18:$V7,19:$V8,20:$V9,21:$Va,22:$Vb},o([16,17,18,19,20,21,22],[2,11]),{1:[2,1]},o($V3,[2,2]),{9:23,16:$V5,17:$V6,18:$V7,19:$V8,20:$V9,21:$Va,22:$Vb},{7:[1,25],8:8,14:24,15:$V2},o($V3,[2,6]),o($V4,[2,10]),o($Vc,[2,12],{23:[1,26]}),o($Vc,[2,13],{23:[1,27]}),o($Vc,[2,14],{23:[1,28]}),o($Vc,[2,15],{23:[1,29]}),o($Vc,[2,16],{23:[1,30]}),o($Vc,[2,17],{23:[1,31]}),o($Vc,[2,18],{23:[1,32]}),o($V4,$Vd,{10:[1,33]}),o($V4,[2,7]),{8:34,15:$V2},{24:[1,35]},{24:[1,36]},{25:[1,37]},{26:[1,38]},{20:[1,39]},{21:[1,40]},{22:[1,41]},o($V3,[2,4]),{9:42,16:$V5,17:$V6,18:$V7,19:$V8,20:$V9,21:$Va,22:$Vb},o($Vc,[2,19]),o($Vc,[2,21]),o($Vc,[2,20]),o($Vc,[2,22]),o($Vc,[2,23]),o($Vc,[2,24]),o($Vc,[2,25]),o($V4,$Vd)],
+defaultActions: {10:[2,1]},
 parseError: function parseError (str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -353,8 +404,10 @@ _handle_error:
     return true;
 }};
 
-    const { Declaracion } = require('../Interprete/Declaracion.ts');
-    const { Instruccion } = require('../Interprete/Instruccion.ts');
+    const Dato = require('../interprete/expresiones/Dato.js');
+    const Variable = require('../interprete/expresiones/Variable.js');
+    const Mostrar = require('../interprete/instrucciones/Mostrar.js');
+    const Declara = require('../interprete/instrucciones/Declara.js');
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){
 var lexer = ({
@@ -683,159 +736,159 @@ options: {"case-insensitive":true},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:
+case 0:return 'PARENABRE'
 break;
-case 1:
+case 1:return 'PARENCIE'
 break;
-case 2:return 'PARENABRE';
+case 2:return 10
 break;
-case 3:return 'PARENCIE';
+case 3:return 13
 break;
-case 4:return 12;
+case 4:return 'MAS'
 break;
-case 5:return 'COMA';
+case 5:return 'RESTA'
 break;
-case 6:return 'MAS';
+case 6:return 'MULTI'
 break;
-case 7:return 'RESTA';
+case 7:return 'DIVI'
 break;
-case 8:return 'MULTI';
+case 8:return 'MODULO'
 break;
-case 9:return 'DIVI';
+case 9:return 'IGUAL'
 break;
-case 10:return 'MODULO';
+case 10:return 'IGUALIGUAL'
 break;
-case 11:return 'IGUAL';
+case 11:return 'DIFERENTE'
 break;
-case 12:return 'IGUALIGUAL';
+case 12:return 'MENOR'
 break;
-case 13:return 'DIFERENTE';
+case 13:return 'MAYOR'
 break;
-case 14:return 'MENOR';
+case 14:return 'MAYORIGUAL'
 break;
-case 15:return 'MAYOR';
+case 15:return 'MENORIGUAL'
 break;
-case 16:return 'MAYORIGUAL';
+case 16:return 16
 break;
-case 17:return 'MENORIGUAL';
+case 17:return 17
 break;
-case 18:return 13;
+case 18:return 18
 break;
-case 19:return 14;
+case 19:return 19
 break;
-case 20:return 15;
+case 20:return 20
 break;
-case 21:return 16;
+case 21:return 21
 break;
-case 22:return 17;
+case 22:return 22
 break;
-case 23:return 18;
+case 23:return 'AND'
 break;
-case 24:return 19;
+case 24:return 'OR'
 break;
-case 25:return 'AND';
+case 25:return 'NOT'
 break;
-case 26:return 'OR';
+case 26:return 'BEGIN'
 break;
-case 27:return 'NOT';
+case 27:return 'END'
 break;
-case 28:return 'BEGIN';
+case 28:return 7
 break;
-case 29:return 'END';
+case 29:return 23
 break;
-case 30:return 9;
+case 30:return 'SET'
 break;
-case 31:return 'DEFAULT';
+case 31:return 'CREATE'
 break;
-case 32:return 'SET';
+case 32:return 'TABLE'
 break;
-case 33:return 'CREATE';
+case 33:return 'ALTER'
 break;
-case 34:return 'TABLE';
+case 34:return 'ADD'
 break;
-case 35:return 'ALTER';
+case 35:return 'DROP'
 break;
-case 36:return 'ADD';
+case 36:return 'COLUMN'
 break;
-case 37:return 'DROP';
+case 37:return 'RENAME'
 break;
-case 38:return 'COLUMN';
+case 38:return 'TO'
 break;
-case 39:return 'RENAME';
+case 39:return 'INSERT'
 break;
-case 40:return 'TO';
+case 40:return 'INTO'
 break;
-case 41:return 'INSERT';
+case 41:return 'VALUES'
 break;
-case 42:return 'INTO';
+case 42:return 'SELECT'
 break;
-case 43:return 'VALUES';
+case 43:return 'FROM'
 break;
-case 44:return 'SELECT';
+case 44:return 'WHERE'
 break;
-case 45:return 'FROM';
+case 45:return 'UPDATE'
 break;
-case 46:return 'WHERE';
+case 46:return 'TRUNCATE'
 break;
-case 47:return 'UPDATE';
+case 47:return 'DELETE'
 break;
-case 48:return 'TRUNCATE';
+case 48:return 'CAST'
 break;
-case 49:return 'DELETE';
+case 49:return 'IF'
 break;
-case 50:return 'CAST';
+case 50:return 'THEN'
 break;
-case 51:return 'IF';
+case 51:return 'ELSE'
 break;
-case 52:return 'THEN';
+case 52:return 'WHEN'
 break;
-case 53:return 'ELSE';
+case 53:return 'CASE'
 break;
-case 54:return 'WHEN';
+case 54:return 'WHILE'
 break;
-case 55:return 'CASE';
+case 55:return 'FOR'
 break;
-case 56:return 'WHILE';
+case 56:return 'IN'
 break;
-case 57:return 'FOR';
+case 57:return 'BREAK'
 break;
-case 58:return 'IN';
+case 58:return 'CONTINUE'
 break;
-case 59:return 'BREAK';
+case 59:return 'PRINT'
 break;
-case 60:return 'CONTINUE';
+case 60:return 'FUNCION'
 break;
-case 61:return 'PRINT';
+case 61:return 'RETURNS'
 break;
-case 62:return 'FUNCION';
+case 62:return 'PROCEDURE'
 break;
-case 63:return 'RETURNS';
+case 63:return 'AS'
 break;
-case 64:return 'PROCEDURE';
+case 64:return 'LOWER'
 break;
-case 65:return 'AS';
+case 65:return 'UPPER'
 break;
-case 66:return 'LOWER';
+case 66:return 'ROUND'
 break;
-case 67:return 'UPPER';
+case 67:return 'LEN'
 break;
-case 68:return 'ROUND';
+case 68:return 'TYPEOF'
 break;
-case 69:return 'LEN';
+case 69:return 25;
 break;
-case 70:return 'TYPEOF';
+case 70: return 24; 
 break;
-case 71:return 'DATEN';
+case 71: return 'ENTERO'; 
 break;
-case 72:return 'REALES'; 
+case 72: return 15; 
 break;
-case 73:return 'ENTERO'; 
+case 73: return 26; 
 break;
-case 74:return 10;
+case 74:
 break;
-case 75:return 'CADENA';
+case 75:
 break;
-case 76:/* Espacios se ignoran */
+case 76:/* Comentarios se ignoran */
 break;
 case 77:/* Espacios se ignoran */
 break;
@@ -847,7 +900,7 @@ case 80: console.error('Error léxico: \"' + yy_.yytext + '\", linea: ' + yy_.yy
 break;
 }
 },
-rules: [/^(?:--.*)/i,/^(?:\/\*[\s\S]*?\*\/)/i,/^(?:\()/i,/^(?:\))/i,/^(?:;)/i,/^(?:,)/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:\+)/i,/^(?:=)/i,/^(?:==)/i,/^(?:!=)/i,/^(?:<)/i,/^(?:>)/i,/^(?:>=)/i,/^(?:<=)/i,/^(?:int\b)/i,/^(?:double\b)/i,/^(?:date\b)/i,/^(?:varchar\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:null\b)/i,/^(?:and\b)/i,/^(?:or\b)/i,/^(?:not\b)/i,/^(?:begin\b)/i,/^(?:end\b)/i,/^(?:declare\b)/i,/^(?:default\b)/i,/^(?:set\b)/i,/^(?:create\b)/i,/^(?:table\b)/i,/^(?:alter\b)/i,/^(?:add\b)/i,/^(?:drop\b)/i,/^(?:column\b)/i,/^(?:rename\b)/i,/^(?:to\b)/i,/^(?:insert\b)/i,/^(?:into\b)/i,/^(?:values\b)/i,/^(?:select\b)/i,/^(?:from\b)/i,/^(?:where\b)/i,/^(?:update\b)/i,/^(?:truncate\b)/i,/^(?:delete\b)/i,/^(?:cast\b)/i,/^(?:if\b)/i,/^(?:then\b)/i,/^(?:else\b)/i,/^(?:when\b)/i,/^(?:case\b)/i,/^(?:while\b)/i,/^(?:for\b)/i,/^(?:in\b)/i,/^(?:break\b)/i,/^(?:continue\b)/i,/^(?:print\b)/i,/^(?:funcion\b)/i,/^(?:returns\b)/i,/^(?:procedure\b)/i,/^(?:as\b)/i,/^(?:lower\b)/i,/^(?:upper\b)/i,/^(?:round\b)/i,/^(?:len\b)/i,/^(?:typeof\b)/i,/^(?:^\d{4}([\-/.])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])$)/i,/^(?:[0-9]+(\.[0-9]+)?\b)/i,/^(?:[0-9]+)/i,/^(?:^[^ ]+$)/i,/^(?:"(\\.|[^\"\\])*")/i,/^(?:[ \s\r\n\t])/i,/^(?:[ \\])/i,/^(?:[ \“\’\"\'])/i,/^(?:$)/i,/^(?:.)/i],
+rules: [/^(?:\()/i,/^(?:\))/i,/^(?:;)/i,/^(?:,)/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:\+)/i,/^(?:=)/i,/^(?:==)/i,/^(?:!=)/i,/^(?:<)/i,/^(?:>)/i,/^(?:>=)/i,/^(?:<=)/i,/^(?:int\b)/i,/^(?:double\b)/i,/^(?:date\b)/i,/^(?:varchar\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:null\b)/i,/^(?:and\b)/i,/^(?:or\b)/i,/^(?:not\b)/i,/^(?:begin\b)/i,/^(?:end\b)/i,/^(?:declare\b)/i,/^(?:default\b)/i,/^(?:set\b)/i,/^(?:create\b)/i,/^(?:table\b)/i,/^(?:alter\b)/i,/^(?:add\b)/i,/^(?:drop\b)/i,/^(?:column\b)/i,/^(?:rename\b)/i,/^(?:to\b)/i,/^(?:insert\b)/i,/^(?:into\b)/i,/^(?:values\b)/i,/^(?:select\b)/i,/^(?:from\b)/i,/^(?:where\b)/i,/^(?:update\b)/i,/^(?:truncate\b)/i,/^(?:delete\b)/i,/^(?:cast\b)/i,/^(?:if\b)/i,/^(?:then\b)/i,/^(?:else\b)/i,/^(?:when\b)/i,/^(?:case\b)/i,/^(?:while\b)/i,/^(?:for\b)/i,/^(?:in\b)/i,/^(?:break\b)/i,/^(?:continue\b)/i,/^(?:print\b)/i,/^(?:funcion\b)/i,/^(?:returns\b)/i,/^(?:procedure\b)/i,/^(?:as\b)/i,/^(?:lower\b)/i,/^(?:upper\b)/i,/^(?:round\b)/i,/^(?:len\b)/i,/^(?:typeof\b)/i,/^(?:\d{4}([\-/.])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9]))/i,/^(?:([0-9]+(\.[0-9]+)?\b))/i,/^(?:([0-9]+))/i,/^(?:[a-zA-z][a-zA-z0-9_]*)/i,/^(?:"(\\.|[^\"\\])*")/i,/^(?:--.*)/i,/^(?:\/\*[\s\S]*?\*\/)/i,/^(?:[ \s\r\n\t])/i,/^(?:[ \\])/i,/^(?:[ \“\’\"\'])/i,/^(?:$)/i,/^(?:.)/i],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80],"inclusive":true}}
 });
 return lexer;
