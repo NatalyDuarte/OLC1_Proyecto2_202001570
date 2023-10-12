@@ -14,7 +14,11 @@ class Declara extends Instruccion{
     }
 
     /*getVariable(nombre){
-
+        if (nombre = this.id.ejecutar(entorno).valor){
+            return nombre;
+        }else{
+            return "null";
+        }
     }*/
 }
 

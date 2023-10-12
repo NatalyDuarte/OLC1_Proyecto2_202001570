@@ -131,6 +131,7 @@ lista_instrucciones
 
 instruccion
 	: DECLARE var tipo PUNTOYCOMA   {$$ = new Declara($2, $3);}
+    | SET var IGUAL valor PUNTOYCOMA           {$$ = new Declara($2, $4);}
     | multiple { $$ = $1; }
 	| error PYC	{console.error('Error sintáctico: ' + yytext + ',  linea: ' + this._$.first_line + ', columna: ' + this._$.first_column);}
 ;
@@ -147,6 +148,15 @@ decVar
 
 var 
     : VARIABLE          {$$ = new Variable($1);}
+;
+
+valor
+    : REALES       {$$ = new Dato('INT',$1);}
+    | DATEN       {$$ = new Dato('DATE',$1);}
+    | CADENA       {$$ = new Dato('VARCHAR',$1);}
+    | TRUE       {$$ = new Dato('TRUE',$1);}
+    | FALSE       {$$ = new Dato('FALSE',$1);}
+    | NULL       {$$ = new Dato('NULL',$1);}
 ;
 
 tipo
