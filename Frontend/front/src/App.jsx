@@ -1,9 +1,10 @@
 import './App.css';
-import { Primero } from './components/Primero';
-import { Segundo } from './components/Segundo';
-import { Tercero } from './components/Tercero';
+import { Primero } from './componentes/Primero';
+import { Segundo } from './componentes/Segundo';
+import { Tercero } from './componentes/Tercero';
 
 function App() {
+  const url = "http://localhost:4000"
   return (
     <div className="App">
       <header class="masthead text-center text-white">

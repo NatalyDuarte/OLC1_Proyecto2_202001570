@@ -13,10 +13,10 @@ entero  [0-9]+;
 ';'          			{return 'PUNTOYCOMA'}
 ','          			{return 'COMA'}
 '+'          			{return 'MAS'}
-'-'          			{return 'RESTA'}
-'*'          			{return 'MULTI'}
+'-'          			{return 'MENOS'}
+'*'          			{return 'POR'}
 '/'          			{return 'DIVI'} 
-'+'          			{return 'MODULO'} 
+'%'          			{return 'MODULO'} 
 '='          			{return 'IGUAL'} 
 '=='          			{return 'IGUALIGUAL'} 
 '!='          			{return 'DIFERENTE'} 
@@ -82,8 +82,11 @@ entero  [0-9]+;
 \d{4}([\-/.])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])  {return 'DATEN';}
 {real}                  { return 'REALES'; }
 {entero}                { return 'ENTERO'; } 
-@[a-zA-z][a-zA-z0-9_]*                { return 'VARIABLE'; }
+[a-zA-z]+                { return 'VARI'; }
+@[a-zA-z][a-zA-z0-9_]*   { return 'VARIABLE'; }
+
 \"(\\.|[^\"\\])*\"   	{ return 'CADENA'; }
+\'(\\.|[^\"\\])*\'   	{ return 'CADPR'; }
 
 
 
@@ -103,15 +106,19 @@ entero  [0-9]+;
 %{
     const Dato = require('../interprete/expresiones/Dato.js');
     const Variable = require('../interprete/expresiones/Variable.js');
-    const Mostrar = require('../interprete/instrucciones/Mostrar.js');
+    const Print = require('../interprete/instrucciones/Print.js');
     const Declara = require('../interprete/instrucciones/Declara.js');
+    const Aritmetica = require('../interprete/instrucciones/Aritmetica.js');
 %}
 
 
 //Precedencia
 
-//%left 'MAS' 'MENOS'
-
+%left 'MAS'
+%left 'POR'
+%left 'MENOS'
+%left 'DIVI'
+%left 'MODULO'
 
 // Simbolo Inicial
 //Base de la Gramatica(inicio,lista_instrucciones,instruccion,expresion) https://github.com/AlexIngGuerra/OLC1-2S2023
@@ -131,9 +138,14 @@ lista_instrucciones
 
 instruccion
 	: DECLARE var tipo PUNTOYCOMA   {$$ = new Declara($2, $3);}
-    | SET var IGUAL valor PUNTOYCOMA           {$$ = new Declara($2, $4);}
+    | SET var IGUAL tipo PUNTOYCOMA           {$$ = new Declara($2, $4);}
     | multiple { $$ = $1; }
+    | PRINT tipo PUNTOYCOMA {$$ = new Print($2);}
+    //| SELECT POR FROM VARI PUNTOYCOMA  
 	| error PYC	{console.error('Error sintáctico: ' + yytext + ',  linea: ' + this._$.first_line + ', columna: ' + this._$.first_column);}
+;
+expre
+    : CADPR {$$ = new  Dato('VARCHAR',null);}
 ;
 
 multiple
@@ -148,15 +160,6 @@ decVar
 
 var 
     : VARIABLE          {$$ = new Variable($1);}
-;
-
-valor
-    : REALES       {$$ = new Dato('INT',$1);}
-    | DATEN       {$$ = new Dato('DATE',$1);}
-    | CADENA       {$$ = new Dato('VARCHAR',$1);}
-    | TRUE       {$$ = new Dato('TRUE',$1);}
-    | FALSE       {$$ = new Dato('FALSE',$1);}
-    | NULL       {$$ = new Dato('NULL',$1);}
 ;
 
 tipo
@@ -174,4 +177,17 @@ tipo
     | TRUE DEFAULT TRUE       {$$ = new Dato('TRUE',$3);}
     | FALSE DEFAULT FALSE       {$$ = new Dato('FALSE',$3);}
     | NULL DEFAULT NULL       {$$ = new Dato('NULL',$3);}
+    | REALES       {$$ = new Dato('INT',$1);}
+    | DATEN       {$$ = new Dato('DATE',$1);}
+    | CADENA       {$$ = new Dato('VARCHAR',$1);}
+    | CADPR       {$$ = new Dato('VARCHAR',$1);}
+    | VARI       {$$ = new Dato('VARCHAR',$1);}
+    //Operaciones Aritmeticas
+    | tipo MAS tipo  {$$ = new Aritmetica($1, '+', $3)}
+    | tipo POR tipo  {$$ = new Aritmetica($1, '*', $3)} 
+    | tipo MENOS tipo  {$$ = new Aritmetica($1, '-', $3)} 
+    | tipo DIVI tipo  {$$ = new Aritmetica($1, '/', $3)} 
+    | tipo MODULO tipo  {$$ = new Aritmetica($1, '%', $3)} 
+    | MENOS tipo {$$ = new Aritmetica("Menos", 'Nega', $2)} 
+    | MAS tipo {$$ = new Aritmetica("Mas", 'Nega', $2)} 
 ;

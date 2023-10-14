@@ -9,5 +9,7 @@ const indexController = require('../controller/indexc.js')
 // Rutas
 router.get("/", indexController.index);
 router.post("/analizar", indexController.analizar);
+router.get("/getdata", indexController.getdata);
+router.post("/obdata",indexController.obdata);
 
 module.exports = router;

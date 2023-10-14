@@ -37,13 +37,13 @@ class Dato extends Instruccion{
                 if (this.valor==null){
                     return Null;
                 }else{
-                    return new String(this.valor);
+                    return new Boolean(this.valor);
                 }
             case 'FALSE':
                 if (this.valor==null){
                     return Null;
                 }else{
-                    return new String(this.valor);
+                    return new Boolean(this.valor);
                 }
             case 'NULL':
                 if (this.valor==null){
