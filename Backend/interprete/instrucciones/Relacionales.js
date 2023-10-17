@@ -1,11 +1,10 @@
 const Instruccion = require("../Instruccion");
 
 class Relacionales extends Instruccion{
-    constructor(izq, op, der){
+    constructor(izq,der){
         super();
         this.izq = izq;
         this.der = der;
-        this.op = op;
         this.valor = null;
     }
 
@@ -14,7 +13,41 @@ class Relacionales extends Instruccion{
         let der = this.der.ejecutar(entorno);
         switch(this.op){
             case '=':
-                return this;
+                if (izq.valor === der.valor){
+                    return true;
+                }else{
+                    return false;
+                }
+            case '!=':
+                if (izq.valor !== der.valor){
+                    return true;
+                }else{
+                    return false;
+                }
+            case '<':
+                if (izq.valor < der.valor){
+                    return true;
+                }else{
+                    return false;
+                }
+            case '<=':
+                if (izq.valor <= der.valor){
+                    return true;
+                }else{
+                    return false;
+                }
+            case '>':
+                if (izq.valor > der.valor){
+                    return true;
+                }else{
+                    return false;
+                }
+            case '>=':
+                if (izq.valor >= der.valor){
+                    return true;
+                }else{
+                    return false;
+                }
         }
         return this
     }
