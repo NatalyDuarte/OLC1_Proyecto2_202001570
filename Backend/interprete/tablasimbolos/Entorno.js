@@ -1,4 +1,3 @@
-//Tablasimb de https://github.com/AlexIngGuerra/OLC1-2S2023
 const Simbolo = require("./Simbolo");
 const Funcion = require("./Funcion");
 

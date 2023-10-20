@@ -9,6 +9,7 @@ entero  [0-9]+;
 %%
 // Reglas Lexicas
 '.'          			{return 'PUNTO'}
+'@'          			{return 'ARROBA'}
 '('          			{return 'PARENABRE'}
 ')'          			{return 'PARENCIE'}
 ';'          			{return 'PUNTOYCOMA'}
@@ -107,19 +108,12 @@ columna\d+              { return 'COLUM'; }
 /lex
 // ============================ ANALIZADOR SINTACTICO ===============================
 %{
-    const Dato = require('../interprete/expresiones/Dato.js');
-    const Variable = require('../interprete/expresiones/Variable.js');
-    const Print = require('../interprete/instrucciones/Print.js');
-    const Declara = require('../interprete/instrucciones/Declara.js');
-    const Aritmetica = require('../interprete/instrucciones/Aritmetica.js');
-    const Relacional = require('../interprete/instrucciones/Relacionales.js');
-    const Select = require('../interprete/instrucciones/Select.js');
-    const Logico = require('../interprete/instrucciones/Logico.js');
-    const Encapsula = require('../interprete/instrucciones/Encapsula.js');
-    const Columna = require('../interprete/expresiones/Columna.js');
-    const Tabla = require('../interprete/instrucciones/Tabla.js');
+    const Dato = require("../interprete/expresiones/Dato.js");
+    const Mostrar = require('../interprete/instrucciones/Mostrar.js');
+    const Aritmetica = require('../interprete/expresiones/Aritmetica.js')
+    const Asignar  = require('../interprete/instrucciones/Asignar')
+    const Id = require('../interprete/expresiones/Id')
     const Errores = require('../interprete/instrucciones/Errores.js');
-    const ListaError = require('../interprete/instrucciones/ListaError.js');
     const Informacion = require('../interprete/instrucciones/Informacion.js');
 %}
 
@@ -156,9 +150,11 @@ lista_instrucciones
 ;
 
 instruccion
-	: DECLARE VARI tipo PUNTOYCOMA   {$$ = new Declara($2, $3);}
-    | SET VARI IGUAL tipo PUNTOYCOMA           {$$ = new Declara($2, $4);}
-    | SET tipo PUNTOYCOMA
+   // : DECLARE asignacion                              { $$ = $1; }
+    : declaracion                                       { $$ = $1; }
+    | SELECT ARROBA tipo PUNTOYCOMA                   { $$ = new Mostrar($3,@3.first_line,@3.first_column); }
+    | tipo                                              { $$ = $1; }
+    /*| SET tipo PUNTOYCOMA
     | multiple { $$ = $1; }
     | PRINT tipo PUNTOYCOMA {$$ = new Print($2);}
     | PRINT lista_instrucciones PUNTOYCOMA {$$ = new Print($2);}
@@ -179,7 +175,7 @@ instruccion
     | VARI VARCHAR {$$ = new Columna($1,"string")}
     | VARI TRUE {$$ = new Columna($1,"true")}
     | VARI FALSE {$$ = new Columna($1,"false")}
-    | VARI NULL {$$ = new Columna($1,"null")}
+    | VARI NULL {$$ = new Columna($1,"null")}*/
   /*  | VARI COMA 
     | ALTER TABLE VARI tipo PUNTOYCOMA
     | DROP TABLE VARI PUNTOYCOMA
@@ -209,7 +205,23 @@ instruccion
                 }
 ;
 
+declaracion
+    :SET ARROBA VARI IGUAL tipo PUNTOYCOMA           {$$ = new Asignar($3,$5,@3.first_line,@3.first_column);}
+;
 
+
+/*asignacion 
+    : ARROBA VARI tipo COMA asignacion                                      {$$ = new Declara($2,null,$3.tipo,@2.first_line,@2.first_column);}
+    | ARROBA VARI tipo PUNTOYCOMA                                           {$$ = new Declara($2,null,$3.tipo,@2.first_line,@2.first_column);}
+    | ARROBA VARI INT DEFAULT REALES PUNTOYCOMA                             {$$ = new Declara($2,$5,$3,@2.first_line,@2.first_column);}
+    | ARROBA VARI DATE DEFAULT DATEN PUNTOYCOMA                             {$$ = new Declara($2,$5,$3,@2.first_line,@2.first_column);}
+    | ARROBA VARI DOUBLE DEFAULT REALES PUNTOYCOMA                          {$$ = new Declara($2,$5,$3,@2.first_line,@2.first_column);}
+    | ARROBA VARI VARCHAR DEFAULT CADENA PUNTOYCOMA                         {$$ = new Declara($2,$5,$3,@2.first_line,@2.first_column);}
+    | ARROBA VARI TRUE DEFAULT TRUE PUNTOYCOMA                              {$$ = new Declara($2,$5,$3,@2.first_line,@2.first_column);}
+    | ARROBA VARI FALSE DEFAULT FALSE PUNTOYCOMA                            {$$ = new Declara($2,$5,$3,@2.first_line,@2.first_column);}
+    | ARROBA VARI NULL DEFAULT NULL PUNTOYCOMA                              {$$ = new Declara($2,$5,$3,@2.first_line,@2.first_column);}
+;*/
+/*
 multiple
     : multiple COMA  decVar { $$ = $1; }
     | decVar { $$ = $1; }
@@ -218,43 +230,39 @@ multiple
 decVar
     : DECLARE var tipo  {$$ = new Declara($2, $3);}
     | var tipo          {$$ = new Declara($1, $2);}
-;
+
 
 var 
     : VARIABLE          {$$ = new Variable($1);}
 ;
-
+*/
 tipo
-    : INT        {$$ = new  Dato('INT',null);}
-    | DOUBLE        {$$ = new  Dato('DOUBLE',null);}
-    | DATE        {$$ = new  Dato('DATE',null);}
-    | VARCHAR        {$$ = new  Dato('VARCHAR',null);}
-    | TRUE        {$$ = new  Dato('TRUE',null);}
-    | FALSE        {$$ = new  Dato('FALSE',null);}
-    | NULL        {$$ = new  Dato('NULL',null);}
-    | INT DEFAULT REALES       {$$ = new Dato('INT',$3);}
-    | DATE DEFAULT DATEN       {$$ = new Dato('DATE',$3);}
-    | DOUBLE DEFAULT REALES       {$$ = new Dato('DOUBLE',$3);}
-    | VARCHAR DEFAULT CADENA       {$$ = new Dato('VARCHAR',$3);}
-    | TRUE DEFAULT TRUE       {$$ = new Dato('TRUE',$3);}
-    | FALSE DEFAULT FALSE       {$$ = new Dato('FALSE',$3);}
-    | NULL DEFAULT NULL       {$$ = new Dato('NULL',$3);}
-    | REALES       {$$ = new Dato('INT',$1);}
-    | DATEN       {$$ = new Dato('DATE',$1);}
-    | CADENA       {$$ = new Dato('VARCHAR',$1);}
-    | CADPR       {$$ = new Dato('VARCHAR',$1);}
+    : INT           {$$ = new Dato(null, 'int');}
+    | DOUBLE        {$$ = new Dato(null, 'double');}
+    | DATE          {$$ = new Dato(null, 'date');}
+    | VARCHAR       {$$ = new Dato(null, 'varchar');}
+    | TRUE          {$$ = new Dato(null, 'true');}
+    | FALSE         {$$ = new Dato(null, 'false');}
+    | NULL          {$$ = new Dato(null, 'null');}
+    //Datos
+    | REALES       {$$ = new Dato($1, 'int');}
+    | DATEN        {$$ = new Dato($1, 'date');}
+    | CADENA       {$$ = new Dato($1, 'varchar');}
+    | CADPR        {$$ = new Dato($1, 'varchar');}
+    | VARI         {$$ = new Id($1);}
+    
     //| CADPR COMA  {$$ = new Dato('VARCHAR',$1);}
-    | VARI COMA  {$$ = new Dato('VARCHAR',$1);}
+    //| VARI COMA  {$$ = new Dato('VARCHAR',$1);}
     //Operaciones Aritmeticas
-    | tipo MAS tipo  {$$ = new Aritmetica($1, '+', $3)}
-    | tipo POR tipo  {$$ = new Aritmetica($1, '*', $3)} 
-    | tipo MENOS tipo  {$$ = new Aritmetica($1, '-', $3)} 
-    | tipo DIVI tipo  {$$ = new Aritmetica($1, '/', $3)} 
-    | tipo MODULO tipo  {$$ = new Aritmetica($1, '%', $3)} 
-    | MENOS tipo {$$ = new Aritmetica("Menos", 'Nega', $2)} 
-    | MAS tipo {$$ = new Aritmetica("Mas", 'Nega', $2)} 
+    | tipo MAS tipo     {$$ = new Aritmetica($1, '+', $3,@3.first_line,@3.first_column)}
+    | tipo POR tipo     {$$ = new Aritmetica($1, '*', $3,@3.first_line,@3.first_column)} 
+    | tipo MENOS tipo   {$$ = new Aritmetica($1, '-', $3,@3.first_line,@3.first_column)} 
+    | tipo DIVI tipo    {$$ = new Aritmetica($1, '/', $3,@3.first_line,@3.first_column)} 
+    | tipo MODULO tipo  {$$ = new Aritmetica($1, '%', $3,@3.first_line,@3.first_column)} 
+    //| MENOS tipo {$$ = new Aritmetica("Menos", 'Nega', $2)} 
+    //| MAS tipo {$$ = new Aritmetica("Mas", 'Nega', $2)} 
     //Operaciones Relacionales
-    | tipo IGUAL tipo {$$ = new Relacional($1, '=', $3)}
+    /*| tipo IGUAL tipo {$$ = new Relacional($1, '=', $3)}
     | tipo DIFERENTE tipo {$$ = new Relacional($1, '!=', $3)}
     | tipo MENOR tipo {$$ = new Relacional($1, '<', $3)}
     | tipo MENOR IGUAL tipo {$$ = new Relacional($1, '<=', $3)}
@@ -263,7 +271,7 @@ tipo
     //Operadores Logicos
     | tipo AND tipo {$$ = new Logico($1, 'and', $3)}
     | tipo OR tipo {$$ = new Logico($1, 'or', $3)}
-    | NOT tipo {$$ = new Logico(null, 'not', $2)}
+    | NOT tipo {$$ = new Logico(null, 'not', $2)}*/
     //Tablas
    /* | ADD VARI tipo 
     | DROP COLUMN VARI

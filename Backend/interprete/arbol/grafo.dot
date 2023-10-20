@@ -1,0 +1,19 @@
+graph {
+ordering="out"
+1[label="nombre"]
+2[label="Asignar"]
+2--1
+
+}graph {
+ordering="out"
+1[label="nombre"]
+2[label="Asignar"]
+2--1
+
+}graph {
+ordering="out"
+3[label="nombre"]
+4[label="Asignar"]
+4--3
+
+}

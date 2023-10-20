@@ -1,15 +1,17 @@
 const Instruccion = require("../Instruccion");
 var contador = require("../arbol/Contador");
 const Informacion = require ("../instrucciones/Informacion.js")
-class Dato extends Instruccion{
+class Id extends Instruccion{
 
-    constructor(valor, tipo){
+    constructor(nombre){
         super();
-        this.valor = valor;
-        this.tipo = tipo;
+        this.nombre = nombre;
+        this.valor = null;
     }
 
     ejecutar(entorno){
+        let simbolo = entorno.obtenerSimbolo(this.nombre);
+        this.valor = simbolo.valor;
         return this;
     }
     getAst(){
@@ -23,7 +25,7 @@ class Dato extends Instruccion{
 
         let cadena = 
         `${nodoDato}[label="${this.valor}"]\n`+
-        `${nodoPadre}[label="dato"]\n`+
+        `${nodoPadre}[label="id"]\n`+
         `${nodoPadre}--${nodoDato}\n`;
 
         nodo.padre = nodoPadre;
@@ -36,4 +38,4 @@ class Dato extends Instruccion{
     }
 }
 
-module.exports = Dato;
+module.exports = Id;

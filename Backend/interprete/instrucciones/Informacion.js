@@ -3,6 +3,7 @@ const Instruccion = require('../instrucciones/Errores.js')
 class Informacion {
     constructor() {
         this.error = [];
+        this.simbolos = [];
         this.AST = "";
     }
 
@@ -21,6 +22,14 @@ class Informacion {
         return this.error;
     }
 
+    add_Simbolo(data) {
+        this.simbolos.push(data);
+    }
+
+    get_Simbolo() {
+        return this.simbolos;
+    }
+
     add_AST(cadena) {
         this.AST += cadena;
     }
@@ -37,21 +46,6 @@ class Informacion {
         this.error = [];
     }
 
-    clear_Enviroment() {
-        this.enviroment = new env(null);
-    }
-
-    add_Variable(id, tipo, linea, columna, valor) {
-        this.enviroment.guardar_Variable(id, tipo, linea, columna, valor);
-    }
-
-    add_Funcion(id, tipo, linea, columna, valor) {
-        this.enviroment.guardar_funcion(id, tipo, linea, columna, valor);
-    }
-
-    get_Env() {
-        return this.enviroment;
-    }
 }
 
 module.exports = Informacion;

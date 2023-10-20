@@ -2,10 +2,11 @@ const Instruccion = require("../Instruccion");
 const Informacion = require("../instrucciones/Informacion");
 const Simb = require("../tablasimbolos/TablaSimbolos.js")
 var contador = require("../arbol/Contador");
-class Mostrar extends Instruccion {
+class Asignar extends Instruccion{
 
-    constructor(expresion,linea,columna){
+    constructor(id, expresion,linea,columna){
         super();
+        this.id = id;
         this.expresion = expresion;
         this.linea = linea;
         this.columna = columna;
@@ -13,9 +14,9 @@ class Mostrar extends Instruccion {
 
     ejecutar(entorno){
         let expresion = this.expresion.ejecutar(entorno);
-        console.log(expresion.valor);
+        entorno.agregarSimbolo(this.id, expresion.valor)
         let s = Informacion.getInstance();
-        s.add_Simbolo(new Simb(this.expresion.valor,"Print",expresion.tipo,entorno.nombre,this.linea,this.columna));
+        s.add_Simbolo(new Simb(this.id,"Variable",expresion.tipo,entorno.nombre,this.linea,this.columna));
     }
     getAst(){
         let nodo = {
@@ -27,8 +28,8 @@ class Mostrar extends Instruccion {
         let nodoPadre = contador.get();
 
         let cadena = 
-        `${nodoDato}[label="${this.expresion.valor}"]\n`+
-        `${nodoPadre}[label="Imprimir"]\n`+
+        `${nodoDato}[label="${this.id}"]\n`+
+        `${nodoPadre}[label="Asignar"]\n`+
         `${nodoPadre}--${nodoDato}\n`;
 
         nodo.padre = nodoPadre;
@@ -36,9 +37,9 @@ class Mostrar extends Instruccion {
 
         let s = Informacion.getInstance();
         s.add_AST(cadena);
-
+        
         return nodo;
     }
 }
 
-module.exports = Mostrar;
+module.exports = Asignar

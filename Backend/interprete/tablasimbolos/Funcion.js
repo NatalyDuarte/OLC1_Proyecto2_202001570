@@ -1,4 +1,4 @@
-//Base tablasimbolos https://github.com/AlexIngGuerra/OLC1-2S2023
+
 class Funcion{
 
     constructor(nombre, parametros, instrucciones){

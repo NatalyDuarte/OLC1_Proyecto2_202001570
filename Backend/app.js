@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 // Imports rutas
-const indexRoutes = require("./routes/indexr.js")
+const indexRoutes = require("./routes/index.routes.js")
 
 app.use("/", indexRoutes)
 

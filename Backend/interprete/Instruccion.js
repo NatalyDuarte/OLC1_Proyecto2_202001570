@@ -1,10 +1,12 @@
-//Base del interprete https://github.com/AlexIngGuerra/OLC1-2S2023
-class Instruccion {
+
+class Instruccion{
+
     constructor(){}
 
-    interpretar(entorno){}
+    ejecutar(entorno){}
+    getAst(){ 
+    }
 
-    getArbol(){}
 }
 
 module.exports = Instruccion;
