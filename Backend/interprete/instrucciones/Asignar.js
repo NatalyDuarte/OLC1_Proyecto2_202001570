@@ -14,9 +14,9 @@ class Asignar extends Instruccion{
 
     ejecutar(entorno){
         let expresion = this.expresion.ejecutar(entorno);
-        entorno.agregarSimbolo(this.id, expresion.valor)
+        entorno.agregarSimbolo(this.id, expresion.valor);
         let s = Informacion.getInstance();
-        s.add_Simbolo(new Simb(this.id,"Variable",expresion.tipo,entorno.nombre,this.linea,this.columna));
+        s.add_Simbolo(new Simb(this.expresion.valor,"Asignar",expresion.tipo,entorno.nombre,this.linea,this.columna));
     }
     getAst(){
         let nodo = {

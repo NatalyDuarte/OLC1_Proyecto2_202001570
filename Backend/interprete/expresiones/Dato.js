@@ -1,16 +1,22 @@
 const Instruccion = require("../Instruccion");
 var contador = require("../arbol/Contador");
 const Informacion = require ("../instrucciones/Informacion.js")
+const Simb = require("../tablasimbolos/TablaSimbolos.js")
 class Dato extends Instruccion{
 
-    constructor(valor, tipo){
+    constructor(valor, tipo,linea,columna){
         super();
         this.valor = valor;
         this.tipo = tipo;
+        this.linea = linea;
+        this.columna = columna;
+
     }
 
     ejecutar(entorno){
-        return this;
+        let s = Informacion.getInstance();
+        s.add_Simbolo(new Simb(this.valor,"Dato",this.tipo,entorno.nombre,this.linea,this.columna));
+        return this;   
     }
     getAst(){
         let nodo = {

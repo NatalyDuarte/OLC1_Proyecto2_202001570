@@ -72,12 +72,12 @@
   }
 */
 var Parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,7],$V1=[1,5],$V2=[1,8],$V3=[1,20],$V4=[1,9],$V5=[1,10],$V6=[1,11],$V7=[1,12],$V8=[1,13],$V9=[1,14],$Va=[1,15],$Vb=[1,16],$Vc=[1,17],$Vd=[1,18],$Ve=[1,19],$Vf=[2,5,8,12,13,15,16,17,18,19,20,21,22,23,24,25],$Vg=[1,24],$Vh=[1,25],$Vi=[1,26],$Vj=[1,27],$Vk=[1,28],$Vl=[2,5,8,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,10],$V1=[1,4],$V2=[1,6],$V3=[1,7],$V4=[1,8],$V5=[1,9],$V6=[1,11],$V7=[2,5,7,10,13,14,15,16,17,19,20],$V8=[1,30],$V9=[1,19],$Va=[1,21],$Vb=[1,20],$Vc=[1,22],$Vd=[1,23],$Ve=[1,24],$Vf=[1,25],$Vg=[1,26],$Vh=[1,27],$Vi=[1,28],$Vj=[1,29],$Vk=[1,42],$Vl=[1,37],$Vm=[1,38],$Vn=[1,39],$Vo=[1,40],$Vp=[1,41],$Vq=[1,43],$Vr=[1,44],$Vs=[1,45],$Vt=[1,46],$Vu=[1,47],$Vv=[1,48],$Vw=[13,18,22,35,36,37,38,39,40,41,42,43,44,45],$Vx=[2,22],$Vy=[2,23],$Vz=[2,24],$VA=[2,25],$VB=[2,26],$VC=[2,27],$VD=[2,28],$VE=[13,22,35,36,37,38,39,40,41,42,43,44,45],$VF=[13,18,22,35,36,37,38,39,40,41],$VG=[13,18,22,35,36,37,38,39,40,41,42];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"inicio":3,"lista_instrucciones":4,"EOF":5,"instruccion":6,"declaracion":7,"SELECT":8,"ARROBA":9,"tipo":10,"PUNTOYCOMA":11,"SET":12,"VARI":13,"IGUAL":14,"INT":15,"DOUBLE":16,"DATE":17,"VARCHAR":18,"TRUE":19,"FALSE":20,"NULL":21,"REALES":22,"DATEN":23,"CADENA":24,"CADPR":25,"MAS":26,"POR":27,"MENOS":28,"DIVI":29,"MODULO":30,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",8:"SELECT",9:"ARROBA",11:"PUNTOYCOMA",12:"SET",13:"VARI",14:"IGUAL",15:"INT",16:"DOUBLE",17:"DATE",18:"VARCHAR",19:"TRUE",20:"FALSE",21:"NULL",22:"REALES",23:"DATEN",24:"CADENA",25:"CADPR",26:"MAS",27:"POR",28:"MENOS",29:"DIVI",30:"MODULO"},
-productions_: [0,[3,2],[4,2],[4,1],[6,1],[6,4],[6,1],[6,1],[7,6],[10,1],[10,1],[10,1],[10,1],[10,1],[10,1],[10,1],[10,1],[10,1],[10,1],[10,1],[10,1],[10,3],[10,3],[10,3],[10,3],[10,3]],
+symbols_: {"error":2,"inicio":3,"lista_instrucciones":4,"EOF":5,"instruccion":6,"DECLARE":7,"asignacion":8,"declaracion":9,"SELECT":10,"ARROBA":11,"tipo":12,"PUNTOYCOMA":13,"PRINT":14,"BEGIN":15,"END":16,"IF":17,"THEN":18,"ELSE":19,"SET":20,"VARI":21,"IGUAL":22,"INT":23,"DEFAULT":24,"DATE":25,"DOUBLE":26,"VARCHAR":27,"TRUE":28,"FALSE":29,"NULL":30,"REALES":31,"DATEN":32,"CADENA":33,"CADPR":34,"MAS":35,"POR":36,"MENOS":37,"DIVI":38,"MODULO":39,"DIFERENTE":40,"MENOR":41,"MAYOR":42,"AND":43,"OR":44,"NOT":45,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",7:"DECLARE",8:"asignacion",10:"SELECT",11:"ARROBA",13:"PUNTOYCOMA",14:"PRINT",15:"BEGIN",16:"END",17:"IF",18:"THEN",19:"ELSE",20:"SET",21:"VARI",22:"IGUAL",23:"INT",24:"DEFAULT",25:"DATE",26:"DOUBLE",27:"VARCHAR",28:"TRUE",29:"FALSE",30:"NULL",31:"REALES",32:"DATEN",33:"CADENA",34:"CADPR",35:"MAS",36:"POR",37:"MENOS",38:"DIVI",39:"MODULO",40:"DIFERENTE",41:"MENOR",42:"MAYOR",43:"AND",44:"OR",45:"NOT"},
+productions_: [0,[3,2],[4,2],[4,1],[6,2],[6,1],[6,4],[6,3],[6,3],[6,4],[6,9],[6,6],[6,1],[9,6],[9,5],[9,7],[9,7],[9,7],[9,7],[9,7],[9,7],[9,7],[12,1],[12,1],[12,1],[12,1],[12,1],[12,1],[12,1],[12,1],[12,1],[12,1],[12,1],[12,1],[12,3],[12,3],[12,3],[12,3],[12,3],[12,3],[12,3],[12,3],[12,4],[12,3],[12,4],[12,3],[12,3],[12,3]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -92,13 +92,25 @@ break;
 case 3:
 this.$ = []; this.$.push($$[$0])
 break;
-case 4: case 6:
- this.$ = $$[$0]; 
+case 4:
+ this.$ = $$[$0-1]; 
 break;
 case 5:
+ this.$ = $$[$0]; 
+break;
+case 6: case 7: case 8:
  this.$ = new Mostrar($$[$0-1],_$[$0-1].first_line,_$[$0-1].first_column); 
 break;
-case 7:
+case 9:
+ this.$ = new Encapsula($$[$0-2],_$[$0-2].first_line,_$[$0-2].first_column);
+break;
+case 10:
+ this.$ = new IfElse($$[$0-7],$$[$0-5],$$[$0-3],_$[$0-7].first_line,_$[$0-7].first_column);
+break;
+case 11:
+ this.$ = new If($$[$0-4],$$[$0-2],_$[$0-4].first_line,_$[$0-4].first_column);
+break;
+case 12:
 
                 console.log('Error sintáctico: ' + yytext + ',  linea: ' + this._$.first_line + ', columna: ' + this._$.first_column);
                 let s = Informacion.getInstance();
@@ -106,61 +118,85 @@ case 7:
                 //ListaError.push(err);
                 
 break;
-case 8:
+case 13:
 this.$ = new Asignar($$[$0-3],$$[$0-1],_$[$0-3].first_line,_$[$0-3].first_column);
 break;
-case 9:
-this.$ = new Dato(null, 'int');
-break;
-case 10:
-this.$ = new Dato(null, 'double');
-break;
-case 11:
-this.$ = new Dato(null, 'date');
-break;
-case 12:
-this.$ = new Dato(null, 'varchar');
-break;
-case 13:
-this.$ = new Dato(null, 'true');
-break;
 case 14:
-this.$ = new Dato(null, 'false');
+this.$ = new Asignar($$[$0-2],$$[$0-1],_$[$0-2].first_line,_$[$0-2].first_column);
 break;
-case 15:
-this.$ = new Dato(null, 'null');
+case 15: case 16: case 17: case 18: case 19: case 20: case 21:
+this.$ = new Asignar($$[$0-4],$$[$0-1],_$[$0-4].first_line,_$[$0-4].first_column);
 break;
-case 16:
-this.$ = new Dato($$[$0], 'int');
-break;
-case 17:
-this.$ = new Dato($$[$0], 'date');
-break;
-case 18: case 19:
-this.$ = new Dato($$[$0], 'varchar');
-break;
-case 20:
-this.$ = new Id($$[$0]);
-break;
-case 21:
-this.$ = new Aritmetica($$[$0-2], '+', $$[$0],_$[$0].first_line,_$[$0].first_column)
-break;
-case 22:
-this.$ = new Aritmetica($$[$0-2], '*', $$[$0],_$[$0].first_line,_$[$0].first_column)
+case 22: case 29:
+this.$ = new Dato($$[$0], 'int',_$[$0].first_line,_$[$0].first_column);
 break;
 case 23:
-this.$ = new Aritmetica($$[$0-2], '-', $$[$0],_$[$0].first_line,_$[$0].first_column)
+this.$ = new Dato($$[$0], 'double',_$[$0].first_line,_$[$0].first_column);
 break;
-case 24:
-this.$ = new Aritmetica($$[$0-2], '/', $$[$0],_$[$0].first_line,_$[$0].first_column)
+case 24: case 30:
+this.$ = new Dato($$[$0], 'date',_$[$0].first_line,_$[$0].first_column);
 break;
-case 25:
-this.$ = new Aritmetica($$[$0-2], '%', $$[$0],_$[$0].first_line,_$[$0].first_column)
+case 25: case 31: case 32:
+this.$ = new Dato($$[$0], 'varchar',_$[$0].first_line,_$[$0].first_column);
+break;
+case 26:
+this.$ = new Dato($$[$0], 'true',_$[$0].first_line,_$[$0].first_column);
+break;
+case 27:
+this.$ = new Dato($$[$0], 'false',_$[$0].first_line,_$[$0].first_column);
+break;
+case 28:
+this.$ = new Dato($$[$0], 'null',_$[$0].first_line,_$[$0].first_column);
+break;
+case 33:
+this.$ = new Id($$[$0],_$[$0].first_line,_$[$0].first_column);
+break;
+case 34:
+this.$ = new Aritmetica($$[$0-2], '+', $$[$0],_$[$0].first_line,_$[$0].first_column);
+break;
+case 35:
+this.$ = new Aritmetica($$[$0-2], '*', $$[$0],_$[$0].first_line,_$[$0].first_column);
+break;
+case 36:
+this.$ = new Aritmetica($$[$0-2], '-', $$[$0],_$[$0].first_line,_$[$0].first_column);
+break;
+case 37:
+this.$ = new Aritmetica($$[$0-2], '/', $$[$0],_$[$0].first_line,_$[$0].first_column);
+break;
+case 38:
+this.$ = new Aritmetica($$[$0-2], '%', $$[$0],_$[$0].first_line,_$[$0].first_column);
+break;
+case 39:
+this.$ = new Relacional($$[$0-2], '=', $$[$0],_$[$0].first_line,_$[$0].first_column);
+break;
+case 40:
+this.$ = new Relacional($$[$0-2], '!=', $$[$0],_$[$0].first_line,_$[$0].first_column);
+break;
+case 41:
+this.$ = new Relacional($$[$0-2], '<', $$[$0],_$[$0].first_line,_$[$0].first_column);
+break;
+case 42:
+this.$ = new Relacional($$[$0-3], '<=', $$[$0],_$[$0].first_line,_$[$0].first_column);
+break;
+case 43:
+this.$ = new Relacional($$[$0-2], '>', $$[$0],_$[$0].first_line,_$[$0].first_column);
+break;
+case 44:
+this.$ = new Relacional($$[$0-3], '>=', $$[$0],_$[$0].first_line,_$[$0].first_column);
+break;
+case 45:
+this.$ = new Logico($$[$0-2], 'and', $$[$0],_$[$0].first_line,_$[$0].first_column);
+break;
+case 46:
+this.$ = new Logico($$[$0-2], 'or', $$[$0],_$[$0].first_line,_$[$0].first_column);
+break;
+case 47:
+this.$ = new Logico($$[$0-2], 'not', $$[$0],_$[$0].first_line,_$[$0].first_column);
 break;
 }
 },
-table: [{2:$V0,3:1,4:2,6:3,7:4,8:$V1,10:6,12:$V2,13:$V3,15:$V4,16:$V5,17:$V6,18:$V7,19:$V8,20:$V9,21:$Va,22:$Vb,23:$Vc,24:$Vd,25:$Ve},{1:[3]},{2:$V0,5:[1,21],6:22,7:4,8:$V1,10:6,12:$V2,13:$V3,15:$V4,16:$V5,17:$V6,18:$V7,19:$V8,20:$V9,21:$Va,22:$Vb,23:$Vc,24:$Vd,25:$Ve},o($Vf,[2,3]),o($Vf,[2,4]),{9:[1,23]},o($Vf,[2,6],{26:$Vg,27:$Vh,28:$Vi,29:$Vj,30:$Vk}),o($Vf,[2,7]),{9:[1,29]},o($Vl,[2,9]),o($Vl,[2,10]),o($Vl,[2,11]),o($Vl,[2,12]),o($Vl,[2,13]),o($Vl,[2,14]),o($Vl,[2,15]),o($Vl,[2,16]),o($Vl,[2,17]),o($Vl,[2,18]),o($Vl,[2,19]),o($Vl,[2,20]),{1:[2,1]},o($Vf,[2,2]),{10:30,13:$V3,15:$V4,16:$V5,17:$V6,18:$V7,19:$V8,20:$V9,21:$Va,22:$Vb,23:$Vc,24:$Vd,25:$Ve},{10:31,13:$V3,15:$V4,16:$V5,17:$V6,18:$V7,19:$V8,20:$V9,21:$Va,22:$Vb,23:$Vc,24:$Vd,25:$Ve},{10:32,13:$V3,15:$V4,16:$V5,17:$V6,18:$V7,19:$V8,20:$V9,21:$Va,22:$Vb,23:$Vc,24:$Vd,25:$Ve},{10:33,13:$V3,15:$V4,16:$V5,17:$V6,18:$V7,19:$V8,20:$V9,21:$Va,22:$Vb,23:$Vc,24:$Vd,25:$Ve},{10:34,13:$V3,15:$V4,16:$V5,17:$V6,18:$V7,19:$V8,20:$V9,21:$Va,22:$Vb,23:$Vc,24:$Vd,25:$Ve},{10:35,13:$V3,15:$V4,16:$V5,17:$V6,18:$V7,19:$V8,20:$V9,21:$Va,22:$Vb,23:$Vc,24:$Vd,25:$Ve},{13:[1,36]},{11:[1,37],26:$Vg,27:$Vh,28:$Vi,29:$Vj,30:$Vk},o([2,5,8,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26],[2,21],{27:$Vh,28:$Vi,29:$Vj,30:$Vk}),o([2,5,8,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27],[2,22],{28:$Vi,29:$Vj,30:$Vk}),o([2,5,8,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28],[2,23],{29:$Vj,30:$Vk}),o([2,5,8,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29],[2,24],{30:$Vk}),o($Vl,[2,25]),{14:[1,38]},o($Vf,[2,5]),{10:39,13:$V3,15:$V4,16:$V5,17:$V6,18:$V7,19:$V8,20:$V9,21:$Va,22:$Vb,23:$Vc,24:$Vd,25:$Ve},{11:[1,40],26:$Vg,27:$Vh,28:$Vi,29:$Vj,30:$Vk},o($Vf,[2,8])],
-defaultActions: {21:[2,1]},
+table: [{2:$V0,3:1,4:2,6:3,7:$V1,9:5,10:$V2,14:$V3,15:$V4,17:$V5,20:$V6},{1:[3]},{2:$V0,5:[1,12],6:13,7:$V1,9:5,10:$V2,14:$V3,15:$V4,17:$V5,20:$V6},o($V7,[2,3]),{8:[1,14],11:[1,15]},o($V7,[2,5]),{11:[1,16]},{2:$V0,4:18,6:3,7:$V1,9:5,10:$V2,12:17,14:$V3,15:$V4,17:$V5,20:$V6,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{2:$V0,4:31,6:3,7:$V1,9:5,10:$V2,14:$V3,15:$V4,17:$V5,20:$V6},{12:32,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},o($V7,[2,12]),{11:[1,33]},{1:[2,1]},o($V7,[2,2]),o($V7,[2,4]),{21:[1,34]},{12:35,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{13:[1,36],22:$Vk,35:$Vl,36:$Vm,37:$Vn,38:$Vo,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv},{2:$V0,6:13,7:$V1,9:5,10:$V2,13:[1,49],14:$V3,15:$V4,17:$V5,20:$V6},o($Vw,$Vx),o($Vw,$Vy),o($Vw,$Vz),o($Vw,$VA),o($Vw,$VB),o($Vw,$VC),o($Vw,$VD),o($Vw,[2,29]),o($Vw,[2,30]),o($Vw,[2,31]),o($Vw,[2,32]),o($Vw,[2,33]),{2:$V0,6:13,7:$V1,9:5,10:$V2,14:$V3,15:$V4,16:[1,50],17:$V5,20:$V6},{18:[1,51],22:$Vk,35:$Vl,36:$Vm,37:$Vn,38:$Vo,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv},{21:[1,52]},{12:53,21:$V8,23:[1,54],25:[1,55],26:[1,56],27:[1,57],28:[1,58],29:[1,59],30:[1,60],31:$Vg,32:$Vh,33:$Vi,34:$Vj},{13:[1,61],22:$Vk,35:$Vl,36:$Vm,37:$Vn,38:$Vo,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv},o($V7,[2,7]),{12:62,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:63,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:64,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:65,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:66,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:67,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:68,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:69,21:$V8,22:[1,70],23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:71,21:$V8,22:[1,72],23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:73,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:74,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:75,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},o($V7,[2,8]),{13:[1,76]},{2:$V0,4:77,6:3,7:$V1,9:5,10:$V2,14:$V3,15:$V4,17:$V5,20:$V6},{22:[1,78]},{13:[1,79],22:$Vk,35:$Vl,36:$Vm,37:$Vn,38:$Vo,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv},o($VE,$Vx,{24:[1,80]}),o($VE,$Vz,{24:[1,81]}),o($VE,$Vy,{24:[1,82]}),o($VE,$VA,{24:[1,83]}),o($VE,$VB,{24:[1,84]}),o($VE,$VC,{24:[1,85]}),o($VE,$VD,{24:[1,86]}),o($V7,[2,6]),o([13,18,35],[2,34],{22:$Vk,36:$Vm,37:$Vn,38:$Vo,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv}),o([13,18,35,36],[2,35],{22:$Vk,37:$Vn,38:$Vo,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv}),o([13,18,35,36,37],[2,36],{22:$Vk,38:$Vo,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv}),o([13,18,35,36,37,38],[2,37],{22:$Vk,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv}),o([13,18,35,36,37,38,39],[2,38],{22:$Vk,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv}),o([13,18,22,35,36,37,38,39],[2,39],{40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv}),o([13,18,22,35,36,37,38,39,40],[2,40],{41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv}),o($VF,[2,41],{42:$Vs,43:$Vt,44:$Vu,45:$Vv}),{12:87,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},o($VG,[2,43],{43:$Vt,44:$Vu,45:$Vv}),{12:88,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},o([13,18,22,35,36,37,38,39,40,41,42,43],[2,45],{44:$Vu,45:$Vv}),o([13,18,22,35,36,37,38,39,40,41,42,43,44],[2,46],{45:$Vv}),o($Vw,[2,47]),o($V7,[2,9]),{2:$V0,6:13,7:$V1,9:5,10:$V2,14:$V3,15:$V4,16:[1,90],17:$V5,19:[1,89],20:$V6},{12:91,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},o($V7,[2,14]),{12:92,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:93,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:94,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:95,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:96,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:97,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},{12:98,21:$V8,23:$V9,25:$Va,26:$Vb,27:$Vc,28:$Vd,29:$Ve,30:$Vf,31:$Vg,32:$Vh,33:$Vi,34:$Vj},o($VF,[2,42],{42:$Vs,43:$Vt,44:$Vu,45:$Vv}),o($VG,[2,44],{43:$Vt,44:$Vu,45:$Vv}),{2:$V0,4:99,6:3,7:$V1,9:5,10:$V2,14:$V3,15:$V4,17:$V5,20:$V6},{13:[1,100]},{13:[1,101],22:$Vk,35:$Vl,36:$Vm,37:$Vn,38:$Vo,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv},{13:[1,102],22:$Vk,35:$Vl,36:$Vm,37:$Vn,38:$Vo,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv},{13:[1,103],22:$Vk,35:$Vl,36:$Vm,37:$Vn,38:$Vo,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv},{13:[1,104],22:$Vk,35:$Vl,36:$Vm,37:$Vn,38:$Vo,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv},{13:[1,105],22:$Vk,35:$Vl,36:$Vm,37:$Vn,38:$Vo,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv},{13:[1,106],22:$Vk,35:$Vl,36:$Vm,37:$Vn,38:$Vo,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv},{13:[1,107],22:$Vk,35:$Vl,36:$Vm,37:$Vn,38:$Vo,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv},{13:[1,108],22:$Vk,35:$Vl,36:$Vm,37:$Vn,38:$Vo,39:$Vp,40:$Vq,41:$Vr,42:$Vs,43:$Vt,44:$Vu,45:$Vv},{2:$V0,6:13,7:$V1,9:5,10:$V2,14:$V3,15:$V4,16:[1,109],17:$V5,20:$V6},o($V7,[2,11]),o($V7,[2,13]),o($V7,[2,15]),o($V7,[2,16]),o($V7,[2,17]),o($V7,[2,18]),o($V7,[2,19]),o($V7,[2,20]),o($V7,[2,21]),{17:[1,110]},{13:[1,111]},o($V7,[2,10])],
+defaultActions: {12:[2,1]},
 parseError: function parseError (str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -411,11 +447,17 @@ _handle_error:
 
     const Dato = require("../interprete/expresiones/Dato.js");
     const Mostrar = require('../interprete/instrucciones/Mostrar.js');
-    const Aritmetica = require('../interprete/expresiones/Aritmetica.js')
-    const Asignar  = require('../interprete/instrucciones/Asignar')
-    const Id = require('../interprete/expresiones/Id')
+    const Aritmetica = require('../interprete/expresiones/Aritmetica.js');
+    const Logico = require('../interprete/expresiones/Logico.js');
+    const Relacional = require('../interprete/expresiones/Relacional.js');
+    const Asignar  = require('../interprete/instrucciones/Asignar');
+    const Id = require('../interprete/expresiones/Id');
     const Errores = require('../interprete/instrucciones/Errores.js');
+    const Token = require('../interprete/instrucciones/Token.js');
     const Informacion = require('../interprete/instrucciones/Informacion.js');
+    const Encapsula  = require('../interprete/instrucciones/Encapsula.js');
+    const If  = require('../interprete/instrucciones/If.js');
+    const IfElse  = require('../interprete/instrucciones/IfElse.js');
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){
 var lexer = ({
@@ -744,157 +786,309 @@ options: {"case-insensitive":true},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:return 'PUNTO'
-break;
-case 1:return 9
-break;
-case 2:return 'PARENABRE'
-break;
-case 3:return 'PARENCIE'
-break;
-case 4:return 11
-break;
-case 5:return 'COMA'
-break;
-case 6:return 26
-break;
-case 7:return 28
-break;
-case 8:return 27
-break;
-case 9:return 29
-break;
-case 10:return 30
-break;
-case 11:return 14
-break;
-case 12:return 'DIFERENTE'
-break;
-case 13:return 'MENOR'
-break;
-case 14:return 'MAYOR'
-break;
-case 15:return 15
-break;
-case 16:return 16
-break;
-case 17:return 17
-break;
-case 18:return 18
-break;
-case 19:return 19
-break;
-case 20:return 20
-break;
-case 21:return 21
-break;
-case 22:return 'AND'
-break;
-case 23:return 'OR'
-break;
-case 24:return 'NOT'
-break;
-case 25:return 'BEGIN'
-break;
-case 26:return 'END'
-break;
-case 27:return 'DECLARE'
-break;
-case 28:return 'DEFAULT'
-break;
-case 29:return 12
-break;
-case 30:return 'CREATE'
-break;
-case 31:return 'TABLE'
-break;
-case 32:return 'ALTER'
-break;
-case 33:return 'ADD'
-break;
-case 34:return 'DROP'
-break;
-case 35:return 'COLUMN'
-break;
-case 36:return 'RENAME'
-break;
-case 37:return 'TO'
-break;
-case 38:return 'INSERT'
-break;
-case 39:return 'INTO'
-break;
-case 40:return 'VALUES'
-break;
-case 41:return 8
-break;
-case 42:return 'FROM'
-break;
-case 43:return 'WHERE'
-break;
-case 44:return 'UPDATE'
-break;
-case 45:return 'TRUNCATE'
-break;
-case 46:return 'DELETE'
-break;
-case 47:return 'CAST'
-break;
-case 48:return 'IF'
-break;
-case 49:return 'THEN'
-break;
-case 50:return 'ELSE'
-break;
-case 51:return 'WHEN'
-break;
-case 52:return 'CASE'
-break;
-case 53:return 'WHILE'
-break;
-case 54:return 'FOR'
-break;
-case 55:return 'IN'
-break;
-case 56:return 'BREAK'
-break;
-case 57:return 'CONTINUE'
-break;
-case 58:return 'PRINT'
-break;
-case 59:return 'FUNCION'
-break;
-case 60:return 'RETURNS'
-break;
-case 61:return 'PROCEDURE'
-break;
-case 62:return 'AS'
-break;
-case 63:return 'LOWER'
-break;
-case 64:return 'UPPER'
-break;
-case 65:return 'ROUND'
-break;
-case 66:return 'LEN'
-break;
-case 67:return 'TYPEOF'
-break;
-case 68:return 23;
-break;
-case 69: return 22; 
-break;
-case 70: return 'ENTERO'; 
-break;
-case 71: return 'COLUM'; 
-break;
-case 72: return 13; 
-break;
-case 73: return 'VARIABLE'; 
-break;
-case 74: return 24; 
-break;
-case 75: return 25; 
+case 0:let sa = Informacion.getInstance();
+                        sa.add_Token(new Token(yy_.yytext,"Punto", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'PUNTO'
+break;
+case 1:let sb = Informacion.getInstance();
+                        sb.add_Token(new Token(yy_.yytext,"Arroba", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 11
+break;
+case 2:let sf = Informacion.getInstance();
+                        sf.add_Token(new Token(yy_.yytext,"Parentesis abre", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'PARENABRE'
+break;
+case 3:let sg = Informacion.getInstance();
+                        sg.add_Token(new Token(yy_.yytext,"Parentesis cierra", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'PARENCIE'
+break;
+case 4:let se = Informacion.getInstance();
+                        se.add_Token(new Token(yy_.yytext,"Punto y coma", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 13
+break;
+case 5:let sh = Informacion.getInstance();
+                        sh.add_Token(new Token(yy_.yytext,"Coma", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'COMA'
+break;
+case 6:let si = Informacion.getInstance();
+                        si.add_Token(new Token(yy_.yytext,"Mas", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 35
+break;
+case 7:let sj = Informacion.getInstance();
+                        sj.add_Token(new Token(yy_.yytext,"Menos", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 37
+break;
+case 8:let sk = Informacion.getInstance();
+                        sk.add_Token(new Token(yy_.yytext,"Por", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 36
+break;
+case 9:let sl = Informacion.getInstance();
+                        sl.add_Token(new Token(yy_.yytext,"Division", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 38
+break;
+case 10:let sm = Informacion.getInstance();
+                        sm.add_Token(new Token(yy_.yytext,"Modulo", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 39
+break;
+case 11:let sn = Informacion.getInstance();
+                        sn.add_Token(new Token(yy_.yytext,"Igual", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 22
+break;
+case 12:let so = Informacion.getInstance();
+                        so.add_Token(new Token(yy_.yytext,"Diferente", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 40
+break;
+case 13:let sp = Informacion.getInstance();
+                        sp.add_Token(new Token(yy_.yytext,"Menor", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 41
+break;
+case 14:let sq = Informacion.getInstance();
+                        sq.add_Token(new Token(yy_.yytext,"Mayor", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 42
+break;
+case 15:let sr = Informacion.getInstance();
+                        sr.add_Token(new Token(yy_.yytext,"Int", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 23
+break;
+case 16:let ss = Informacion.getInstance();
+                        ss.add_Token(new Token(yy_.yytext,"Double", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 26
+break;
+case 17:let st = Informacion.getInstance();
+                        st.add_Token(new Token(yy_.yytext,"Date", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 25
+break;
+case 18:let sd = Informacion.getInstance();
+                        sd.add_Token(new Token(yy_.yytext,"Varchar", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 27
+break;
+case 19:let su = Informacion.getInstance();
+                        su.add_Token(new Token(yy_.yytext,"True", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 28
+break;
+case 20:let sv = Informacion.getInstance();
+                        sv.add_Token(new Token(yy_.yytext,"False", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 29
+break;
+case 21:let sw = Informacion.getInstance();
+                        sw.add_Token(new Token(yy_.yytext,"Null", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 30
+break;
+case 22:let sx = Informacion.getInstance();
+                        sx.add_Token(new Token(yy_.yytext,"And", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 43
+break;
+case 23:let sy = Informacion.getInstance();
+                        sy.add_Token(new Token(yy_.yytext,"Or", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 44
+break;
+case 24:let sz = Informacion.getInstance();
+                        sz.add_Token(new Token(yy_.yytext,"Not", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 45
+break;
+case 25:let a = Informacion.getInstance();
+                        a.add_Token(new Token(yy_.yytext,"Begin", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 15
+break;
+case 26:let ab = Informacion.getInstance();
+                        ab.add_Token(new Token(yy_.yytext,"End", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 16
+break;
+case 27:let ac = Informacion.getInstance();
+                        ac.add_Token(new Token(yy_.yytext,"Declare", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 7
+break;
+case 28:let ad = Informacion.getInstance();
+                        ad.add_Token(new Token(yy_.yytext,"Default", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 24
+break;
+case 29:let ae = Informacion.getInstance();
+                        ae.add_Token(new Token(yy_.yytext,"Set", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 20
+break;
+case 30:let af = Informacion.getInstance();
+                        af.add_Token(new Token(yy_.yytext,"Create", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'CREATE'
+break;
+case 31:let ag = Informacion.getInstance();
+                        ag.add_Token(new Token(yy_.yytext,"Table", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'TABLE'
+break;
+case 32:let ah = Informacion.getInstance();
+                        ah.add_Token(new Token(yy_.yytext,"Alter", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'ALTER'
+break;
+case 33:let ai = Informacion.getInstance();
+                        ai.add_Token(new Token(yy_.yytext,"Add", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'ADD'
+break;
+case 34:let aj = Informacion.getInstance();
+                        aj.add_Token(new Token(yy_.yytext,"Drop", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'DROP'
+break;
+case 35:let ak = Informacion.getInstance();
+                        ak.add_Token(new Token(yy_.yytext,"Column", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'COLUMN'
+break;
+case 36:let al = Informacion.getInstance();
+                        al.add_Token(new Token(yy_.yytext,"Rename", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'RENAME'
+break;
+case 37:let am = Informacion.getInstance();
+                        am.add_Token(new Token(yy_.yytext,"To", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'TO'
+break;
+case 38:let an = Informacion.getInstance();
+                        an.add_Token(new Token(yy_.yytext,"Insert", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'INSERT'
+break;
+case 39:let ao = Informacion.getInstance();
+                        ao.add_Token(new Token(yy_.yytext,"Into", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'INTO'
+break;
+case 40:let ap = Informacion.getInstance();
+                        ap.add_Token(new Token(yy_.yytext,"Values", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'VALUES'
+break;
+case 41:let aq = Informacion.getInstance();
+                        aq.add_Token(new Token(yy_.yytext,"Select", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 10
+break;
+case 42:let ar = Informacion.getInstance();
+                        ar.add_Token(new Token(yy_.yytext,"From", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'FROM'
+break;
+case 43:let as = Informacion.getInstance();
+                        as.add_Token(new Token(yy_.yytext,"Where", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'WHERE'
+break;
+case 44:let at = Informacion.getInstance();
+                        at.add_Token(new Token(yy_.yytext,"Update", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'UPDATE'
+break;
+case 45:let au = Informacion.getInstance();
+                        au.add_Token(new Token(yy_.yytext,"Truncate", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'TRUNCATE'
+break;
+case 46:let av = Informacion.getInstance();
+                        av.add_Token(new Token(yy_.yytext,"Delete", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'DELETE'
+break;
+case 47:let aw = Informacion.getInstance();
+                        aw.add_Token(new Token(yy_.yytext,"Cast", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'CAST'
+break;
+case 48:let ax = Informacion.getInstance();
+                        ax.add_Token(new Token(yy_.yytext,"If", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 17
+break;
+case 49:let ay = Informacion.getInstance();
+                        ay.add_Token(new Token(yy_.yytext,"Then", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 18
+break;
+case 50:let az = Informacion.getInstance();
+                        az.add_Token(new Token(yy_.yytext,"Else", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 19
+break;
+case 51:let b = Informacion.getInstance();
+                        b.add_Token(new Token(yy_.yytext,"When", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'WHEN'
+break;
+case 52:let ba = Informacion.getInstance();
+                        ba.add_Token(new Token(yy_.yytext,"Case", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'CASE'
+break;
+case 53:let bb = Informacion.getInstance();
+                        bb.add_Token(new Token(yy_.yytext,"While", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'WHILE'
+break;
+case 54:let bc = Informacion.getInstance();
+                        bc.add_Token(new Token(yy_.yytext,"For", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'FOR'
+break;
+case 55:let bd = Informacion.getInstance();
+                        bd.add_Token(new Token(yy_.yytext,"In", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'IN'
+break;
+case 56:let be = Informacion.getInstance();
+                        be.add_Token(new Token(yy_.yytext,"Break", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'BREAK'
+break;
+case 57:let bf = Informacion.getInstance();
+                        bf.add_Token(new Token(yy_.yytext,"Continue", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'CONTINUE'
+break;
+case 58:let bg = Informacion.getInstance();
+                        bg.add_Token(new Token(yy_.yytext,"Print", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 14
+break;
+case 59:let bh = Informacion.getInstance();
+                        bh.add_Token(new Token(yy_.yytext,"Funcion", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'FUNCION'
+break;
+case 60:let bi = Informacion.getInstance();
+                        bi.add_Token(new Token(yy_.yytext,"Returns", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'RETURNS'
+break;
+case 61:let bj = Informacion.getInstance();
+                        bj.add_Token(new Token(yy_.yytext,"Procedure", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'PROCEDURE'
+break;
+case 62:let bk = Informacion.getInstance();
+                        bk.add_Token(new Token(yy_.yytext,"As", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'AS'
+break;
+case 63:let bl = Informacion.getInstance();
+                        bl.add_Token(new Token(yy_.yytext,"Lower", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'LOWER'
+break;
+case 64:let bm = Informacion.getInstance();
+                        bm.add_Token(new Token(yy_.yytext,"Upper", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'UPPER'
+break;
+case 65:let bn = Informacion.getInstance();
+                        bn.add_Token(new Token(yy_.yytext,"Round", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'ROUND'
+break;
+case 66:let bo = Informacion.getInstance();
+                        bo.add_Token(new Token(yy_.yytext,"Len", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'LEN'
+break;
+case 67:let bq = Informacion.getInstance();
+                        bq.add_Token(new Token(yy_.yytext,"Typeof", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'TYPEOF'
+break;
+case 68:let br = Informacion.getInstance();
+                        br.add_Token(new Token(yy_.yytext,"Fecha", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 32;
+break;
+case 69:let bs = Informacion.getInstance();
+                        bs.add_Token(new Token(yy_.yytext,"Numero Real", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 31; 
+break;
+case 70:let bt = Informacion.getInstance();
+                        bt.add_Token(new Token(yy_.yytext,"Numero Entero", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                         return 'ENTERO'; 
+break;
+case 71: let bu = Informacion.getInstance();
+                        bu.add_Token(new Token(yy_.yytext,"Columna", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 'COLUM'; 
+break;
+case 72: let sc = Informacion.getInstance();
+                        sc.add_Token(new Token(yy_.yytext,"Nombre Variable", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 21; 
+break;
+case 73:let bv = Informacion.getInstance();
+                        bv.add_Token(new Token(yy_.yytext,"Variable", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                         return 'VARIABLE'; 
+break;
+case 74: let bw = Informacion.getInstance();
+                        bw.add_Token(new Token(yy_.yytext,"Cadena", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                        return 33; 
+break;
+case 75:let bx = Informacion.getInstance();
+                        bx.add_Token(new Token(yy_.yytext,"Cadena", yy_.yylloc.first_line, yy_.yylloc.first_column));
+                         return 34; 
 break;
 case 76:
 break;

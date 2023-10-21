@@ -12,5 +12,6 @@ router.get("/getdata", indexController.getdata);
 router.post("/obdata",indexController.obdata);
 router.get("/repoerror",indexController.reportes);
 router.get("/reposim",indexController.reportesi);
+router.get("/repoto",indexController.reporteto);
 
 module.exports = router;

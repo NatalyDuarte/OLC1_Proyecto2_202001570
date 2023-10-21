@@ -8,85 +8,237 @@ entero  [0-9]+;
 
 %%
 // Reglas Lexicas
-'.'          			{return 'PUNTO'}
-'@'          			{return 'ARROBA'}
-'('          			{return 'PARENABRE'}
-')'          			{return 'PARENCIE'}
-';'          			{return 'PUNTOYCOMA'}
-','          			{return 'COMA'}
-'+'          			{return 'MAS'}
-'-'          			{return 'MENOS'}
-'*'          			{return 'POR'}
-'/'          			{return 'DIVI'} 
-'%'          			{return 'MODULO'} 
-'='          			{return 'IGUAL'} 
-'!='          			{return 'DIFERENTE'} 
-'<'          			{return 'MENOR'} 
-'>'          			{return 'MAYOR'} 
-'int'    	 			{return 'INT'} 
-'double'    			{return 'DOUBLE'} 
-'date'    				{return 'DATE'} 
-'varchar'    			{return 'VARCHAR'} 
-'true'    				{return 'TRUE'} 
-'false'    				{return 'FALSE'} 
-'null'    				{return 'NULL'} 
-'and'    				{return 'AND'} 
-'or'    				{return 'OR'} 
-'not'    				{return 'NOT'} 
-'begin'    				{return 'BEGIN'} 
-'end'    				{return 'END'} 
-'declare'    			{return 'DECLARE'} 
-'default'    			{return 'DEFAULT'} 
-'set'    				{return 'SET'} 
-'create'    			{return 'CREATE'} 
-'table'    				{return 'TABLE'} 
-'alter'    				{return 'ALTER'} 
-'add'    				{return 'ADD'} 
-'drop'    				{return 'DROP'} 
-'column'    			{return 'COLUMN'} 
-'rename'    			{return 'RENAME'} 
-'to'    				{return 'TO'} 
-'insert'    			{return 'INSERT'} 
-'into'    				{return 'INTO'} 
-'values'    			{return 'VALUES'} 
-'select'    			{return 'SELECT'} 
-'from'    				{return 'FROM'} 
-'where'   			 	{return 'WHERE'} 
-'update'    			{return 'UPDATE'} 
-'truncate'    			{return 'TRUNCATE'} 
-'delete'    			{return 'DELETE'} 
-'cast'    				{return 'CAST'} 
-'if'    				{return 'IF'} 
-'then'    				{return 'THEN'} 
-'else'    				{return 'ELSE'} 
-'when'    				{return 'WHEN'} 
-'case'    				{return 'CASE'} 
-'while'    				{return 'WHILE'} 
-'for'    				{return 'FOR'} 
-'in'    				{return 'IN'} 
-'break'    				{return 'BREAK'} 
-'continue'    			{return 'CONTINUE'} 
-'print'    				{return 'PRINT'} 
-'funcion'    			{return 'FUNCION'} 
-'returns'    			{return 'RETURNS'} 
-'procedure'    			{return 'PROCEDURE'} 
-'as'    				{return 'AS'} 
-'lower'    				{return 'LOWER'} 
-'upper'    				{return 'UPPER'} 
-'round'    				{return 'ROUND'} 
-'len'    				{return 'LEN'} 
-'typeof'    			{return 'TYPEOF'} 
+'.'          			{let sa = Informacion.getInstance();
+                        sa.add_Token(new Token(yytext,"Punto", yylloc.first_line, yylloc.first_column));
+                        return 'PUNTO'}
+'@'          			{let sb = Informacion.getInstance();
+                        sb.add_Token(new Token(yytext,"Arroba", yylloc.first_line, yylloc.first_column));
+                        return 'ARROBA'}
+'('          			{let sf = Informacion.getInstance();
+                        sf.add_Token(new Token(yytext,"Parentesis abre", yylloc.first_line, yylloc.first_column));
+                        return 'PARENABRE'}
+')'          			{let sg = Informacion.getInstance();
+                        sg.add_Token(new Token(yytext,"Parentesis cierra", yylloc.first_line, yylloc.first_column));
+                        return 'PARENCIE'}
+';'          			{let se = Informacion.getInstance();
+                        se.add_Token(new Token(yytext,"Punto y coma", yylloc.first_line, yylloc.first_column));
+                        return 'PUNTOYCOMA'}
+','          			{let sh = Informacion.getInstance();
+                        sh.add_Token(new Token(yytext,"Coma", yylloc.first_line, yylloc.first_column));
+                        return 'COMA'}
+'+'          			{let si = Informacion.getInstance();
+                        si.add_Token(new Token(yytext,"Mas", yylloc.first_line, yylloc.first_column));
+                        return 'MAS'}
+'-'          			{let sj = Informacion.getInstance();
+                        sj.add_Token(new Token(yytext,"Menos", yylloc.first_line, yylloc.first_column));
+                        return 'MENOS'}
+'*'          			{let sk = Informacion.getInstance();
+                        sk.add_Token(new Token(yytext,"Por", yylloc.first_line, yylloc.first_column));
+                        return 'POR'}
+'/'          			{let sl = Informacion.getInstance();
+                        sl.add_Token(new Token(yytext,"Division", yylloc.first_line, yylloc.first_column));
+                        return 'DIVI'} 
+'%'          			{let sm = Informacion.getInstance();
+                        sm.add_Token(new Token(yytext,"Modulo", yylloc.first_line, yylloc.first_column));
+                        return 'MODULO'} 
+'='          			{let sn = Informacion.getInstance();
+                        sn.add_Token(new Token(yytext,"Igual", yylloc.first_line, yylloc.first_column));
+                        return 'IGUAL'} 
+'!='          			{let so = Informacion.getInstance();
+                        so.add_Token(new Token(yytext,"Diferente", yylloc.first_line, yylloc.first_column));
+                        return 'DIFERENTE'} 
+'<'          			{let sp = Informacion.getInstance();
+                        sp.add_Token(new Token(yytext,"Menor", yylloc.first_line, yylloc.first_column));
+                        return 'MENOR'} 
+'>'          			{let sq = Informacion.getInstance();
+                        sq.add_Token(new Token(yytext,"Mayor", yylloc.first_line, yylloc.first_column));
+                        return 'MAYOR'} 
+'int'    	 			{let sr = Informacion.getInstance();
+                        sr.add_Token(new Token(yytext,"Int", yylloc.first_line, yylloc.first_column));
+                        return 'INT'} 
+'double'    			{let ss = Informacion.getInstance();
+                        ss.add_Token(new Token(yytext,"Double", yylloc.first_line, yylloc.first_column));
+                        return 'DOUBLE'} 
+'date'    				{let st = Informacion.getInstance();
+                        st.add_Token(new Token(yytext,"Date", yylloc.first_line, yylloc.first_column));
+                        return 'DATE'} 
+'varchar'    			{let sd = Informacion.getInstance();
+                        sd.add_Token(new Token(yytext,"Varchar", yylloc.first_line, yylloc.first_column));
+                        return 'VARCHAR'} 
+'true'    				{let su = Informacion.getInstance();
+                        su.add_Token(new Token(yytext,"True", yylloc.first_line, yylloc.first_column));
+                        return 'TRUE'} 
+'false'    				{let sv = Informacion.getInstance();
+                        sv.add_Token(new Token(yytext,"False", yylloc.first_line, yylloc.first_column));
+                        return 'FALSE'} 
+'null'    				{let sw = Informacion.getInstance();
+                        sw.add_Token(new Token(yytext,"Null", yylloc.first_line, yylloc.first_column));
+                        return 'NULL'} 
+'and'    				{let sx = Informacion.getInstance();
+                        sx.add_Token(new Token(yytext,"And", yylloc.first_line, yylloc.first_column));
+                        return 'AND'} 
+'or'    				{let sy = Informacion.getInstance();
+                        sy.add_Token(new Token(yytext,"Or", yylloc.first_line, yylloc.first_column));
+                        return 'OR'} 
+'not'    				{let sz = Informacion.getInstance();
+                        sz.add_Token(new Token(yytext,"Not", yylloc.first_line, yylloc.first_column));
+                        return 'NOT'} 
+'begin'    				{let a = Informacion.getInstance();
+                        a.add_Token(new Token(yytext,"Begin", yylloc.first_line, yylloc.first_column));
+                        return 'BEGIN'} 
+'end'    				{let ab = Informacion.getInstance();
+                        ab.add_Token(new Token(yytext,"End", yylloc.first_line, yylloc.first_column));
+                        return 'END'} 
+'declare'    			{let ac = Informacion.getInstance();
+                        ac.add_Token(new Token(yytext,"Declare", yylloc.first_line, yylloc.first_column));
+                        return 'DECLARE'} 
+'default'    			{let ad = Informacion.getInstance();
+                        ad.add_Token(new Token(yytext,"Default", yylloc.first_line, yylloc.first_column));
+                        return 'DEFAULT'} 
+'set'    				{let ae = Informacion.getInstance();
+                        ae.add_Token(new Token(yytext,"Set", yylloc.first_line, yylloc.first_column));
+                        return 'SET'} 
+'create'    			{let af = Informacion.getInstance();
+                        af.add_Token(new Token(yytext,"Create", yylloc.first_line, yylloc.first_column));
+                        return 'CREATE'} 
+'table'    				{let ag = Informacion.getInstance();
+                        ag.add_Token(new Token(yytext,"Table", yylloc.first_line, yylloc.first_column));
+                        return 'TABLE'} 
+'alter'    				{let ah = Informacion.getInstance();
+                        ah.add_Token(new Token(yytext,"Alter", yylloc.first_line, yylloc.first_column));
+                        return 'ALTER'} 
+'add'    				{let ai = Informacion.getInstance();
+                        ai.add_Token(new Token(yytext,"Add", yylloc.first_line, yylloc.first_column));
+                        return 'ADD'} 
+'drop'    				{let aj = Informacion.getInstance();
+                        aj.add_Token(new Token(yytext,"Drop", yylloc.first_line, yylloc.first_column));
+                        return 'DROP'} 
+'column'    			{let ak = Informacion.getInstance();
+                        ak.add_Token(new Token(yytext,"Column", yylloc.first_line, yylloc.first_column));
+                        return 'COLUMN'} 
+'rename'    			{let al = Informacion.getInstance();
+                        al.add_Token(new Token(yytext,"Rename", yylloc.first_line, yylloc.first_column));
+                        return 'RENAME'} 
+'to'    				{let am = Informacion.getInstance();
+                        am.add_Token(new Token(yytext,"To", yylloc.first_line, yylloc.first_column));
+                        return 'TO'} 
+'insert'    			{let an = Informacion.getInstance();
+                        an.add_Token(new Token(yytext,"Insert", yylloc.first_line, yylloc.first_column));
+                        return 'INSERT'} 
+'into'    				{let ao = Informacion.getInstance();
+                        ao.add_Token(new Token(yytext,"Into", yylloc.first_line, yylloc.first_column));
+                        return 'INTO'} 
+'values'    			{let ap = Informacion.getInstance();
+                        ap.add_Token(new Token(yytext,"Values", yylloc.first_line, yylloc.first_column));
+                        return 'VALUES'} 
+'select'    			{let aq = Informacion.getInstance();
+                        aq.add_Token(new Token(yytext,"Select", yylloc.first_line, yylloc.first_column));
+                        return 'SELECT'} 
+'from'    				{let ar = Informacion.getInstance();
+                        ar.add_Token(new Token(yytext,"From", yylloc.first_line, yylloc.first_column));
+                        return 'FROM'} 
+'where'   			 	{let as = Informacion.getInstance();
+                        as.add_Token(new Token(yytext,"Where", yylloc.first_line, yylloc.first_column));
+                        return 'WHERE'} 
+'update'    			{let at = Informacion.getInstance();
+                        at.add_Token(new Token(yytext,"Update", yylloc.first_line, yylloc.first_column));
+                        return 'UPDATE'} 
+'truncate'    			{let au = Informacion.getInstance();
+                        au.add_Token(new Token(yytext,"Truncate", yylloc.first_line, yylloc.first_column));
+                        return 'TRUNCATE'} 
+'delete'    			{let av = Informacion.getInstance();
+                        av.add_Token(new Token(yytext,"Delete", yylloc.first_line, yylloc.first_column));
+                        return 'DELETE'} 
+'cast'    				{let aw = Informacion.getInstance();
+                        aw.add_Token(new Token(yytext,"Cast", yylloc.first_line, yylloc.first_column));
+                        return 'CAST'} 
+'if'    				{let ax = Informacion.getInstance();
+                        ax.add_Token(new Token(yytext,"If", yylloc.first_line, yylloc.first_column));
+                        return 'IF'} 
+'then'    				{let ay = Informacion.getInstance();
+                        ay.add_Token(new Token(yytext,"Then", yylloc.first_line, yylloc.first_column));
+                        return 'THEN'} 
+'else'    				{let az = Informacion.getInstance();
+                        az.add_Token(new Token(yytext,"Else", yylloc.first_line, yylloc.first_column));
+                        return 'ELSE'} 
+'when'    				{let b = Informacion.getInstance();
+                        b.add_Token(new Token(yytext,"When", yylloc.first_line, yylloc.first_column));
+                        return 'WHEN'} 
+'case'    				{let ba = Informacion.getInstance();
+                        ba.add_Token(new Token(yytext,"Case", yylloc.first_line, yylloc.first_column));
+                        return 'CASE'} 
+'while'    				{let bb = Informacion.getInstance();
+                        bb.add_Token(new Token(yytext,"While", yylloc.first_line, yylloc.first_column));
+                        return 'WHILE'} 
+'for'    				{let bc = Informacion.getInstance();
+                        bc.add_Token(new Token(yytext,"For", yylloc.first_line, yylloc.first_column));
+                        return 'FOR'} 
+'in'    				{let bd = Informacion.getInstance();
+                        bd.add_Token(new Token(yytext,"In", yylloc.first_line, yylloc.first_column));
+                        return 'IN'} 
+'break'    				{let be = Informacion.getInstance();
+                        be.add_Token(new Token(yytext,"Break", yylloc.first_line, yylloc.first_column));
+                        return 'BREAK'} 
+'continue'    			{let bf = Informacion.getInstance();
+                        bf.add_Token(new Token(yytext,"Continue", yylloc.first_line, yylloc.first_column));
+                        return 'CONTINUE'} 
+'print'    				{let bg = Informacion.getInstance();
+                        bg.add_Token(new Token(yytext,"Print", yylloc.first_line, yylloc.first_column));
+                        return 'PRINT'} 
+'funcion'    			{let bh = Informacion.getInstance();
+                        bh.add_Token(new Token(yytext,"Funcion", yylloc.first_line, yylloc.first_column));
+                        return 'FUNCION'} 
+'returns'    			{let bi = Informacion.getInstance();
+                        bi.add_Token(new Token(yytext,"Returns", yylloc.first_line, yylloc.first_column));
+                        return 'RETURNS'} 
+'procedure'    			{let bj = Informacion.getInstance();
+                        bj.add_Token(new Token(yytext,"Procedure", yylloc.first_line, yylloc.first_column));
+                        return 'PROCEDURE'} 
+'as'    				{let bk = Informacion.getInstance();
+                        bk.add_Token(new Token(yytext,"As", yylloc.first_line, yylloc.first_column));
+                        return 'AS'} 
+'lower'    				{let bl = Informacion.getInstance();
+                        bl.add_Token(new Token(yytext,"Lower", yylloc.first_line, yylloc.first_column));
+                        return 'LOWER'} 
+'upper'    				{let bm = Informacion.getInstance();
+                        bm.add_Token(new Token(yytext,"Upper", yylloc.first_line, yylloc.first_column));
+                        return 'UPPER'} 
+'round'    				{let bn = Informacion.getInstance();
+                        bn.add_Token(new Token(yytext,"Round", yylloc.first_line, yylloc.first_column));
+                        return 'ROUND'} 
+'len'    				{let bo = Informacion.getInstance();
+                        bo.add_Token(new Token(yytext,"Len", yylloc.first_line, yylloc.first_column));
+                        return 'LEN'} 
+'typeof'    			{let bq = Informacion.getInstance();
+                        bq.add_Token(new Token(yytext,"Typeof", yylloc.first_line, yylloc.first_column));
+                        return 'TYPEOF'} 
 
 // La expresion regular del formato de fecha http://w3.unpocodetodo.info/utiles/regex-ejemplos.php?type=fechas
-\d{4}([\-/.])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])  {return 'DATEN';}
-{real}                  { return 'REALES'; }
-{entero}                { return 'ENTERO'; } 
-columna\d+              { return 'COLUM'; } 
-[a-zA-z][a-zA-z0-9_]*   { return 'VARI'; }
-@[a-zA-z][a-zA-z0-9_]*   { return 'VARIABLE'; }
+\d{4}([\-/.])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])  {let br = Informacion.getInstance();
+                        br.add_Token(new Token(yytext,"Fecha", yylloc.first_line, yylloc.first_column));
+                        return 'DATEN';}
+{real}                  {let bs = Informacion.getInstance();
+                        bs.add_Token(new Token(yytext,"Numero Real", yylloc.first_line, yylloc.first_column));
+                        return 'REALES'; }
+{entero}                {let bt = Informacion.getInstance();
+                        bt.add_Token(new Token(yytext,"Numero Entero", yylloc.first_line, yylloc.first_column));
+                         return 'ENTERO'; } 
+columna\d+              { let bu = Informacion.getInstance();
+                        bu.add_Token(new Token(yytext,"Columna", yylloc.first_line, yylloc.first_column));
+                        return 'COLUM'; } 
+[a-zA-z][a-zA-z0-9_]*   { let sc = Informacion.getInstance();
+                        sc.add_Token(new Token(yytext,"Nombre Variable", yylloc.first_line, yylloc.first_column));
+                        return 'VARI'; }
+@[a-zA-z][a-zA-z0-9_]*   {let bv = Informacion.getInstance();
+                        bv.add_Token(new Token(yytext,"Variable", yylloc.first_line, yylloc.first_column));
+                         return 'VARIABLE'; }
 
-\"(\\.|[^\"\\])*\"   	{ return 'CADENA'; }
-\'(\\.|[^\"\\])*\'   	{ return 'CADPR'; }
+\"(\\.|[^\"\\])*\"   	{ let bw = Informacion.getInstance();
+                        bw.add_Token(new Token(yytext,"Cadena", yylloc.first_line, yylloc.first_column));
+                        return 'CADENA'; }
+\'(\\.|[^\"\\])*\'   	{let bx = Informacion.getInstance();
+                        bx.add_Token(new Token(yytext,"Cadena", yylloc.first_line, yylloc.first_column));
+                         return 'CADPR'; }
 
 
 
@@ -110,11 +262,17 @@ columna\d+              { return 'COLUM'; }
 %{
     const Dato = require("../interprete/expresiones/Dato.js");
     const Mostrar = require('../interprete/instrucciones/Mostrar.js');
-    const Aritmetica = require('../interprete/expresiones/Aritmetica.js')
-    const Asignar  = require('../interprete/instrucciones/Asignar')
-    const Id = require('../interprete/expresiones/Id')
+    const Aritmetica = require('../interprete/expresiones/Aritmetica.js');
+    const Logico = require('../interprete/expresiones/Logico.js');
+    const Relacional = require('../interprete/expresiones/Relacional.js');
+    const Asignar  = require('../interprete/instrucciones/Asignar');
+    const Id = require('../interprete/expresiones/Id');
     const Errores = require('../interprete/instrucciones/Errores.js');
+    const Token = require('../interprete/instrucciones/Token.js');
     const Informacion = require('../interprete/instrucciones/Informacion.js');
+    const Encapsula  = require('../interprete/instrucciones/Encapsula.js');
+    const If  = require('../interprete/instrucciones/If.js');
+    const IfElse  = require('../interprete/instrucciones/IfElse.js');
 %}
 
 
@@ -150,14 +308,16 @@ lista_instrucciones
 ;
 
 instruccion
-   // : DECLARE asignacion                              { $$ = $1; }
-    : declaracion                                       { $$ = $1; }
-    | SELECT ARROBA tipo PUNTOYCOMA                   { $$ = new Mostrar($3,@3.first_line,@3.first_column); }
-    | tipo                                              { $$ = $1; }
+    : DECLARE asignacion                                               { $$ = $1; }
+    | declaracion                                                      { $$ = $1; }
+    | SELECT ARROBA tipo PUNTOYCOMA                                    { $$ = new Mostrar($3,@3.first_line,@3.first_column); }
+    | PRINT tipo PUNTOYCOMA                                            { $$ = new Mostrar($2,@2.first_line,@2.first_column); }
+    | PRINT lista_instrucciones PUNTOYCOMA                             { $$ = new Mostrar($2,@2.first_line,@2.first_column); }
+    | BEGIN lista_instrucciones END PUNTOYCOMA                         { $$ = new Encapsula($2,@2.first_line,@2.first_column);} 
+    | IF tipo THEN lista_instrucciones ELSE lista_instrucciones END IF PUNTOYCOMA    { $$ = new IfElse($2,$4,$6,@2.first_line,@2.first_column);}
+    | IF tipo THEN lista_instrucciones END PUNTOYCOMA                  { $$ = new If($2,$4,@2.first_line,@2.first_column);}
+
     /*| SET tipo PUNTOYCOMA
-    | multiple { $$ = $1; }
-    | PRINT tipo PUNTOYCOMA {$$ = new Print($2);}
-    | PRINT lista_instrucciones PUNTOYCOMA {$$ = new Print($2);}
     | SELECT POR FROM VARI WHERE tipo PUNTOYCOMA  {$$ = new Select($4,$6);}
     | BEGIN lista_instrucciones END PUNTOYCOMA   {$$ = new Encapsula($2);}
     | CREATE TABLE VARI PARENABRE lista_instrucciones PARENCIE PUNTOYCOMA  {$$ = new Tabla($3,$5);}
@@ -189,8 +349,6 @@ instruccion
     | TRUNCATE TABLE VARI PUNTOYCOMA
     | DELETE FROM VARI WHERE tipo PUNTOYCOMA
     | CAST PARENABRE tipo AS tipo PARENCIE
-    | IF tipo THEN lista_instrucciones
-    | IF tipo THEN lista_instrucciones ELSE lista_instrucciones END IF PUNTOYCOMA
     | ELSE tipo
     | CASE tipo lista_instrucciones END PUNTOYCOMA 
     | CASE tipo lista_instrucciones END AS tipo PUNTOYCOMA
@@ -206,72 +364,49 @@ instruccion
 ;
 
 declaracion
-    :SET ARROBA VARI IGUAL tipo PUNTOYCOMA           {$$ = new Asignar($3,$5,@3.first_line,@3.first_column);}
+    : SET ARROBA VARI IGUAL tipo PUNTOYCOMA                     {$$ = new Asignar($3,$5,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI tipo PUNTOYCOMA                       {$$ = new Asignar($3,$4,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI INT DEFAULT tipo PUNTOYCOMA         {$$ = new Asignar($3,$6,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI DATE DEFAULT tipo PUNTOYCOMA         {$$ = new Asignar($3,$6,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI DOUBLE DEFAULT tipo PUNTOYCOMA      {$$ = new Asignar($3,$6,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI VARCHAR DEFAULT tipo PUNTOYCOMA     {$$ = new Asignar($3,$6,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI TRUE DEFAULT tipo PUNTOYCOMA          {$$ = new Asignar($3,$6,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI FALSE DEFAULT tipo PUNTOYCOMA        {$$ = new Asignar($3,$6,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI NULL DEFAULT tipo PUNTOYCOMA          {$$ = new Asignar($3,$6,@3.first_line,@3.first_column);}
 ;
-
-
-/*asignacion 
-    : ARROBA VARI tipo COMA asignacion                                      {$$ = new Declara($2,null,$3.tipo,@2.first_line,@2.first_column);}
-    | ARROBA VARI tipo PUNTOYCOMA                                           {$$ = new Declara($2,null,$3.tipo,@2.first_line,@2.first_column);}
-    | ARROBA VARI INT DEFAULT REALES PUNTOYCOMA                             {$$ = new Declara($2,$5,$3,@2.first_line,@2.first_column);}
-    | ARROBA VARI DATE DEFAULT DATEN PUNTOYCOMA                             {$$ = new Declara($2,$5,$3,@2.first_line,@2.first_column);}
-    | ARROBA VARI DOUBLE DEFAULT REALES PUNTOYCOMA                          {$$ = new Declara($2,$5,$3,@2.first_line,@2.first_column);}
-    | ARROBA VARI VARCHAR DEFAULT CADENA PUNTOYCOMA                         {$$ = new Declara($2,$5,$3,@2.first_line,@2.first_column);}
-    | ARROBA VARI TRUE DEFAULT TRUE PUNTOYCOMA                              {$$ = new Declara($2,$5,$3,@2.first_line,@2.first_column);}
-    | ARROBA VARI FALSE DEFAULT FALSE PUNTOYCOMA                            {$$ = new Declara($2,$5,$3,@2.first_line,@2.first_column);}
-    | ARROBA VARI NULL DEFAULT NULL PUNTOYCOMA                              {$$ = new Declara($2,$5,$3,@2.first_line,@2.first_column);}
-;*/
-/*
-multiple
-    : multiple COMA  decVar { $$ = $1; }
-    | decVar { $$ = $1; }
-;
-
-decVar
-    : DECLARE var tipo  {$$ = new Declara($2, $3);}
-    | var tipo          {$$ = new Declara($1, $2);}
-
-
-var 
-    : VARIABLE          {$$ = new Variable($1);}
-;
-*/
 tipo
-    : INT           {$$ = new Dato(null, 'int');}
-    | DOUBLE        {$$ = new Dato(null, 'double');}
-    | DATE          {$$ = new Dato(null, 'date');}
-    | VARCHAR       {$$ = new Dato(null, 'varchar');}
-    | TRUE          {$$ = new Dato(null, 'true');}
-    | FALSE         {$$ = new Dato(null, 'false');}
-    | NULL          {$$ = new Dato(null, 'null');}
+    : INT           {$$ = new Dato($1, 'int',@1.first_line,@1.first_column);}
+    | DOUBLE        {$$ = new Dato($1, 'double',@1.first_line,@1.first_column);}
+    | DATE          {$$ = new Dato($1, 'date',@1.first_line,@1.first_column);}
+    | VARCHAR       {$$ = new Dato($1, 'varchar',@1.first_line,@1.first_column);}
+    | TRUE          {$$ = new Dato($1, 'true',@1.first_line,@1.first_column);}
+    | FALSE         {$$ = new Dato($1, 'false',@1.first_line,@1.first_column);}
+    | NULL          {$$ = new Dato($1, 'null',@1.first_line,@1.first_column);}
     //Datos
-    | REALES       {$$ = new Dato($1, 'int');}
-    | DATEN        {$$ = new Dato($1, 'date');}
-    | CADENA       {$$ = new Dato($1, 'varchar');}
-    | CADPR        {$$ = new Dato($1, 'varchar');}
-    | VARI         {$$ = new Id($1);}
-    
-    //| CADPR COMA  {$$ = new Dato('VARCHAR',$1);}
-    //| VARI COMA  {$$ = new Dato('VARCHAR',$1);}
+    | REALES       {$$ = new Dato($1, 'int',@1.first_line,@1.first_column);}
+    | DATEN        {$$ = new Dato($1, 'date',@1.first_line,@1.first_column);}
+    | CADENA       {$$ = new Dato($1, 'varchar',@1.first_line,@1.first_column);}
+    | CADPR        {$$ = new Dato($1, 'varchar',@1.first_line,@1.first_column);}
+    | VARI         {$$ = new Id($1,@1.first_line,@1.first_column);}
     //Operaciones Aritmeticas
-    | tipo MAS tipo     {$$ = new Aritmetica($1, '+', $3,@3.first_line,@3.first_column)}
-    | tipo POR tipo     {$$ = new Aritmetica($1, '*', $3,@3.first_line,@3.first_column)} 
-    | tipo MENOS tipo   {$$ = new Aritmetica($1, '-', $3,@3.first_line,@3.first_column)} 
-    | tipo DIVI tipo    {$$ = new Aritmetica($1, '/', $3,@3.first_line,@3.first_column)} 
-    | tipo MODULO tipo  {$$ = new Aritmetica($1, '%', $3,@3.first_line,@3.first_column)} 
+    | tipo MAS tipo     {$$ = new Aritmetica($1, '+', $3,@3.first_line,@3.first_column);}
+    | tipo POR tipo     {$$ = new Aritmetica($1, '*', $3,@3.first_line,@3.first_column);} 
+    | tipo MENOS tipo   {$$ = new Aritmetica($1, '-', $3,@3.first_line,@3.first_column);} 
+    | tipo DIVI tipo    {$$ = new Aritmetica($1, '/', $3,@3.first_line,@3.first_column);} 
+    | tipo MODULO tipo  {$$ = new Aritmetica($1, '%', $3,@3.first_line,@3.first_column);} 
     //| MENOS tipo {$$ = new Aritmetica("Menos", 'Nega', $2)} 
     //| MAS tipo {$$ = new Aritmetica("Mas", 'Nega', $2)} 
     //Operaciones Relacionales
-    /*| tipo IGUAL tipo {$$ = new Relacional($1, '=', $3)}
-    | tipo DIFERENTE tipo {$$ = new Relacional($1, '!=', $3)}
-    | tipo MENOR tipo {$$ = new Relacional($1, '<', $3)}
-    | tipo MENOR IGUAL tipo {$$ = new Relacional($1, '<=', $3)}
-    | tipo MAYOR tipo {$$ = new Relacional($1, '>', $3)}
-    | tipo MAYOR IGUAL tipo {$$ = new Relacional($1, '>=', $3)}
+    | tipo IGUAL tipo       {$$ = new Relacional($1, '=', $3,@3.first_line,@3.first_column);}
+    | tipo DIFERENTE tipo   {$$ = new Relacional($1, '!=', $3,@3.first_line,@3.first_column);}
+    | tipo MENOR tipo       {$$ = new Relacional($1, '<', $3,@3.first_line,@3.first_column);}
+    | tipo MENOR IGUAL tipo {$$ = new Relacional($1, '<=', $4,@4.first_line,@4.first_column);}
+    | tipo MAYOR tipo       {$$ = new Relacional($1, '>', $3,@3.first_line,@3.first_column);}
+    | tipo MAYOR IGUAL tipo {$$ = new Relacional($1, '>=', $4,@4.first_line,@4.first_column);}
     //Operadores Logicos
-    | tipo AND tipo {$$ = new Logico($1, 'and', $3)}
-    | tipo OR tipo {$$ = new Logico($1, 'or', $3)}
-    | NOT tipo {$$ = new Logico(null, 'not', $2)}*/
+    | tipo AND tipo         {$$ = new Logico($1, 'and', $3,@3.first_line,@3.first_column);}
+    | tipo OR tipo          {$$ = new Logico($1, 'or', $3,@3.first_line,@3.first_column);}
+    | tipo NOT tipo         {$$ = new Logico($1, 'not', $3,@3.first_line,@3.first_column);}
     //Tablas
    /* | ADD VARI tipo 
     | DROP COLUMN VARI

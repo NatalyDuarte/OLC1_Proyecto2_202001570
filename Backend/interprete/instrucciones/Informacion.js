@@ -4,7 +4,9 @@ class Informacion {
     constructor() {
         this.error = [];
         this.simbolos = [];
+        this.tokens = [];
         this.AST = "";
+        this.interpre = "";
     }
 
     static getInstance() {
@@ -22,6 +24,14 @@ class Informacion {
         return this.error;
     }
 
+    add_Token(data) {
+        this.tokens.push(data);
+    }
+
+    get_Token() {
+        return this.tokens;
+    }
+
     add_Simbolo(data) {
         this.simbolos.push(data);
     }
@@ -36,6 +46,14 @@ class Informacion {
 
     get_AST() {
         return this.AST;
+    }
+
+    add_Inter(cadena) {
+        this.interpre += cadena;
+    }
+
+    get_Inter() {
+        return this.interpre;
     }
 
     clear_AST() {
