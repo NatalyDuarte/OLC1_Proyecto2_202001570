@@ -261,18 +261,26 @@ columna\d+              { let bu = Informacion.getInstance();
 // ============================ ANALIZADOR SINTACTICO ===============================
 %{
     const Dato = require("../interprete/expresiones/Dato.js");
+    const ColumnaE = require("../interprete/expresiones/ColumnaE.js");
     const Mostrar = require('../interprete/instrucciones/Mostrar.js');
     const Aritmetica = require('../interprete/expresiones/Aritmetica.js');
     const Logico = require('../interprete/expresiones/Logico.js');
     const Relacional = require('../interprete/expresiones/Relacional.js');
+    const AsigTabla  = require('../interprete/instrucciones/AsigTabla');
+    const AgregarCo  = require('../interprete/instrucciones/AgregarCo');
+    const EliminarCo  = require('../interprete/instrucciones/EliminarCo');
+    const CambiarN  = require('../interprete/instrucciones/CambiarN');
+    const CambiarNC  = require('../interprete/instrucciones/CambiarNC');
+    const EliminarT  = require('../interprete/instrucciones/EliminarT');
     const Asignar  = require('../interprete/instrucciones/Asignar');
     const Id = require('../interprete/expresiones/Id');
     const Errores = require('../interprete/instrucciones/Errores.js');
     const Token = require('../interprete/instrucciones/Token.js');
     const Informacion = require('../interprete/instrucciones/Informacion.js');
     const Encapsula  = require('../interprete/instrucciones/Encapsula.js');
-    const If  = require('../interprete/instrucciones/If.js');
     const IfElse  = require('../interprete/instrucciones/IfElse.js');
+    const If  = require('../interprete/instrucciones/If.js');
+    const While  = require('../interprete/instrucciones/While.js');
 %}
 
 
@@ -314,31 +322,34 @@ instruccion
     | PRINT tipo PUNTOYCOMA                                            { $$ = new Mostrar($2,@2.first_line,@2.first_column); }
     | PRINT lista_instrucciones PUNTOYCOMA                             { $$ = new Mostrar($2,@2.first_line,@2.first_column); }
     | BEGIN lista_instrucciones END PUNTOYCOMA                         { $$ = new Encapsula($2,@2.first_line,@2.first_column);} 
-    | IF tipo THEN lista_instrucciones ELSE lista_instrucciones END IF PUNTOYCOMA    { $$ = new IfElse($2,$4,$6,@2.first_line,@2.first_column);}
-    | IF tipo THEN lista_instrucciones END PUNTOYCOMA                  { $$ = new If($2,$4,@2.first_line,@2.first_column);}
-
+    | IF tipo THEN lista_instrucciones ELSE lista_instrucciones END IF PUNTOYCOMA      { $$ = new IfElse($2,$4,$6,@2.first_line,@2.first_column);}
+    | IF tipo THEN lista_instrucciones END IF PUNTOYCOMA                { $$ = new If($2,$4,@2.first_line,@2.first_column);}
+    | WHILE tipo lista_instrucciones END WHILE PUNTOYCOMA               { $$ = new While($2,$3,@2.first_line,@2.first_column);}
+    //Para crear tablas 
+    | CREATE TABLE tipo PARENABRE lista_instrucciones PARENCIE PUNTOYCOMA  {$$ = new AsigTabla($3,$5,@3.first_line,@3.first_column);}
+    | VARI INT COMA             {$$ = new ColumnaE($1,"int",@1.first_line,@1.first_column);}
+    | VARI DOUBLE COMA          {$$ = new ColumnaE($1,"double",@1.first_line,@1.first_column);}
+    | VARI DATE COMA            {$$ = new ColumnaE($1,"date",@1.first_line,@1.first_column);}
+    | VARI VARCHAR COMA         {$$ = new ColumnaE($1,"string",@1.first_line,@1.first_column);}
+    | VARI TRUE COMA            {$$ = new ColumnaE($1,"true",@1.first_line,@1.first_column);}
+    | VARI FALSE COMA           {$$ = new ColumnaE($1,"false",@1.first_line,@1.first_column);}
+    | VARI NULL COMA            {$$ = new ColumnaE($1,"null",@1.first_line,@1.first_column);}
+    | VARI INT                  {$$ = new ColumnaE($1,"int",@1.first_line,@1.first_column);}
+    | VARI DOUBLE               {$$ = new ColumnaE($1,"double",@1.first_line,@1.first_column);}
+    | VARI DATE                 {$$ = new ColumnaE($1,"date",@1.first_line,@1.first_column);}
+    | VARI VARCHAR              {$$ = new ColumnaE($1,"string",@1.first_line,@1.first_column);}
+    | VARI TRUE                 {$$ = new ColumnaE($1,"true",@1.first_line,@1.first_column);}
+    | VARI FALSE                {$$ = new ColumnaE($1,"false",@1.first_line,@1.first_column);}
+    | VARI NULL                 {$$ = new ColumnaE($1,"null",@1.first_line,@1.first_column);}
+    | ALTER TABLE VARI ADD lista_instrucciones PUNTOYCOMA          {$$ = new AgregarCo($3,$5,@3.first_line,@3.first_column);}
+    | ALTER TABLE VARI DROP COLUMN VARI PUNTOYCOMA                 {$$ = new EliminarCo($3,$6,@3.first_line,@3.first_column);}
+    | ALTER TABLE VARI RENAME TO tipo PUNTOYCOMA                   {$$ = new CambiarN($3,$6,@3.first_line,@3.first_column);}
+    | ALTER TABLE VARI RENAME COLUMN VARI TO VARI PUNTOYCOMA       {$$ = new CambiarNC($3,$6,$8,@3.first_line,@3.first_column);}
+    | DROP TABLE VARI PUNTOYCOMA                                   {$$ = new EliminarT($3,@3.first_line,@3.first_column);}
     /*| SET tipo PUNTOYCOMA
     | SELECT POR FROM VARI WHERE tipo PUNTOYCOMA  {$$ = new Select($4,$6);}
-    | BEGIN lista_instrucciones END PUNTOYCOMA   {$$ = new Encapsula($2);}
-    | CREATE TABLE VARI PARENABRE lista_instrucciones PARENCIE PUNTOYCOMA  {$$ = new Tabla($3,$5);}
-    //Para crear tablas 
-    | VARI INT COMA {$$ = new Columna($1,"int")}
-    | VARI DOUBLE COMA {$$ = new Columna($1,"double")}
-    | VARI DATE COMA {$$ = new Columna($1,"date")}
-    | VARI VARCHAR COMA {$$ = new Columna($1,"string")}
-    | VARI TRUE COMA {$$ = new Columna($1,"true")}
-    | VARI FALSE COMA {$$ = new Columna($1,"false")}
-    | VARI NULL COMA {$$ = new Columna($1,"null")}
-    | VARI INT  {$$ = new Columna($1,"int")}
-    | VARI DOUBLE {$$ = new Columna($1,"double")}
-    | VARI DATE {$$ = new Columna($1,"date")}
-    | VARI VARCHAR {$$ = new Columna($1,"string")}
-    | VARI TRUE {$$ = new Columna($1,"true")}
-    | VARI FALSE {$$ = new Columna($1,"false")}
-    | VARI NULL {$$ = new Columna($1,"null")}*/
-  /*  | VARI COMA 
-    | ALTER TABLE VARI tipo PUNTOYCOMA
-    | DROP TABLE VARI PUNTOYCOMA
+*/
+  /*cambiar
     | INSERT INTO VARI PARENABRE lista_instrucciones PARENCIE VALUES PARENABRE tipo PARENCIE PUNTOYCOMA
     | SELECT tipo FROM VARI PUNTOYCOMA
     | SELECT POR FROM VARI PUNTOYCOMA
@@ -353,7 +364,6 @@ instruccion
     | CASE tipo lista_instrucciones END PUNTOYCOMA 
     | CASE tipo lista_instrucciones END AS tipo PUNTOYCOMA
     | WHEN tipo THEN tipo
-    | WHILE tipo lista_instrucciones
     | FOR tipo IN tipo PUNTO PUNTO tipo lista_instrucciones*/
 	| error	{
                 console.log('Error sintáctico: ' + yytext + ',  linea: ' + this._$.first_line + ', columna: ' + this._$.first_column);
@@ -388,6 +398,7 @@ tipo
     | CADENA       {$$ = new Dato($1, 'varchar',@1.first_line,@1.first_column);}
     | CADPR        {$$ = new Dato($1, 'varchar',@1.first_line,@1.first_column);}
     | VARI         {$$ = new Id($1,@1.first_line,@1.first_column);}
+    | ARROBA VARI  {$$ = new Id($2,@2.first_line,@2.first_column);}
     //Operaciones Aritmeticas
     | tipo MAS tipo     {$$ = new Aritmetica($1, '+', $3,@3.first_line,@3.first_column);}
     | tipo POR tipo     {$$ = new Aritmetica($1, '*', $3,@3.first_line,@3.first_column);} 
@@ -407,9 +418,4 @@ tipo
     | tipo AND tipo         {$$ = new Logico($1, 'and', $3,@3.first_line,@3.first_column);}
     | tipo OR tipo          {$$ = new Logico($1, 'or', $3,@3.first_line,@3.first_column);}
     | tipo NOT tipo         {$$ = new Logico($1, 'not', $3,@3.first_line,@3.first_column);}
-    //Tablas
-   /* | ADD VARI tipo 
-    | DROP COLUMN VARI
-    | RENAME TO VARI
-    | RENAME COLUMN VARI TO VARI*/
 ;
