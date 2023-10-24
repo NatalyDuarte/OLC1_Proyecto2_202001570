@@ -2,29 +2,22 @@ const Instruccion = require("../Instruccion");
 const Informacion = require("../instrucciones/Informacion");
 const Simb = require("../tablasimbolos/TablaSimbolos.js")
 var contador = require("../arbol/Contador");
-const Entorno = require("../tablasimbolos/Entorno")
+class InsertarF extends Instruccion{
 
-class If extends Instruccion{
-    constructor(condicion, instrucciones,linea,columna){
+    constructor(id, colum, filas,linea,columna){
         super();
-        this.condicion = condicion;
-        this.instrucciones = instrucciones;
+        this.id = id;
+        this.colum = colum;
+        this.filas = filas;
         this.linea = linea;
         this.columna = columna;
     }
 
     ejecutar(entorno){
-        let entornoif = new Entorno("If Simple", entorno);
-        let condicion = this.condicion.ejecutar(entornoif);
-        
-        if (condicion.valor){
-            this.instrucciones.forEach(instruccion => {
-                instruccion.ejecutar(entornoif);
-            });
-        }
-        
         let s = Informacion.getInstance();
-        s.add_Simbolo(new Simb(condicion.valor,"If",condicion.tipo,entorno.nombre,this.linea,this.columna)); 
+        s.add_Simbolo(new Simb(this.id,"Agregar Fila",this.filas.id,entorno.nombre,this.linea,this.columna));
+        entorno.agregarTablaF(this.id, this.colum ,this.filas);
+        console.log("Se agrego correctamentela la fila "+ this.filas.id +" a la tabla "+this.id);
     }
     getAst(){
         let nodo = {
@@ -36,8 +29,8 @@ class If extends Instruccion{
         let nodoPadre = contador.get();
 
         let cadena = 
-        `${nodoDato}[label="${this.condicion.valor}"]\n`+
-        `${nodoPadre}[label="If"]\n`+
+        `${nodoDato}[label="${this.filas.id}"]\n`+
+        `${nodoPadre}[label="AgregarFila"]\n`+
         `${nodoPadre}--${nodoDato}\n`;
 
         nodo.padre = nodoPadre;
@@ -49,4 +42,5 @@ class If extends Instruccion{
         return nodo;
     }
 }
-module.exports = If;
+
+module.exports = InsertarF;

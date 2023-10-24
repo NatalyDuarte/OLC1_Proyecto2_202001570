@@ -14,7 +14,7 @@ const index = (req, res) =>{
 }
 
 const analizar = (req, res) => {
-    const {entrada} = req.body;
+    let {entrada} = req.body;
     let instrucciones = parser.parse(entrada);
     let entorno = new Entorno("global", null);
     let dot = "C:/Lib/Graphviz/bin/dot"
@@ -55,12 +55,23 @@ const analizar = (req, res) => {
 }
 const  obdata = (req, res) => {
     let {val} = req.body;
+    console.log(val)
     data.push(val)
     res.status(200).json({message: 'Funciona el obdata'});
 }
 
 const  getdata = (req, res) => {
     res.status(200).json({message: 'Funciona el getdata',data: data});
+}
+
+const reporteast = (req,res)=>{
+   var url =  "./interprete/arbol/grafoast.svg"
+   exec(`start ${url}`, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error al abrir el navegador: ${error}`);
+        }
+    });
+   res.status(200).json({message: 'Se abrio correctamente el ast'});
 }
 
 const reportes = (req, res) => {
@@ -413,5 +424,6 @@ module.exports = {
     getdata,
     reportes,
     reportesi,
-    reporteto 
+    reporteto,
+    reporteast 
 }

@@ -11,6 +11,34 @@ function App() {
   useEffect(() => {
   }, [])
   
+  function RepoTokens(event){
+    event.preventDefault();
+    axios.get("http://localhost:4000/repoto")
+    .then((response)=>{
+      setdata(response.data.data)
+    })
+  }
+  function RepoErrores(event){
+    event.preventDefault();
+    axios.get("http://localhost:4000/repoerror")
+    .then((response)=>{
+      setdata(response.data.data)
+    })
+  }
+  function RepoTaSim(event){
+    event.preventDefault();
+    axios.get("http://localhost:4000/reposim")
+    .then((response)=>{
+      setdata(response.data.data)
+    })
+  }
+  function RepoAST(event){
+    event.preventDefault();
+    axios.get("http://localhost:4000/repoast")
+    .then((response)=>{
+      setdata(response.data.data)
+    })
+  }
   function Eliminar(event){
     event.preventDefault();
     document.getElementById('entrada').value = '';
@@ -46,17 +74,17 @@ function App() {
     event.preventDefault();
     var documento = document.getElementById('entrada').value;
     alert(documento);
-    axios.post("http://localhost:4000/obdata",{
-      val : documento
+    axios.post("http://localhost:4000/analizar",{
+      entrada : documento
     }).then(
         (response)=>{
           console.log(response.data)
         }
     )
-    axios.get("http://localhost:4000/getdata")
+   /* axios.get("http://localhost:4000/getdata")
     .then((response)=>{
       setdata(response.data.data)
-    })
+    })*/
   }
   function CargaAr(event){
     event.preventDefault();
@@ -161,10 +189,10 @@ function App() {
             <div class="row gx-5 align-items-center">
               <div class=" order-lg-1">
                 <div class="p-2">
-                <p><button class="btn btn-primary  rounded-pill " >Reporte de Tokens</button></p>
-                <p><button class="btn btn-primary  rounded-pill " >Reporte de Errores</button></p>
-                <p><button class="btn btn-primary  rounded-pill " >Reporte de Tabla de simbolos</button></p>
-                <p><button class="btn btn-primary  rounded-pill " >Generar Arbol de Analisis Sintactico</button></p>
+                <p><button class="btn btn-primary  rounded-pill " onClick = {RepoTokens} >Reporte de Tokens</button></p>
+                <p><button class="btn btn-primary  rounded-pill " onClick = {RepoErrores} >Reporte de Errores</button></p>
+                <p><button class="btn btn-primary  rounded-pill " onClick = {RepoTaSim} >Reporte de Tabla de simbolos</button></p>
+                <p><button class="btn btn-primary  rounded-pill " onClick = {RepoAST} >Generar Arbol de Analisis Sintactico</button></p>
                 </div>
               </div>
             </div>

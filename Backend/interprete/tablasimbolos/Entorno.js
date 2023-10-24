@@ -6,6 +6,7 @@ class Entorno {
         this.tablasimbolos = {};
         this.tablafunciones = {};
         this.tablas = {};
+        this.salida = []
         this.anterior = anterior;
         this.nombre = nombre;
     }
@@ -20,6 +21,21 @@ class Entorno {
         if(nombrea.nombre.nombre === nombre){
             nombrea.columnas.push(column)
             console.log(nombrea.columnas)
+        }
+    }
+
+    agregarTablaF(nombre,columna,fila){
+        let nombrea = this.tablas['[object Object]']
+        if(nombrea.nombre.nombre === nombre){
+            for (let i = 0; i < nombrea.columnas.length; i++) {
+                for (let o = 0; o < columna.length; o++){
+                    if(nombrea.columnas[i].id === columna[o].id){
+                        console.log("llego")
+                        nombrea.columnas[i].fila.push(fila)
+                        console.log(nombrea.columnas[i].fila)
+                    }
+                }
+            }
         }
     }
 
@@ -58,6 +74,19 @@ class Entorno {
         console.log(nombrea.nombre)
     }
 
+    EliminarTF(nombre){
+        let nombrea = this.tablas['[object Object]']
+        if(nombrea.nombre.nombre === nombre){
+            for (let i = 0; i < nombrea.columnas.length; i++) {
+                for (let o = 0; o < nombrea.columnas[i].fila.length; o++){
+                    nombrea.columnas[i].fila.splice(o,1);
+                    console.log(nombrea.columnas[i])
+                    break;
+                }
+            }
+        }
+    }
+
     CambiarTablaNC(nombre,column,nombreco){
         let nombrea = this.tablas['[object Object]']
         if(nombrea.nombre.nombre === nombre){
@@ -67,6 +96,35 @@ class Entorno {
                     console.log(nombrea.columnas[i].id);
                 }
               }
+        }
+    }
+
+    obtenerColumna(nombre,columna){
+        let nombrea = this.tablas['[object Object]']
+        if(nombrea.nombre.nombre === nombre){
+            for (let i = 0; i < nombrea.columnas.length; i++) {
+                if(nombrea.columnas[i].id === columna){
+                    console.log("El nombre de la columna es: "+ nombrea.columnas[i].id);
+                    console.log("El tipo de la columna es: "+ nombrea.columnas[i].tipo);
+                    for (let o = 0; o < nombrea.columnas[i].fila.length; o++){
+                        console.log("Las filas que contiene la columna son: "+ nombrea.columnas[i].fila[o][o].id);
+                    }
+                    console.log("----------------------------------------")
+                }
+            }
+        }
+    }
+
+    obtenerTabla(nombre){
+        let nombrea = this.tablas['[object Object]']
+        if(nombrea.nombre.nombre === nombre){
+            for (let i = 0; i < nombrea.columnas.length; i++) {
+                console.log("El nombre de la columna es: "+ nombrea.columnas[i].id);
+                console.log("El tipo de la columna es: "+ nombrea.columnas[i].tipo);
+                for (let o = 0; o < nombrea.columnas[i].fila.length; o++){
+                    console.log("Las filas que contiene la columna son: "+ nombrea.columnas[i].fila[o][o].id);
+                }
+            }
         }
     }
 

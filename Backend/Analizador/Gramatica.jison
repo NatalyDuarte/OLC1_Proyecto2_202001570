@@ -262,12 +262,21 @@ columna\d+              { let bu = Informacion.getInstance();
 %{
     const Dato = require("../interprete/expresiones/Dato.js");
     const ColumnaE = require("../interprete/expresiones/ColumnaE.js");
+    const When = require("../interprete/expresiones/When.js");
+    const Fila = require("../interprete/expresiones/Fila.js");
     const Mostrar = require('../interprete/instrucciones/Mostrar.js');
+    const Select = require('../interprete/instrucciones/Select.js');
+    const SelectT = require('../interprete/instrucciones/SelectT.js');
+    const Case = require('../interprete/instrucciones/Case.js');
     const Aritmetica = require('../interprete/expresiones/Aritmetica.js');
+    const Casteo = require('../interprete/expresiones/Casteo.js');
     const Logico = require('../interprete/expresiones/Logico.js');
+    const Else = require('../interprete/expresiones/Else.js');
     const Relacional = require('../interprete/expresiones/Relacional.js');
     const AsigTabla  = require('../interprete/instrucciones/AsigTabla');
     const AgregarCo  = require('../interprete/instrucciones/AgregarCo');
+    const InsertarF  = require('../interprete/instrucciones/InsertarF');
+    const Truncate  = require('../interprete/instrucciones/Truncate');
     const EliminarCo  = require('../interprete/instrucciones/EliminarCo');
     const CambiarN  = require('../interprete/instrucciones/CambiarN');
     const CambiarNC  = require('../interprete/instrucciones/CambiarNC');
@@ -322,48 +331,55 @@ instruccion
     | PRINT tipo PUNTOYCOMA                                            { $$ = new Mostrar($2,@2.first_line,@2.first_column); }
     | PRINT lista_instrucciones PUNTOYCOMA                             { $$ = new Mostrar($2,@2.first_line,@2.first_column); }
     | BEGIN lista_instrucciones END PUNTOYCOMA                         { $$ = new Encapsula($2,@2.first_line,@2.first_column);} 
-    | IF tipo THEN lista_instrucciones ELSE lista_instrucciones END IF PUNTOYCOMA      { $$ = new IfElse($2,$4,$6,@2.first_line,@2.first_column);}
-    | IF tipo THEN lista_instrucciones END IF PUNTOYCOMA                { $$ = new If($2,$4,@2.first_line,@2.first_column);}
+    //| IF tipo THEN lista_instrucciones IfElse END IF PUNTOYCOMA      { $$ = new IfElse($2,$4,$5,@2.first_line,@2.first_column);}
+    | IF tipo THEN lista_instrucciones PUNTOYCOMA                { $$ = new If($2,$4,@2.first_line,@2.first_column);}                       
     | WHILE tipo lista_instrucciones END WHILE PUNTOYCOMA               { $$ = new While($2,$3,@2.first_line,@2.first_column);}
-    //Para crear tablas 
+    //Para crear tablas DDL
     | CREATE TABLE tipo PARENABRE lista_instrucciones PARENCIE PUNTOYCOMA  {$$ = new AsigTabla($3,$5,@3.first_line,@3.first_column);}
     | VARI INT COMA             {$$ = new ColumnaE($1,"int",@1.first_line,@1.first_column);}
     | VARI DOUBLE COMA          {$$ = new ColumnaE($1,"double",@1.first_line,@1.first_column);}
     | VARI DATE COMA            {$$ = new ColumnaE($1,"date",@1.first_line,@1.first_column);}
-    | VARI VARCHAR COMA         {$$ = new ColumnaE($1,"string",@1.first_line,@1.first_column);}
+    | VARI VARCHAR COMA         {$$ = new ColumnaE($1,"varchar",@1.first_line,@1.first_column);}
     | VARI TRUE COMA            {$$ = new ColumnaE($1,"true",@1.first_line,@1.first_column);}
     | VARI FALSE COMA           {$$ = new ColumnaE($1,"false",@1.first_line,@1.first_column);}
     | VARI NULL COMA            {$$ = new ColumnaE($1,"null",@1.first_line,@1.first_column);}
     | VARI INT                  {$$ = new ColumnaE($1,"int",@1.first_line,@1.first_column);}
     | VARI DOUBLE               {$$ = new ColumnaE($1,"double",@1.first_line,@1.first_column);}
     | VARI DATE                 {$$ = new ColumnaE($1,"date",@1.first_line,@1.first_column);}
-    | VARI VARCHAR              {$$ = new ColumnaE($1,"string",@1.first_line,@1.first_column);}
+    | VARI VARCHAR              {$$ = new ColumnaE($1,"varchar",@1.first_line,@1.first_column);}
     | VARI TRUE                 {$$ = new ColumnaE($1,"true",@1.first_line,@1.first_column);}
     | VARI FALSE                {$$ = new ColumnaE($1,"false",@1.first_line,@1.first_column);}
     | VARI NULL                 {$$ = new ColumnaE($1,"null",@1.first_line,@1.first_column);}
+    | REALES COMA               {$$ = new Fila($1,@1.first_line,@1.first_column);}
+    | DATEN COMA                {$$ = new Fila($1,@1.first_line,@1.first_column);}
+    | CADENA COMA               {$$ = new Fila($1,@1.first_line,@1.first_column);}
+    | CADPR COMA                {$$ = new Fila($1,@1.first_line,@1.first_column);}
+    | VARI COMA                 {$$ = new Fila($1,@1.first_line,@1.first_column);}
+    | ARROBA VARI COMA          {$$ = new Fila($2,@2.first_line,@2.first_column);}
     | ALTER TABLE VARI ADD lista_instrucciones PUNTOYCOMA          {$$ = new AgregarCo($3,$5,@3.first_line,@3.first_column);}
     | ALTER TABLE VARI DROP COLUMN VARI PUNTOYCOMA                 {$$ = new EliminarCo($3,$6,@3.first_line,@3.first_column);}
     | ALTER TABLE VARI RENAME TO tipo PUNTOYCOMA                   {$$ = new CambiarN($3,$6,@3.first_line,@3.first_column);}
     | ALTER TABLE VARI RENAME COLUMN VARI TO VARI PUNTOYCOMA       {$$ = new CambiarNC($3,$6,$8,@3.first_line,@3.first_column);}
     | DROP TABLE VARI PUNTOYCOMA                                   {$$ = new EliminarT($3,@3.first_line,@3.first_column);}
+    //Casteos
+    | CAST PARENABRE tipo AS tipo PARENCIE                         {$$ = new Casteo($3,$5,@3.first_line,@3.first_column);}
+    // Tabla DML
+    | INSERT INTO VARI PARENABRE lista_instrucciones PARENCIE VALUES PARENABRE lista_instrucciones PARENCIE PUNTOYCOMA  {$$= new InsertarF($3,$5,$9,@3.first_line,@3.first_column);}  
+    | SELECT VARI FROM VARI PUNTOYCOMA                             { $$ = new Select($2,$4,@2.first_line,@2.first_column);}  
+    | SELECT POR FROM VARI PUNTOYCOMA                              { $$ = new SelectT($4,@2.first_line,@2.first_column);}  
+    | CASE tipo lista_instrucciones END PUNTOYCOMA                 { $$ = new Case($2,$3,@2.first_line,@2.first_column);}
+    | WHEN tipo THEN lista_instrucciones PUNTOYCOMA                { $$ = new When($2,$4,@2.first_line,@2.first_column);}
+    | ELSE lista_instrucciones PUNTOYCOMA                          { $$ = new Else($2,@2.first_line,@2.first_column);}
+    | TRUNCATE TABLE VARI PUNTOYCOMA                               { $$ = new Truncate($3,@3.first_line,@3.first_column);}
+    //| tipo      {$$ = $1;}
+    //| SELECT lista_instrucciones FROM VARI WHERE tipo PUNTOYCOMA
     /*| SET tipo PUNTOYCOMA
     | SELECT POR FROM VARI WHERE tipo PUNTOYCOMA  {$$ = new Select($4,$6);}
-*/
-  /*cambiar
-    | INSERT INTO VARI PARENABRE lista_instrucciones PARENCIE VALUES PARENABRE tipo PARENCIE PUNTOYCOMA
-    | SELECT tipo FROM VARI PUNTOYCOMA
-    | SELECT POR FROM VARI PUNTOYCOMA
-    | SELECT tipo FROM VARI WHERE tipo PUNTOYCOMA
     | SELECT tipo
     | SELECT VARI AS VARI PUNTOYCOMA
     | UPDATE VARI SET tipo WHERE tipo PUNTOYCOMA
-    | TRUNCATE TABLE VARI PUNTOYCOMA
     | DELETE FROM VARI WHERE tipo PUNTOYCOMA
-    | CAST PARENABRE tipo AS tipo PARENCIE
-    | ELSE tipo
-    | CASE tipo lista_instrucciones END PUNTOYCOMA 
     | CASE tipo lista_instrucciones END AS tipo PUNTOYCOMA
-    | WHEN tipo THEN tipo
     | FOR tipo IN tipo PUNTO PUNTO tipo lista_instrucciones*/
 	| error	{
                 console.log('Error sintáctico: ' + yytext + ',  linea: ' + this._$.first_line + ', columna: ' + this._$.first_column);
@@ -372,6 +388,12 @@ instruccion
                 //ListaError.push(err);
                 }
 ;
+
+
+IfElse
+    : Else lista_instrucciones { $$ = $2; }
+;
+
 
 declaracion
     : SET ARROBA VARI IGUAL tipo PUNTOYCOMA                     {$$ = new Asignar($3,$5,@3.first_line,@3.first_column);}

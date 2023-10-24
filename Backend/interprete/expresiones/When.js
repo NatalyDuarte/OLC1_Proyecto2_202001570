@@ -1,23 +1,19 @@
 const Instruccion = require("../Instruccion");
-const Informacion = require("../instrucciones/Informacion");
-const Simb = require("../tablasimbolos/TablaSimbolos.js")
 var contador = require("../arbol/Contador");
-class ColumnaE extends Instruccion{
+const Informacion = require ("../instrucciones/Informacion.js")
+const Simb = require("../tablasimbolos/TablaSimbolos.js")
+class When extends Instruccion{
 
-    constructor(id, tipo,linea,columna){
+    constructor(dato1,dato2,linea,columna){
         super();
-        this.id = id;
-        this.tipo = tipo;
-        this.fila = [];
+        this.dato1 = dato1;
+        this.dato2 = dato2;
         this.linea = linea;
         this.columna = columna;
-
     }
 
     ejecutar(entorno){
-        let s = Informacion.getInstance();
-        s.add_Simbolo(new Simb(this.id,"Columna",this.tipo,entorno.nombre,this.linea,this.columna));
-        return this;   
+        return this;
     }
     getAst(){
         let nodo = {
@@ -29,8 +25,8 @@ class ColumnaE extends Instruccion{
         let nodoPadre = contador.get();
 
         let cadena = 
-        `${nodoDato}[label="${this.id}"]\n`+
-        `${nodoPadre}[label="Columna"]\n`+
+        `${nodoDato}[label="${this.dato1}"]\n`+
+        `${nodoPadre}[label="When"]\n`+
         `${nodoPadre}--${nodoDato}\n`;
 
         nodo.padre = nodoPadre;
@@ -43,4 +39,4 @@ class ColumnaE extends Instruccion{
     }
 }
 
-module.exports = ColumnaE;
+module.exports = When;
