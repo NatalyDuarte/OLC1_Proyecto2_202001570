@@ -42,23 +42,20 @@ class Casteo extends Instruccion{
     }
     getAst(){
         let nodo = {
-            padre: -1,
+            padre: "",
             cadena: ""
         }
 
-        let nodoDato = contador.get();
-        let nodoPadre = contador.get();
+        const aleatorio = Math.floor(Math.random() * (100-0)+0);
+        nodo.padre = "nodocasteo"+aleatorio.toString();
+        const val = this.id.getAst();
 
-        let cadena = 
-        `${nodoDato}[label="${this.id.valor}"]\n`+
-        `${nodoPadre}[label="Casteo"]\n`+
-        `${nodoPadre}--${nodoDato}\n`;
-
-        nodo.padre = nodoPadre;
-        nodo.cadena = cadena;
-
-        let s = Informacion.getInstance();
-        s.add_AST(cadena);
+        nodo.cadena =` 
+        ${nodo.padre}[label ="CAST"];
+        nodotipo${nodo.padre}[label="${this.tipo}"];
+        ${val.cadena}
+        ${nodo.padre} -> nodotipo${nodo.padre} ->${val.padre};
+        `;
         
         return nodo;
     }

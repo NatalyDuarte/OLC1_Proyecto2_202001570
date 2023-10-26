@@ -268,11 +268,13 @@ columna\d+              { let bu = Informacion.getInstance();
     const Select = require('../interprete/instrucciones/Select.js');
     const SelectT = require('../interprete/instrucciones/SelectT.js');
     const Case = require('../interprete/instrucciones/Case.js');
+    const CaseB = require('../interprete/instrucciones/CaseB.js');
     const Aritmetica = require('../interprete/expresiones/Aritmetica.js');
     const Casteo = require('../interprete/expresiones/Casteo.js');
     const Logico = require('../interprete/expresiones/Logico.js');
     const Else = require('../interprete/expresiones/Else.js');
     const Relacional = require('../interprete/expresiones/Relacional.js');
+    const Lower = require('../interprete/expresiones/Lower.js');
     const AsigTabla  = require('../interprete/instrucciones/AsigTabla');
     const AgregarCo  = require('../interprete/instrucciones/AgregarCo');
     const InsertarF  = require('../interprete/instrucciones/InsertarF');
@@ -332,7 +334,7 @@ instruccion
     | PRINT lista_instrucciones PUNTOYCOMA                             { $$ = new Mostrar($2,@2.first_line,@2.first_column); }
     | BEGIN lista_instrucciones END PUNTOYCOMA                         { $$ = new Encapsula($2,@2.first_line,@2.first_column);} 
     //| IF tipo THEN lista_instrucciones IfElse END IF PUNTOYCOMA      { $$ = new IfElse($2,$4,$5,@2.first_line,@2.first_column);}
-    | IF tipo THEN lista_instrucciones PUNTOYCOMA                { $$ = new If($2,$4,@2.first_line,@2.first_column);}                       
+    | IF tipo THEN lista_instrucciones END IF PUNTOYCOMA                { $$ = new If($2,$4,@2.first_line,@2.first_column);}                       
     | WHILE tipo lista_instrucciones END WHILE PUNTOYCOMA               { $$ = new While($2,$3,@2.first_line,@2.first_column);}
     //Para crear tablas DDL
     | CREATE TABLE tipo PARENABRE lista_instrucciones PARENCIE PUNTOYCOMA  {$$ = new AsigTabla($3,$5,@3.first_line,@3.first_column);}
@@ -367,11 +369,12 @@ instruccion
     | INSERT INTO VARI PARENABRE lista_instrucciones PARENCIE VALUES PARENABRE lista_instrucciones PARENCIE PUNTOYCOMA  {$$= new InsertarF($3,$5,$9,@3.first_line,@3.first_column);}  
     | SELECT VARI FROM VARI PUNTOYCOMA                             { $$ = new Select($2,$4,@2.first_line,@2.first_column);}  
     | SELECT POR FROM VARI PUNTOYCOMA                              { $$ = new SelectT($4,@2.first_line,@2.first_column);}  
+    | CASE lista_instrucciones END PUNTOYCOMA                      { $$ = new CaseB($2,@2.first_line,@2.first_column);}
     | CASE tipo lista_instrucciones END PUNTOYCOMA                 { $$ = new Case($2,$3,@2.first_line,@2.first_column);}
     | WHEN tipo THEN lista_instrucciones PUNTOYCOMA                { $$ = new When($2,$4,@2.first_line,@2.first_column);}
     | ELSE lista_instrucciones PUNTOYCOMA                          { $$ = new Else($2,@2.first_line,@2.first_column);}
     | TRUNCATE TABLE VARI PUNTOYCOMA                               { $$ = new Truncate($3,@3.first_line,@3.first_column);}
-    //| tipo      {$$ = $1;}
+    | SELECT LOWER PARENABRE tipo PARENCIE PUNTOYCOMA              { $$ = new Lower($4,@4.first_line,@4.first_column);}
     //| SELECT lista_instrucciones FROM VARI WHERE tipo PUNTOYCOMA
     /*| SET tipo PUNTOYCOMA
     | SELECT POR FROM VARI WHERE tipo PUNTOYCOMA  {$$ = new Select($4,$6);}

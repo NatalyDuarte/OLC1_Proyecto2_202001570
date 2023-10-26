@@ -16,24 +16,24 @@ class Else extends Instruccion{
     }
     getAst(){
         let nodo = {
-            padre: -1,
+            padre: "",
             cadena: ""
         }
 
-        let nodoDato = contador.get();
-        let nodoPadre = contador.get();
+        const aleatorio = Math.floor(Math.random() * (100-0)+0);
+        nodo.padre = "nodoelse"+aleatorio.toString();
 
-        let cadena = 
-        `${nodoDato}[label="${this.instruccion}"]\n`+
-        `${nodoPadre}[label="Else"]\n`+
-        `${nodoPadre}--${nodoDato}\n`;
-
-        nodo.padre = nodoPadre;
-        nodo.cadena = cadena;
-
-        let s = Informacion.getInstance();
-        s.add_AST(cadena);
-
+        nodo.cadena =` 
+        ${nodo.padre}[label ="Else"];
+        `;
+        for (let i = 0; i < this.Instruccion.length; i++) {
+            const val =this.Instruccion[i].getAst();
+            nodo.cadena += ` 
+            ${val.cadena.replace(/['" ]/g, '')}
+            ${nodo.padre}->${val.padre};
+            `;
+        }
+        
         return nodo;
     }
 }

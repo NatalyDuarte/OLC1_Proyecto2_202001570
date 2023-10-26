@@ -6,7 +6,7 @@ class Instruccion{
     ejecutar(entorno){}
     getAst(){ 
         let nodo = {
-            padre: -1,
+            padre: "",
             cadena: ""
         }
         return nodo;

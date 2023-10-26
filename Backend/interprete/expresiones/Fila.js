@@ -19,23 +19,17 @@ class Fila extends Instruccion{
     }
     getAst(){
         let nodo = {
-            padre: -1,
+            padre: "",
             cadena: ""
         }
 
-        let nodoDato = contador.get();
-        let nodoPadre = contador.get();
-
-        let cadena = 
-        `${nodoDato}[label="${this.id}"]\n`+
-        `${nodoPadre}[label="Columna"]\n`+
-        `${nodoPadre}--${nodoDato}\n`;
-
-        nodo.padre = nodoPadre;
-        nodo.cadena = cadena;
-
-        let s = Informacion.getInstance();
-        s.add_AST(cadena);
+        const aleatorio = Math.floor(Math.random() * (100-0)+0);
+        nodo.padre = "nodofila"+aleatorio.toString();
+        nodo.cadena =` 
+        ${nodo.padre}[label ="Fila"];
+        nodoval${nodo.padre}[label="${this.id}"];
+        ${nodo.padre} -> nodoval${nodo.padre};
+        `;
 
         return nodo;
     }

@@ -46,27 +46,27 @@ class Aritmetica extends Instruccion{
                     this.valor = String("null");
                     console.log(this.valor);
                 }else if(comillasSimples.test(izq.valor) || comillasDobles.test(izq.valor) && comillasSimples.test(der.valor) || comillasDobles.test(der.valor) ){
-                    this.valor = String(izq.valor.replace(/['"]/g, '')) + String(der.valor.replace(/['"]/g, ''))
+                    this.valor = String(izq.valor) + String(der.valor)
                     this.valor = String(this.valor);
                     console.log('Las dos variables son string.');
                     console.log(this.valor)
                 }else if(comillasSimples.test(izq.valor) || comillasDobles.test(izq.valor) && !isNaN(parseInt(der.valor)) && Number.isInteger(Number(der.valor)) ){
-                    this.valor = parseInt(izq.valor.replace(/['"]/g, '')) + parseInt(der.valor)
+                    this.valor = parseInt(izq.valor) + parseInt(der.valor)
                     this.valor = parseInt(this.valor);
                     console.log('Las primera variables es varchar y la segunda int.');
                     console.log(this.valor)
                 }else if(!isNaN(parseFloat(izq.valor))===true && comillasSimples.test(der.valor) || comillasDobles.test(der.valor)){
-                    this.valor = Number(izq.valor) + Number(der.valor.replace(/['"]/g, ''))
+                    this.valor = Number(izq.valor) + Number(der.valor)
                     this.valor = parseFloat(this.valor);
                     console.log('Las primera variables es float y la segunda varchar.');
                     console.log(this.valor)
                 }else if (comillasSimples.test(izq.valor) || comillasDobles.test(izq.valor) && !isNaN(parseFloat(der.valor))===true){
-                    this.valor = Number(izq.valor.replace(/['"]/g, '')) + Number(der.valor)
+                    this.valor = Number(izq.valor) + Number(der.valor)
                     this.valor = parseFloat(this.valor);
                     console.log('Las primera variables es varchar y la segunda float.');
                     console.log(this.valor)
                 }else if (!isNaN(parseInt(izq.valor)) && Number.isInteger(Number(izq.valor)) && comillasSimples.test(der.valor) || comillasDobles.test(der.valor) ){
-                    this.valor = Number(izq.valor) + Number(der.valor.replace(/['"]/g, ''))
+                    this.valor = Number(izq.valor) + Number(der.valor)
                     this.valor = parseInt(this.valor);
                     console.log('Las primera variables es int y la segunda varchar.');
                     console.log(this.valor)
@@ -122,27 +122,27 @@ class Aritmetica extends Instruccion{
                     this.valor = String("null");
                     console.log(this.valor);
                 }else if(comillasSimples.test(izq.valor) || comillasDobles.test(izq.valor) && !isNaN(parseInt(der.valor)) && Number.isInteger(Number(der.valor)) ){
-                    this.valor = parseInt(izq.valor.replace(/['"]/g, '')) - parseInt(der.valor)
+                    this.valor = parseInt(izq.valor) - parseInt(der.valor)
                     this.valor = parseInt(this.valor);
                     console.log('Las primera variables es varchar y la segunda int.');
                     console.log(this.valor)
                 }else if(!isNaN(parseFloat(izq.valor))===true && comillasSimples.test(der.valor) || comillasDobles.test(der.valor)){
-                    this.valor = Number(izq.valor) - Number(der.valor.replace(/['"]/g, ''))
+                    this.valor = Number(izq.valor) - Number(der.valor)
                     this.valor = parseFloat(this.valor);
                     console.log('Las primera variables es float y la segunda varchar.');
                     console.log(this.valor)
                 }else if (comillasSimples.test(izq.valor) || comillasDobles.test(izq.valor) && !isNaN(parseFloat(der.valor))===true){
-                    this.valor = Number(izq.valor.replace(/['"]/g, '')) - Number(der.valor)
+                    this.valor = Number(izq.valor) - Number(der.valor)
                     this.valor = parseFloat(this.valor);
                     console.log('Las primera variables es varchar y la segunda float.');
                     console.log(this.valor)
                 }else if (!isNaN(parseInt(izq.valor)) && Number.isInteger(Number(izq.valor)) && comillasSimples.test(der.valor) || comillasDobles.test(der.valor) ){
-                    this.valor = Number(izq.valor) - Number(der.valor.replace(/['"]/g, ''))
+                    this.valor = Number(izq.valor) - Number(der.valor)
                     this.valor = parseInt(this.valor);
                     console.log('Las primera variables es int y la segunda varchar.');
                     console.log(this.valor)
                 }else if(comillasSimples.test(izq.valor) || comillasDobles.test(izq.valor) && comillasSimples.test(der.valor) || comillasDobles.test(der.valor) ){
-                    this.valor = String(izq.valor.replace(/['"]/g, '')) - String(der.valor.replace(/['"]/g, ''))
+                    this.valor = String(izq.valor) - String(der.valor)
                     this.valor = String(this.valor);
                     console.log('Las dos variables son string.');
                     console.log(this.valor)
@@ -209,29 +209,23 @@ class Aritmetica extends Instruccion{
     }
     getAst(){
         let nodo = {
-            padre: -1,
+            padre: "",
             cadena: ""
         }
 
-        let izq = this.izq.getAst();
-        let der = this.der.getAst();
-        
-        let op = contador.get();
-        let padre = contador.get();
-
-        nodo.padre = padre;
-        nodo.cadena =
-            izq.cadena+
-            der.cadena+
-            `${op}[label="${this.op}"]\n`+
-            `${padre}[label="expresion"]\n`+
-            `${padre}--${izq.padre}\n`+
-            `${padre}--${op}\n`+
-            `${padre}--${der.padre}\n`
-            ;
-        let s = Informacion.getInstance();
-        s.add_AST(nodo.cadena);
-
+        const aleatorio = Math.floor(Math.random() * (100-0)+0);
+        nodo.padre= "nodoaritmetica"+aleatorio.toString();
+        const exiz = this.izq.getAst();
+        const exder = this.der.getAst();
+        nodo.cadena =` 
+        ${nodo.padre}[label ="ARITMETICA"];
+        nodooperacion${nodo.padre}[label="${this.op}"];
+        ${exiz.cadena}
+        ${exder.cadena}
+        ${nodo.padre} ->${exiz.padre};
+        ${nodo.padre} -> nodooperacion${nodo.padre};
+        ${nodo.padre} ->${exder.padre};
+        `;
         return nodo;
 
     }

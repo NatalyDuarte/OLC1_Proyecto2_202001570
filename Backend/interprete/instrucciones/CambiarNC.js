@@ -18,26 +18,22 @@ class CambiarNC extends Instruccion{
         s.add_Simbolo(new Simb(this.id,"Cambia Nombre Columna",this.colum,entorno.nombre,this.linea,this.columna));
         entorno.CambiarTablaNC(this.id, this.colum,this.columno);
         console.log("Se cambio correctamente el nombre de la columna "+ this.colum+ " al nombre "+this.columno)
+        s.agregarSalida("Se cambio correctamente el nombre de la columna "+ this.colum+ " al nombre "+this.columno);
     }
     getAst(){
         let nodo = {
-            padre: -1,
+            padre: "",
             cadena: ""
         }
 
-        let nodoDato = contador.get();
-        let nodoPadre = contador.get();
-
-        let cadena = 
-        `${nodoDato}[label="${this.colum}"]\n`+
-        `${nodoPadre}[label="CambiarNombreColumna"]\n`+
-        `${nodoPadre}--${nodoDato}\n`;
-
-        nodo.padre = nodoPadre;
-        nodo.cadena = cadena;
-
-        let s = Informacion.getInstance();
-        s.add_AST(cadena);
+        const aleatorio = Math.floor(Math.random() * (100-0)+0);
+        nodo.padre = "nodocambiarnc"+aleatorio.toString();
+        nodo.cadena =` 
+        ${nodo.padre}[label ="CambiarNombreColumna"];
+        nodoIDS${nodo.padre}[label="Columna"];
+        nodoid${nodo.padre}[label="${this.id}"];
+        ${nodo.padre} ->nodoIDS${nodo.padre} ->nodoid${nodo.padre};
+        `;
         
         return nodo;
     }

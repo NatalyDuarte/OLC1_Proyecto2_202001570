@@ -1,12 +1,12 @@
 const Simbolo = require("./Simbolo");
 const Funcion = require("./Funcion");
 const Tabla = require("./Tabla");
+const Informacion = require("../instrucciones/Informacion");
 class Entorno {
     constructor(nombre, anterior){
         this.tablasimbolos = {};
         this.tablafunciones = {};
         this.tablas = {};
-        this.salida = []
         this.anterior = anterior;
         this.nombre = nombre;
     }
@@ -50,17 +50,17 @@ class Entorno {
               }
         }
         console.log(nombrea.columnas)
-        console.log("Se elimini correctamente la columna "+ column+ " de la tabla "+nombre)
+        let s = Informacion.getInstance();
+        console.log("Se elimino correctamente la columna "+ column+ " de la tabla "+nombre)
+        s.agregarSalida("Se elimino correctamente la columna "+ column+ " de la tabla "+nombre);
     }
 
     CambiarTablaN(nombre,column){
         let nombrea = this.tablas['[object Object]'].nombre
         console.log(nombrea)
         if(nombrea.nombre === nombre){
-            console.log("Aqui")
             nombrea.nombre = column;
         }
-        console.log(nombrea.nombre)
     }
 
     EliminarT(nombre){
@@ -101,15 +101,20 @@ class Entorno {
 
     obtenerColumna(nombre,columna){
         let nombrea = this.tablas['[object Object]']
+        let s = Informacion.getInstance();
         if(nombrea.nombre.nombre === nombre){
             for (let i = 0; i < nombrea.columnas.length; i++) {
                 if(nombrea.columnas[i].id === columna){
                     console.log("El nombre de la columna es: "+ nombrea.columnas[i].id);
+                    s.agregarSalida("El nombre de la columna es: "+ nombrea.columnas[i].id);
                     console.log("El tipo de la columna es: "+ nombrea.columnas[i].tipo);
+                    s.agregarSalida("El tipo de la columna es: "+ nombrea.columnas[i].tipo);
                     for (let o = 0; o < nombrea.columnas[i].fila.length; o++){
                         console.log("Las filas que contiene la columna son: "+ nombrea.columnas[i].fila[o][o].id);
+                        s.agregarSalida("Las filas que contiene la columna son: "+ nombrea.columnas[i].fila[o][o].id);
                     }
                     console.log("----------------------------------------")
+                    s.agregarSalida("----------------------------------------");
                 }
             }
         }
@@ -117,12 +122,16 @@ class Entorno {
 
     obtenerTabla(nombre){
         let nombrea = this.tablas['[object Object]']
+        let s = Informacion.getInstance();
         if(nombrea.nombre.nombre === nombre){
             for (let i = 0; i < nombrea.columnas.length; i++) {
                 console.log("El nombre de la columna es: "+ nombrea.columnas[i].id);
+                s.agregarSalida("El nombre de la columna es: "+ nombrea.columnas[i].id);
                 console.log("El tipo de la columna es: "+ nombrea.columnas[i].tipo);
+                s.agregarSalida("El tipo de la columna es: "+ nombrea.columnas[i].tipo);
                 for (let o = 0; o < nombrea.columnas[i].fila.length; o++){
                     console.log("Las filas que contiene la columna son: "+ nombrea.columnas[i].fila[o][o].id);
+                    s.agregarSalida("Las filas que contiene la columna son: "+ nombrea.columnas[i].fila[o][o].id);
                 }
             }
         }

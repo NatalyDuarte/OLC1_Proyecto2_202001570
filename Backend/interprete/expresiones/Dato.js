@@ -15,28 +15,23 @@ class Dato extends Instruccion{
 
     ejecutar(entorno){
         let s = Informacion.getInstance();
+        this.valor = this.valor.replace(/['"]/g, '');
         s.add_Simbolo(new Simb(this.valor,"Dato",this.tipo,entorno.nombre,this.linea,this.columna));
         return this;   
     }
     getAst(){
         let nodo = {
-            padre: -1,
+            padre: "",
             cadena: ""
         }
 
-        let nodoDato = contador.get();
-        let nodoPadre = contador.get();
-
-        let cadena = 
-        `${nodoDato}[label="${this.valor}"]\n`+
-        `${nodoPadre}[label="dato"]\n`+
-        `${nodoPadre}--${nodoDato}\n`;
-
-        nodo.padre = nodoPadre;
-        nodo.cadena = cadena;
-
-        let s = Informacion.getInstance();
-        s.add_AST(cadena);
+        const aleatorio = Math.floor(Math.random() * (100-0)+0);
+        nodo.padre = "nododato"+aleatorio.toString();
+        nodo.cadena =` 
+        ${nodo.padre}[label ="Dato"];
+        nodoval${nodo.padre}[label="${this.valor}"];
+        ${nodo.padre} -> nodoval${nodo.padre};
+        `;
 
         return nodo;
     }

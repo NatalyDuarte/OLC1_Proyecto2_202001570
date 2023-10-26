@@ -19,23 +19,21 @@ class EliminarCo extends Instruccion{
     }
     getAst(){
         let nodo = {
-            padre: -1,
+            padre: "",
             cadena: ""
         }
 
-        let nodoDato = contador.get();
-        let nodoPadre = contador.get();
-
-        let cadena = 
-        `${nodoDato}[label="${this.id.nombre}"]\n`+
-        `${nodoPadre}[label="EliminarColumna"]\n`+
-        `${nodoPadre}--${nodoDato}\n`;
-
-        nodo.padre = nodoPadre;
-        nodo.cadena = cadena;
-
-        let s = Informacion.getInstance();
-        s.add_AST(cadena);
+        const aleatorio = Math.floor(Math.random() * (100-0)+0);
+        nodo.padre = "nodoaeliminar"+aleatorio.toString();
+        nodo.cadena =` 
+        ${nodo.padre}[label ="EliminarColumna"];
+        nodoIDS${nodo.padre}[label="Tabla"];
+        nodoid${nodo.padre}[label="${this.id}"];
+        nodoI${nodo.padre}[label="Columna"];
+        nodoi${nodo.padre}[label="${this.colum}"];
+        ${nodo.padre} ->nodoIDS${nodo.padre} ->nodoid${nodo.padre};
+        ${nodo.padre}->nodoI${nodo.padre} ->nodoi${nodo.padre};
+        `;
         
         return nodo;
     }

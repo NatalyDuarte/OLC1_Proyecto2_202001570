@@ -7,6 +7,7 @@ class Informacion {
         this.tokens = [];
         this.AST = "";
         this.interpre = "";
+        this.salida = "";
     }
 
     static getInstance() {
@@ -62,6 +63,14 @@ class Informacion {
 
     clear_Errors() {
         this.error = [];
+    }
+
+    agregarSalida(cadena){
+        this.salida += cadena + "\n";
+    }
+
+    getSalida(){
+        return this.salida;
     }
 
 }

@@ -17,24 +17,26 @@ class When extends Instruccion{
     }
     getAst(){
         let nodo = {
-            padre: -1,
+            padre: "",
             cadena: ""
         }
 
-        let nodoDato = contador.get();
-        let nodoPadre = contador.get();
+        const aleatorio = Math.floor(Math.random() * (100-0)+0);
+        nodo.padre = "nodowhen"+aleatorio.toString();
 
-        let cadena = 
-        `${nodoDato}[label="${this.dato1}"]\n`+
-        `${nodoPadre}[label="When"]\n`+
-        `${nodoPadre}--${nodoDato}\n`;
-
-        nodo.padre = nodoPadre;
-        nodo.cadena = cadena;
-
-        let s = Informacion.getInstance();
-        s.add_AST(cadena);
-
+        nodo.cadena =` 
+        ${nodo.padre}[label ="When"];
+        nodotipo${nodo.padre}[label="${this.dato1.valor}"];
+        ${nodo.padre} -> nodotipo${nodo.padre};
+        `;
+        for (let i = 0; i < this.dato2.length; i++) {
+            const val =this.dato2[i].getAst();
+            nodo.cadena += ` 
+            ${val.cadena.replace(/['" ]/g, '')}
+            ${nodo.padre}->${val.padre};
+            `;
+        }
+        
         return nodo;
     }
 }

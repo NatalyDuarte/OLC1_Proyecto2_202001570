@@ -77,29 +77,23 @@ class Relacional extends Instruccion{
     }
     getAst(){
         let nodo = {
-            padre: -1,
+            padre: "",
             cadena: ""
         }
 
-        let izq = this.izq.getAst();
-        let der = this.der.getAst();
-        
-        let op = contador.get();
-        let padre = contador.get();
-
-        nodo.padre = padre;
-        nodo.cadena =
-            izq.cadena+
-            der.cadena+
-            `${op}[label="${this.op}"]\n`+
-            `${padre}[label="expresion"]\n`+
-            `${padre}--${izq.padre}\n`+
-            `${padre}--${op}\n`+
-            `${padre}--${der.padre}\n`
-            ;
-        let s = Informacion.getInstance();
-        s.add_AST(nodo.cadena);
-
+        const aleatorio = Math.floor(Math.random() * (100-0)+0);
+        nodo.padre= "nodorelacional"+aleatorio.toString();
+        const exiz = this.izq.getAst();
+        const exder = this.der.getAst();
+        nodo.cadena =` 
+        ${nodo.padre}[label ="Relacional"];
+        nodooperacion${nodo.padre}[label="${this.op}"];
+        ${exiz.cadena}
+        ${exder.cadena}
+        ${nodo.padre} ->${exiz.padre};
+        ${nodo.padre} -> nodooperacion${nodo.padre};
+        ${nodo.padre} ->${exder.padre};
+        `;
         return nodo;
 
     }

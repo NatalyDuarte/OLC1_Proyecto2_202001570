@@ -15,29 +15,23 @@ class Truncate extends Instruccion {
         entorno.EliminarTF(this.tabla);
         let s = Informacion.getInstance();
         s.add_Simbolo(new Simb(this.tabla,"Eliminar","Filas",entorno.nombre,this.linea,this.columna));
-        console.log("Se elimino los registros correctamente de la tabla "+ this.tabla)
+        console.log("Se elimino los registros correctamente de la tabla "+ this.tabla);
+        s.agregarSalida("Se elimino los registros correctamente de la tabla "+ this.tabla);
     }
     getAst(){
         let nodo = {
-            padre: -1,
+            padre: "",
             cadena: ""
         }
 
-        let nodoDato = contador.get();
-        let nodoPadre = contador.get();
-
-        let cadena = 
-        `${nodoDato}[label="${this.tabla}"]\n`+
-        `${nodoPadre}[label="Eliminar"]\n`+
-        `${nodoPadre}--${nodoDato}\n`;
-
-        nodo.padre = nodoPadre;
-        nodo.cadena = cadena;
-
-        let s = Informacion.getInstance();
-        s.add_AST(cadena);
-
-        return nodo;
+        const aleatorio = Math.floor(Math.random() * (100-0)+0);
+        nodo.padre = "nodoinsertarf"+aleatorio.toString();
+        nodo.cadena =` 
+        ${nodo.padre}[label ="Truncate"];
+        nodoIDS${nodo.padre}[label="Tabla"];
+        nodoid${nodo.padre}[label="${this.tabla}"];
+        ${nodo.padre} ->nodoIDS${nodo.padre} ->nodoid${nodo.padre};
+        `;
     }
 }
 

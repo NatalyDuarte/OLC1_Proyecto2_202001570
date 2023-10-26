@@ -20,23 +20,21 @@ class Asignar extends Instruccion{
     }
     getAst(){
         let nodo = {
-            padre: -1,
+            padre: "",
             cadena: ""
         }
 
-        let nodoDato = contador.get();
-        let nodoPadre = contador.get();
-
-        let cadena = 
-        `${nodoDato}[label="${this.id}"]\n`+
-        `${nodoPadre}[label="Asignar"]\n`+
-        `${nodoPadre}--${nodoDato}\n`;
-
-        nodo.padre = nodoPadre;
-        nodo.cadena = cadena;
-
-        let s = Informacion.getInstance();
-        s.add_AST(cadena);
+        const aleatorio = Math.floor(Math.random() * (100-0)+0);
+        nodo.padre = "nodoasignacion"+aleatorio.toString();
+        const val =this.expresion.getAst();
+        nodo.cadena =` 
+        ${nodo.padre}[label ="ASIGNAR"];
+        nodoIDS${nodo.padre}[label="ID"];
+        nodoid${nodo.padre}[label="${this.id}"];
+        ${val.cadena}
+        ${nodo.padre} ->nodoIDS${nodo.padre} ->nodoid${nodo.padre};
+        ${nodo.padre}->${val.padre};
+        `;
         
         return nodo;
     }

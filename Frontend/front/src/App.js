@@ -81,10 +81,13 @@ function App() {
           console.log(response.data)
         }
     )
-   /* axios.get("http://localhost:4000/getdata")
+    axios.get("http://localhost:4000/getdata")
     .then((response)=>{
-      setdata(response.data.data)
-    })*/
+      setdata(response.data.salida)
+    })
+    var sali = document.getElementById('salida');
+    alert(data)
+    sali.value = data;
   }
   function CargaAr(event){
     event.preventDefault();
@@ -179,7 +182,7 @@ function App() {
     <div>
     <h2 >Salida:</h2>
     <div class="background-color: black; height: 260px; width: 600px; border-radius: 1rem;">
-      <textarea rows="20" cols="70">
+      <textarea id="salida" rows="20" cols="70">
       </textarea>
     </div>
   </div>

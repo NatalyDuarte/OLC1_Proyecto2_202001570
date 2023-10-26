@@ -16,35 +16,49 @@ class If extends Instruccion{
     ejecutar(entorno){
         let entornoif = new Entorno("If Simple", entorno);
         let condicion = this.condicion.ejecutar(entornoif);
-        
-        if (condicion.valor){
-            this.instrucciones.forEach(instruccion => {
-                instruccion.ejecutar(entornoif);
-            });
-        }
-        
         let s = Informacion.getInstance();
         s.add_Simbolo(new Simb(condicion.valor,"If",condicion.tipo,entorno.nombre,this.linea,this.columna)); 
+        var datos = [];
+        var defau = [];
+        for (let i = 0; i < this.instrucciones.length; i++) {
+            if (this.instrucciones[i].expresion != undefined){
+                datos.push(this.instrucciones[i].expresion.valor);
+            }else if ( this.instrucciones[i].Instruccion != undefined){
+                defau.push(this.instrucciones[i].Instruccion)
+            }
+        }
+        if(condicion.valor){
+            console.log(datos[0].replace(/"/g, ''));
+            s.agregarSalida(datos[0]);
+        }else{
+            console.log(defau[0][0].expresion.valor.replace(/"/g, ''));
+            s.agregarSalida(defau[0][0].expresion.valor);
+        }
+        
     }
     getAst(){
+        //Base de getast de https://github.com/Mocta-996/Laboratorio-OLC1-C-1S2023 y https://github.com/AlexIngGuerra/OLC1-2S2023
         let nodo = {
-            padre: -1,
+            padre: "",
             cadena: ""
         }
 
-        let nodoDato = contador.get();
-        let nodoPadre = contador.get();
+        const aleatorio = Math.floor(Math.random() * (100-0)+0);
+        nodo.padre = "nodoif"+aleatorio.toString();
+        nodo.cadena =` 
+        ${nodo.padre}[label ="Case"];
+        nodoIDS${nodo.padre}[label="Condicion"];
+        nodoid${nodo.padre}[label="${this.condicion.valor}"];
+        ${nodo.padre} ->nodoIDS${nodo.padre} ->nodoid${nodo.padre};
+        `;
 
-        let cadena = 
-        `${nodoDato}[label="${this.condicion.valor}"]\n`+
-        `${nodoPadre}[label="If"]\n`+
-        `${nodoPadre}--${nodoDato}\n`;
-
-        nodo.padre = nodoPadre;
-        nodo.cadena = cadena;
-
-        let s = Informacion.getInstance();
-        s.add_AST(cadena);
+        for (let i = 0; i < this.instrucciones.length; i++) {
+            const val =this.instrucciones[i].getAst();
+            nodo.cadena += ` 
+            ${val.cadena.replace(/['" ]/g, '')}
+            ${nodo.padre}->${val.padre};
+            `;
+        }
         
         return nodo;
     }

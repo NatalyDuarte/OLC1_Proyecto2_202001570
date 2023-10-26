@@ -17,26 +17,26 @@ class AsigTabla extends Instruccion{
         let s = Informacion.getInstance();
         s.add_Simbolo(new Simb(this.id.nombre,"Crear Tabla",this.colum.id,entorno.nombre,this.linea,this.columna));
         console.log("Se agrego correctamentela la tabla "+this.id.nombre);
+        s.agregarSalida("Se agrego correctamentela la tabla "+this.id.nombre);
     }
     getAst(){
         let nodo = {
-            padre: -1,
+            padre: "",
             cadena: ""
         }
 
-        let nodoDato = contador.get();
-        let nodoPadre = contador.get();
-
-        let cadena = 
-        `${nodoDato}[label="${this.id.nombre}"]\n`+
-        `${nodoPadre}[label="AsignarTabla"]\n`+
-        `${nodoPadre}--${nodoDato}\n`;
-
-        nodo.padre = nodoPadre;
-        nodo.cadena = cadena;
-
-        let s = Informacion.getInstance();
-        s.add_AST(cadena);
+        const aleatorio = Math.floor(Math.random() * (100-0)+0);
+        nodo.padre = "nodoasignaciont"+aleatorio.toString();
+        nodo.cadena =` 
+        ${nodo.padre}[label ="AsignarTabla"];
+        `;
+        for (let i = 0; i < this.colum.length; i++) {
+            const val =this.colum[i].getAst();
+            nodo.cadena += ` 
+            ${val.cadena}
+            ${nodo.padre}->${val.padre};
+            `;
+        }
         
         return nodo;
     }

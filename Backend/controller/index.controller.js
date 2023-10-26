@@ -8,6 +8,7 @@ const s = informacion.getInstance();
 let errores = [];
 let simbolo = [];
 let tokens = [];
+let salida = "";
 
 const index = (req, res) =>{
     res.status(200).json({message: 'Bienvenido a mi api'});
@@ -20,11 +21,13 @@ const analizar = (req, res) => {
     let dot = "C:/Lib/Graphviz/bin/dot"
     let entrad = "./interprete/arbol/grafo.dot"
     let salida = "./interprete/arbol/grafoast.svg"
-    let cadena = "graph {\nordering=\"out\"\n"
+    let cadena = 'digraph G {\nprincipal[label="AST"];\n';
     instrucciones.forEach(instruccion => {
         instruccion.ejecutar(entorno);
-        cadena = cadena + instruccion.getAst().cadena;
-        console.log()
+        const codigo =  instruccion.getAst();
+        cadena= cadena + `
+                   ${codigo.cadena}\n
+                   principal -> ${codigo.padre};\n`;
     });
     //cadena = cadena + "0[label=\"Instrucciones\"]\n"
     //cadena = cadena + "0--1\n"
@@ -61,7 +64,12 @@ const  obdata = (req, res) => {
 }
 
 const  getdata = (req, res) => {
-    res.status(200).json({message: 'Funciona el getdata',data: data});
+    try{
+        salida = s.getSalida();
+    }catch (error) {
+        console.error('Ups Error: ', error);
+    }  
+    res.status(200).json({message: 'Funciona el getdata',salida: salida});
 }
 
 const reporteast = (req,res)=>{

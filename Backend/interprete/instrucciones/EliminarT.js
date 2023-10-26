@@ -16,26 +16,22 @@ class EliminarT extends Instruccion{
         s.add_Simbolo(new Simb(this.id,"Cambia Nombre","Tabla",entorno.nombre,this.linea,this.columna));
         entorno.EliminarT(this.id);
         console.log("Se elimino correctamente la tabla "+ this.id)
+        s.agregarSalida("Se elimino correctamente la tabla "+ this.id);
     }
     getAst(){
         let nodo = {
-            padre: -1,
+            padre: "",
             cadena: ""
         }
 
-        let nodoDato = contador.get();
-        let nodoPadre = contador.get();
-
-        let cadena = 
-        `${nodoDato}[label="${this.id}"]\n`+
-        `${nodoPadre}[label="EliminarTabla"]\n`+
-        `${nodoPadre}--${nodoDato}\n`;
-
-        nodo.padre = nodoPadre;
-        nodo.cadena = cadena;
-
-        let s = Informacion.getInstance();
-        s.add_AST(cadena);
+        const aleatorio = Math.floor(Math.random() * (100-0)+0);
+        nodo.padre = "nodoeliminart"+aleatorio.toString();
+        nodo.cadena =` 
+        ${nodo.padre}[label ="EliminarTabla"];
+        nodoIDS${nodo.padre}[label="Tabla"];
+        nodoid${nodo.padre}[label="${this.id}"];
+        ${nodo.padre} ->nodoIDS${nodo.padre} ->nodoid${nodo.padre};
+        `;
         
         return nodo;
     }
