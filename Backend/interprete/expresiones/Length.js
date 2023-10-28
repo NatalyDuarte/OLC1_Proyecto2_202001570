@@ -2,20 +2,21 @@ const Instruccion = require("../Instruccion");
 const Informacion = require("../instrucciones/Informacion");
 const Simb = require("../tablasimbolos/TablaSimbolos.js")
 var contador = require("../arbol/Contador");
-class Lower extends Instruccion{
+class Length extends Instruccion{
 
-    constructor(id, linea,columna){
+    constructor(variable, linea,columna){
         super();
-        this.id = id;
+        this.variable = variable;
         this.linea = linea;
         this.columna = columna;
     }
 
     ejecutar(entorno){
         let s = Informacion.getInstance();
-        s.add_Simbolo(new Simb(this.id,"Funcion Nativa","Lower",entorno.nombre,this.linea,this.columna));
-        let expresion = this.id.ejecutar(entorno);
-        expresion.valor = expresion.valor.toLowerCase(); 
+        s.add_Simbolo(new Simb(this.variable.valor,"Funcion Nativa","Length",entorno.nombre,this.linea,this.columna));
+        let expresion = this.variable.ejecutar(entorno);
+        console.log(expresion.valor)
+        expresion.valor = expresion.valor.length;
         console.log(expresion.valor);
         //s.agregarSalida(expresion.valor);
         return expresion.valor;
@@ -27,11 +28,11 @@ class Lower extends Instruccion{
         }
 
         const aleatorio = Math.floor(Math.random() * (100-0)+0);
-        nodo.padre = "nodolower"+aleatorio.toString();
+        nodo.padre = "nodolength"+aleatorio.toString();
 
         nodo.cadena =` 
-        ${nodo.padre}[label ="LOWER"];
-        nodotipo${nodo.padre}[label="${this.id.valor}"];
+        ${nodo.padre}[label ="LENGTH"];
+        nodotipo${nodo.padre}[label="${this.variable.valor}"];
         ${nodo.padre} -> nodotipo${nodo.padre} ;
         `;
         
@@ -39,4 +40,4 @@ class Lower extends Instruccion{
     }
 }
 
-module.exports = Lower;
+module.exports = Length;

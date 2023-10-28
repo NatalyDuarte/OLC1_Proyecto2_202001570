@@ -29,12 +29,16 @@ class Encapsula extends Instruccion{
 
         const aleatorio = Math.floor(Math.random() * (100-0)+0);
         nodo.padre = "nodoencapsula"+aleatorio.toString();
-        const val =this.instrucciones.getAst();
         nodo.cadena =` 
         ${nodo.padre}[label ="Encapsular"];
-        ${val.cadena}
-        ${nodo.padre}->${val.padre};
         `;
+        for (let i = 0; i < this.instrucciones.length; i++) {
+            const val =this.instrucciones[i].getAst();
+            nodo.cadena += ` 
+            ${val.cadena}
+            ${nodo.padre}->${val.padre};
+            `;
+        }
         
         return nodo;
     }

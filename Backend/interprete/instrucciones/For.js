@@ -4,21 +4,22 @@ const Simb = require("../tablasimbolos/TablaSimbolos.js")
 var contador = require("../arbol/Contador");
 const Entorno = require("../tablasimbolos/Entorno")
 
-class While extends Instruccion{
-    constructor(condicion, instrucciones,linea,columna){
+class For extends Instruccion{
+    constructor(condicion, inicio, fin, instrucciones,linea,columna){
         super();
         this.condicion = condicion;
+        this.inicio = inicio;
+        this.fin = fin;
         this.instrucciones = instrucciones;
         this.linea = linea;
         this.columna = columna;
     }
 
     ejecutar(entorno){
-        let entornowh = new Entorno("While", entorno);
-        let condicion = this.condicion.ejecutar(entornowh);
+        let entornowh = new Entorno("For", entorno);
         let limit = 0;
         var consta ;
-        while(condicion.valor) {
+        for (let i = Number(this.inicio.valor); i < Number(this.fin.valor); i++) {
             this.instrucciones.forEach(element => {
                 consta = element.ejecutar(entornowh);
             });
@@ -29,14 +30,13 @@ class While extends Instruccion{
             } else if(consta === "Continue") {
                 continue;
             }
-            condicion = this.condicion.ejecutar(entornowh);
             if(limit == 10000) {
-                let er = console.log("Limite de iteraciones While");
+                let er = console.log("Limite de iteraciones For");
                 break;
             }
-        }
+          }
         let s = Informacion.getInstance();
-        s.add_Simbolo(new Simb(condicion.valor,"While",condicion.tipo,entorno.nombre,this.linea,this.columna)); 
+        s.add_Simbolo(new Simb(this.condicion.valor,"For","For",entorno.nombre,this.linea,this.columna)); 
     }
     getAst(){
         let nodo = {
@@ -44,12 +44,15 @@ class While extends Instruccion{
             cadena: ""
         }
         const aleatorio = Math.floor(Math.random() * (100-0)+0);
-        nodo.padre = "nodoif"+aleatorio.toString();
+        nodo.padre = "nodofor"+aleatorio.toString();
         nodo.cadena =` 
-        ${nodo.padre}[label ="While"];
-        nodoIDS${nodo.padre}[label="Condicion"];
-        nodoid${nodo.padre}[label="${this.condicion.valor}"];
+        ${nodo.padre}[label ="FOR"];
+        nodoIDS${nodo.padre}[label="Inicio"];
+        nodoid${nodo.padre}[label="${this.inicio.valor}"];
         ${nodo.padre} ->nodoIDS${nodo.padre} ->nodoid${nodo.padre};
+        nodoI${nodo.padre}[label="Fin"];
+        nodoi${nodo.padre}[label="${this.fin.valor}"];
+        ${nodo.padre} ->nodoI${nodo.padre} ->nodoi${nodo.padre};
         `;
         for (let i = 0; i < this.instrucciones.length; i++) {
             const val =this.instrucciones[i].getAst();
@@ -62,4 +65,4 @@ class While extends Instruccion{
         return nodo;
     }
 }
-module.exports = While;
+module.exports = For;

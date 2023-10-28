@@ -1,11 +1,13 @@
 const Simbolo = require("./Simbolo");
 const Funcion = require("./Funcion");
+const Metodo = require("./Metodo");
 const Tabla = require("./Tabla");
 const Informacion = require("../instrucciones/Informacion");
 class Entorno {
     constructor(nombre, anterior){
         this.tablasimbolos = {};
         this.tablafunciones = {};
+        this.tablametodos = {};
         this.tablas = {};
         this.anterior = anterior;
         this.nombre = nombre;
@@ -166,6 +168,23 @@ class Entorno {
         while (valor == undefined && entorno.anterior != null){
             entorno = entorno.anterior;
             valor = entorno.tablafunciones[nombre];
+        }
+
+        return valor;
+    }
+
+    agregarMetodo(nombre, parametros, instrucciones){
+        let simbolo = new Metodo(nombre, parametros, instrucciones)
+        this.tablametodos[nombre] = simbolo;
+    }
+
+    obtenerMetodo(nombre){
+        let entorno = this;
+        let valor = entorno.tablametodos[nombre];
+
+        while (valor == undefined && entorno.anterior != null){
+            entorno = entorno.anterior;
+            valor = entorno.tablametodos[nombre];
         }
 
         return valor;

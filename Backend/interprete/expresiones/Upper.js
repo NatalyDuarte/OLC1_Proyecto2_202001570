@@ -2,7 +2,7 @@ const Instruccion = require("../Instruccion");
 const Informacion = require("../instrucciones/Informacion");
 const Simb = require("../tablasimbolos/TablaSimbolos.js")
 var contador = require("../arbol/Contador");
-class Lower extends Instruccion{
+class Upper extends Instruccion{
 
     constructor(id, linea,columna){
         super();
@@ -13,9 +13,9 @@ class Lower extends Instruccion{
 
     ejecutar(entorno){
         let s = Informacion.getInstance();
-        s.add_Simbolo(new Simb(this.id,"Funcion Nativa","Lower",entorno.nombre,this.linea,this.columna));
+        s.add_Simbolo(new Simb(this.id,"Funcion Nativa","Upper",entorno.nombre,this.linea,this.columna));
         let expresion = this.id.ejecutar(entorno);
-        expresion.valor = expresion.valor.toLowerCase(); 
+        expresion.valor = expresion.valor.toUpperCase(); 
         console.log(expresion.valor);
         //s.agregarSalida(expresion.valor);
         return expresion.valor;
@@ -27,10 +27,10 @@ class Lower extends Instruccion{
         }
 
         const aleatorio = Math.floor(Math.random() * (100-0)+0);
-        nodo.padre = "nodolower"+aleatorio.toString();
+        nodo.padre = "nodoupper"+aleatorio.toString();
 
         nodo.cadena =` 
-        ${nodo.padre}[label ="LOWER"];
+        ${nodo.padre}[label ="UPPER"];
         nodotipo${nodo.padre}[label="${this.id.valor}"];
         ${nodo.padre} -> nodotipo${nodo.padre} ;
         `;
@@ -39,4 +39,4 @@ class Lower extends Instruccion{
     }
 }
 
-module.exports = Lower;
+module.exports = Upper;

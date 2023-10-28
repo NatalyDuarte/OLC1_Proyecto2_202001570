@@ -185,9 +185,9 @@ entero  [0-9]+;
 'print'    				{let bg = Informacion.getInstance();
                         bg.add_Token(new Token(yytext,"Print", yylloc.first_line, yylloc.first_column));
                         return 'PRINT'} 
-'funcion'    			{let bh = Informacion.getInstance();
-                        bh.add_Token(new Token(yytext,"Funcion", yylloc.first_line, yylloc.first_column));
-                        return 'FUNCION'} 
+'function'    			{let bh = Informacion.getInstance();
+                        bh.add_Token(new Token(yytext,"Function", yylloc.first_line, yylloc.first_column));
+                        return 'FUNCTION'} 
 'returns'    			{let bi = Informacion.getInstance();
                         bi.add_Token(new Token(yytext,"Returns", yylloc.first_line, yylloc.first_column));
                         return 'RETURNS'} 
@@ -212,7 +212,12 @@ entero  [0-9]+;
 'typeof'    			{let bq = Informacion.getInstance();
                         bq.add_Token(new Token(yytext,"Typeof", yylloc.first_line, yylloc.first_column));
                         return 'TYPEOF'} 
-
+'return'    			{let bza = Informacion.getInstance();
+                        bza.add_Token(new Token(yytext,"Return", yylloc.first_line, yylloc.first_column));
+                        return 'RETURN'} 
+'call'    			    {let bze = Informacion.getInstance();
+                        bze.add_Token(new Token(yytext,"Call", yylloc.first_line, yylloc.first_column));
+                        return 'CALL'} 
 // La expresion regular del formato de fecha http://w3.unpocodetodo.info/utiles/regex-ejemplos.php?type=fechas
 \d{4}([\-/.])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])  {let br = Informacion.getInstance();
                         br.add_Token(new Token(yytext,"Fecha", yylloc.first_line, yylloc.first_column));
@@ -264,7 +269,9 @@ columna\d+              { let bu = Informacion.getInstance();
     const ColumnaE = require("../interprete/expresiones/ColumnaE.js");
     const When = require("../interprete/expresiones/When.js");
     const Fila = require("../interprete/expresiones/Fila.js");
+    const Parametros = require("../interprete/expresiones/Parametros.js");
     const Mostrar = require('../interprete/instrucciones/Mostrar.js');
+    const MostrarI = require('../interprete/instrucciones/MostrarI.js');
     const Select = require('../interprete/instrucciones/Select.js');
     const SelectT = require('../interprete/instrucciones/SelectT.js');
     const Case = require('../interprete/instrucciones/Case.js');
@@ -275,10 +282,14 @@ columna\d+              { let bu = Informacion.getInstance();
     const Else = require('../interprete/expresiones/Else.js');
     const Relacional = require('../interprete/expresiones/Relacional.js');
     const Lower = require('../interprete/expresiones/Lower.js');
+    const Upper = require('../interprete/expresiones/Upper.js');
+    const Round = require('../interprete/expresiones/Round.js');
+    const Length = require('../interprete/expresiones/Length.js');
+    const Truncate = require('../interprete/expresiones/Truncate.js');
+    const Typeof = require('../interprete/expresiones/Typeof.js');
     const AsigTabla  = require('../interprete/instrucciones/AsigTabla');
     const AgregarCo  = require('../interprete/instrucciones/AgregarCo');
     const InsertarF  = require('../interprete/instrucciones/InsertarF');
-    const Truncate  = require('../interprete/instrucciones/Truncate');
     const EliminarCo  = require('../interprete/instrucciones/EliminarCo');
     const CambiarN  = require('../interprete/instrucciones/CambiarN');
     const CambiarNC  = require('../interprete/instrucciones/CambiarNC');
@@ -290,8 +301,15 @@ columna\d+              { let bu = Informacion.getInstance();
     const Informacion = require('../interprete/instrucciones/Informacion.js');
     const Encapsula  = require('../interprete/instrucciones/Encapsula.js');
     const IfElse  = require('../interprete/instrucciones/IfElse.js');
+    const Declare  = require('../interprete/instrucciones/Declare.js');
     const If  = require('../interprete/instrucciones/If.js');
     const While  = require('../interprete/instrucciones/While.js');
+    const Break  = require('../interprete/instrucciones/Break.js');
+    const Continue  = require('../interprete/instrucciones/Continue.js');
+    const For  = require('../interprete/instrucciones/For.js');
+    const Return = require('../interprete/instrucciones/Return.js');
+    const Funciones = require('../interprete/instrucciones/Funciones.js');
+    const Metodo = require('../interprete/instrucciones/Metodo.js');
 %}
 
 
@@ -331,7 +349,7 @@ instruccion
     | declaracion                                                      { $$ = $1; }
     | SELECT ARROBA tipo PUNTOYCOMA                                    { $$ = new Mostrar($3,@3.first_line,@3.first_column); }
     | PRINT tipo PUNTOYCOMA                                            { $$ = new Mostrar($2,@2.first_line,@2.first_column); }
-    | PRINT lista_instrucciones PUNTOYCOMA                             { $$ = new Mostrar($2,@2.first_line,@2.first_column); }
+    | PRINT lista_instrucciones PUNTOYCOMA                             { $$ = new MostrarI($2,@2.first_line,@2.first_column); }
     | BEGIN lista_instrucciones END PUNTOYCOMA                         { $$ = new Encapsula($2,@2.first_line,@2.first_column);} 
     //| IF tipo THEN lista_instrucciones IfElse END IF PUNTOYCOMA      { $$ = new IfElse($2,$4,$5,@2.first_line,@2.first_column);}
     | IF tipo THEN lista_instrucciones END IF PUNTOYCOMA                { $$ = new If($2,$4,@2.first_line,@2.first_column);}                       
@@ -375,6 +393,32 @@ instruccion
     | ELSE lista_instrucciones PUNTOYCOMA                          { $$ = new Else($2,@2.first_line,@2.first_column);}
     | TRUNCATE TABLE VARI PUNTOYCOMA                               { $$ = new Truncate($3,@3.first_line,@3.first_column);}
     | SELECT LOWER PARENABRE tipo PARENCIE PUNTOYCOMA              { $$ = new Lower($4,@4.first_line,@4.first_column);}
+    | SELECT UPPER PARENABRE tipo PARENCIE PUNTOYCOMA              { $$ = new Upper($4,@4.first_line,@4.first_column);}
+    | SELECT ROUND PARENABRE tipo COMA tipo PARENCIE PUNTOYCOMA    { $$ = new Round($4,$6,@4.first_line,@4.first_column);}
+    | SELECT TRUNCATE PARENABRE tipo COMA tipo PARENCIE PUNTOYCOMA { $$ = new Truncate($4,$6,@4.first_line,@4.first_column);}
+    | SELECT TYPEOF PARENABRE tipo PARENCIE PUNTOYCOMA             { $$ = new Typeof($4,@4.first_line,@4.first_column);}
+    | SELECT LEN PARENABRE tipo PARENCIE PUNTOYCOMA                { $$ = new Length($4,@4.first_line,@4.first_column);}
+    | BREAK PUNTOYCOMA                                             { $$ = new Break(@1.first_line,@1.first_column);}
+    | CONTINUE PUNTOYCOMA                                          { $$ = new Continue(@1.first_line,@1.first_column);}
+    | FOR tipo IN tipo PUNTO PUNTO tipo lista_instrucciones END FOR PUNTOYCOMA   {$$ = new For($2,$4,$7,$8,@1.first_line,@1.first_column);}      
+    | CREATE FUNCTION tipo PARENABRE lista_instrucciones PARENCIE RETURNS tipo lista_instrucciones END PUNTOYCOMA  { $$ = new Funciones ($3,$5,$8,$9,@1.first_line,@1.first_column);}
+    | ARROBA VARI INT COMA             {$$ = new Parametros($2,"int",@1.first_line,@1.first_column);}
+    | ARROBA VARI DOUBLE COMA          {$$ = new Parametros($2,"double",@1.first_line,@1.first_column);}
+    | ARROBA VARI DATE COMA            {$$ = new Parametros($2,"date",@1.first_line,@1.first_column);}
+    | ARROBA VARI VARCHAR COMA         {$$ = new Parametros($2,"varchar",@1.first_line,@1.first_column);}
+    | ARROBA VARI TRUE COMA            {$$ = new Parametros($2,"true",@1.first_line,@1.first_column);}
+    | ARROBA VARI FALSE COMA           {$$ = new Parametros($2,"false",@1.first_line,@1.first_column);}
+    | ARROBA VARI NULL COMA            {$$ = new Parametros($2,"null",@1.first_line,@1.first_column);}
+    | ARROBA VARI INT                  {$$ = new Parametros($2,"int",@1.first_line,@1.first_column);}
+    | ARROBA VARI DOUBLE               {$$ = new Parametros($2,"double",@1.first_line,@1.first_column);}
+    | ARROBA VARI DATE                 {$$ = new Parametros($2,"date",@1.first_line,@1.first_column);}
+    | ARROBA VARI VARCHAR              {$$ = new Parametros($2,"varchar",@1.first_line,@1.first_column);}
+    | ARROBA VARI TRUE                 {$$ = new Parametros($2,"true",@1.first_line,@1.first_column);}
+    | ARROBA VARI FALSE                {$$ = new Parametros($2,"false",@1.first_line,@1.first_column);}
+    | ARROBA VARI NULL                 {$$ = new Parametros($2,"null",@1.first_line,@1.first_column);}
+    | RETURN tipo PUNTOYCOMA           {$$ = new Return($1,@1.first_line,@1.first_column);}
+    | CREATE PROCEDURE tipo lista_instrucciones AS BEGIN lista_instrucciones END PUNTOYCOMA  { $$ = new Metodo($3,$4,$7,@1.first_line,@1.first_column);}
+    | CALL tipo PARENABRE lista_instrucciones PARENCIE PUNTOYCOMA
     //| SELECT lista_instrucciones FROM VARI WHERE tipo PUNTOYCOMA
     /*| SET tipo PUNTOYCOMA
     | SELECT POR FROM VARI WHERE tipo PUNTOYCOMA  {$$ = new Select($4,$6);}
@@ -382,8 +426,7 @@ instruccion
     | SELECT VARI AS VARI PUNTOYCOMA
     | UPDATE VARI SET tipo WHERE tipo PUNTOYCOMA
     | DELETE FROM VARI WHERE tipo PUNTOYCOMA
-    | CASE tipo lista_instrucciones END AS tipo PUNTOYCOMA
-    | FOR tipo IN tipo PUNTO PUNTO tipo lista_instrucciones*/
+    | CASE tipo lista_instrucciones END AS tipo PUNTOYCOMA*/
 	| error	{
                 console.log('Error sintáctico: ' + yytext + ',  linea: ' + this._$.first_line + ', columna: ' + this._$.first_column);
                 let s = Informacion.getInstance();
@@ -400,14 +443,14 @@ IfElse
 
 declaracion
     : SET ARROBA VARI IGUAL tipo PUNTOYCOMA                     {$$ = new Asignar($3,$5,@3.first_line,@3.first_column);}
-    | DECLARE ARROBA VARI tipo PUNTOYCOMA                       {$$ = new Asignar($3,$4,@3.first_line,@3.first_column);}
-    | DECLARE ARROBA VARI INT DEFAULT tipo PUNTOYCOMA         {$$ = new Asignar($3,$6,@3.first_line,@3.first_column);}
-    | DECLARE ARROBA VARI DATE DEFAULT tipo PUNTOYCOMA         {$$ = new Asignar($3,$6,@3.first_line,@3.first_column);}
-    | DECLARE ARROBA VARI DOUBLE DEFAULT tipo PUNTOYCOMA      {$$ = new Asignar($3,$6,@3.first_line,@3.first_column);}
-    | DECLARE ARROBA VARI VARCHAR DEFAULT tipo PUNTOYCOMA     {$$ = new Asignar($3,$6,@3.first_line,@3.first_column);}
-    | DECLARE ARROBA VARI TRUE DEFAULT tipo PUNTOYCOMA          {$$ = new Asignar($3,$6,@3.first_line,@3.first_column);}
-    | DECLARE ARROBA VARI FALSE DEFAULT tipo PUNTOYCOMA        {$$ = new Asignar($3,$6,@3.first_line,@3.first_column);}
-    | DECLARE ARROBA VARI NULL DEFAULT tipo PUNTOYCOMA          {$$ = new Asignar($3,$6,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI tipo PUNTOYCOMA                       {$$ = new Declare($3,$4,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI INT DEFAULT tipo PUNTOYCOMA           {$$ = new Declare($3,$6,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI DATE DEFAULT tipo PUNTOYCOMA          {$$ = new Declare($3,$6,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI DOUBLE DEFAULT tipo PUNTOYCOMA        {$$ = new Declare($3,$6,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI VARCHAR DEFAULT tipo PUNTOYCOMA       {$$ = new Declare($3,$6,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI TRUE DEFAULT tipo PUNTOYCOMA          {$$ = new Declare($3,$6,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI FALSE DEFAULT tipo PUNTOYCOMA         {$$ = new Declare($3,$6,@3.first_line,@3.first_column);}
+    | DECLARE ARROBA VARI NULL DEFAULT tipo PUNTOYCOMA          {$$ = new Declare($3,$6,@3.first_line,@3.first_column);}
 ;
 tipo
     : INT           {$$ = new Dato($1, 'int',@1.first_line,@1.first_column);}
