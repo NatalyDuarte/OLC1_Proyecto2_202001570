@@ -1,7 +1,7 @@
 // ========================= ANALIZADOR LEXICO =================================
 %lex
 %options case-insensitive 
-
+// Base https://github.com/AlexIngGuerra/OLC1-2S2023
 // Expresiones Regulares
 real [0-9]+("."[0-9]+)?\b ;
 entero  [0-9]+;
