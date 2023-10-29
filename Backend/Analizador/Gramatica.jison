@@ -310,6 +310,8 @@ columna\d+              { let bu = Informacion.getInstance();
     const Return = require('../interprete/instrucciones/Return.js');
     const Funciones = require('../interprete/instrucciones/Funciones.js');
     const Metodo = require('../interprete/instrucciones/Metodo.js');
+    const Call = require('../interprete/instrucciones/Call.js');
+    const SelectVari = require('../interprete/instrucciones/SelectVari.js');
 %}
 
 
@@ -351,7 +353,6 @@ instruccion
     | PRINT tipo PUNTOYCOMA                                            { $$ = new Mostrar($2,@2.first_line,@2.first_column); }
     | PRINT lista_instrucciones PUNTOYCOMA                             { $$ = new MostrarI($2,@2.first_line,@2.first_column); }
     | BEGIN lista_instrucciones END PUNTOYCOMA                         { $$ = new Encapsula($2,@2.first_line,@2.first_column);} 
-    //| IF tipo THEN lista_instrucciones IfElse END IF PUNTOYCOMA      { $$ = new IfElse($2,$4,$5,@2.first_line,@2.first_column);}
     | IF tipo THEN lista_instrucciones END IF PUNTOYCOMA                { $$ = new If($2,$4,@2.first_line,@2.first_column);}                       
     | WHILE tipo lista_instrucciones END WHILE PUNTOYCOMA               { $$ = new While($2,$3,@2.first_line,@2.first_column);}
     //Para crear tablas DDL
@@ -418,12 +419,12 @@ instruccion
     | ARROBA VARI NULL                 {$$ = new Parametros($2,"null",@1.first_line,@1.first_column);}
     | RETURN tipo PUNTOYCOMA           {$$ = new Return($1,@1.first_line,@1.first_column);}
     | CREATE PROCEDURE tipo lista_instrucciones AS BEGIN lista_instrucciones END PUNTOYCOMA  { $$ = new Metodo($3,$4,$7,@1.first_line,@1.first_column);}
-    | CALL tipo PARENABRE lista_instrucciones PARENCIE PUNTOYCOMA
+    | CALL tipo PARENABRE lista_instrucciones PARENCIE PUNTOYCOMA               {$$ = new Call($2,$4,@1.first_line,@1.first_column);}
+    | SELECT ARROBA VARI AS VARI PUNTOYCOMA                             { $$ = new SelectVari($3,$5,@1.first_line,@1.first_column);}
+   // | SELECT POR FROM VARI WHERE tipo PUNTOYCOMA  {$$ = new Select($4,$6);}
     //| SELECT lista_instrucciones FROM VARI WHERE tipo PUNTOYCOMA
     /*| SET tipo PUNTOYCOMA
-    | SELECT POR FROM VARI WHERE tipo PUNTOYCOMA  {$$ = new Select($4,$6);}
     | SELECT tipo
-    | SELECT VARI AS VARI PUNTOYCOMA
     | UPDATE VARI SET tipo WHERE tipo PUNTOYCOMA
     | DELETE FROM VARI WHERE tipo PUNTOYCOMA
     | CASE tipo lista_instrucciones END AS tipo PUNTOYCOMA*/
@@ -433,11 +434,6 @@ instruccion
                 s.add_Error(new Errores("Sintáctico","No se esperaba en caracter "+ yytext,this._$.first_line,this._$.first_column));
                 //ListaError.push(err);
                 }
-;
-
-
-IfElse
-    : Else lista_instrucciones { $$ = $2; }
 ;
 
 

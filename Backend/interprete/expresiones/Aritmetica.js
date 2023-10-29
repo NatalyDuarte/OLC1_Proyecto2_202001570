@@ -219,11 +219,11 @@ class Aritmetica extends Instruccion{
         const exder = this.der.getAst();
         nodo.cadena =` 
         ${nodo.padre}[label ="ARITMETICA"];
-        nodooperacion${nodo.padre}[label="${this.op}"];
         ${exiz.cadena}
-        ${exder.cadena}
         ${nodo.padre} ->${exiz.padre};
+        nodooperacion${nodo.padre}[label="${this.op}"];
         ${nodo.padre} -> nodooperacion${nodo.padre};
+        ${exder.cadena}
         ${nodo.padre} ->${exder.padre};
         `;
         return nodo;

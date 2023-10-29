@@ -52,7 +52,7 @@ class Casteo extends Instruccion{
 
         nodo.cadena =` 
         ${nodo.padre}[label ="CAST"];
-        nodotipo${nodo.padre}[label="${this.tipo}"];
+        nodotipo${nodo.padre}[label="${this.tipo.tipo}"];
         ${val.cadena}
         ${nodo.padre} -> nodotipo${nodo.padre} ->${val.padre};
         `;

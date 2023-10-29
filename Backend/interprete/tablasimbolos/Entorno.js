@@ -159,17 +159,16 @@ class Entorno {
     agregarFuncion(nombre, parametros, instrucciones){
         let simbolo = new Funcion(nombre, parametros, instrucciones)
         this.tablafunciones[nombre] = simbolo;
+        console.log(this.tablafunciones)
     }
 
     obtenerFuncion(nombre){
-        let entorno = this;
-        let valor = entorno.tablafunciones[nombre];
-
+        let valor = this.tablafunciones[nombre];
         while (valor == undefined && entorno.anterior != null){
             entorno = entorno.anterior;
             valor = entorno.tablafunciones[nombre];
         }
-
+        console.log(valor)
         return valor;
     }
 

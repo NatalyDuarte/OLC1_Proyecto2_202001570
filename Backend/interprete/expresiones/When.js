@@ -23,11 +23,11 @@ class When extends Instruccion{
 
         const aleatorio = Math.floor(Math.random() * (100-0)+0);
         nodo.padre = "nodowhen"+aleatorio.toString();
-
+        const val =this.dato1.getAst();
         nodo.cadena =` 
         ${nodo.padre}[label ="When"];
-        nodotipo${nodo.padre}[label="${this.dato1.valor}"];
-        ${nodo.padre} -> nodotipo${nodo.padre};
+        ${val.cadena}
+        ${nodo.padre}->${val.padre};
         `;
         for (let i = 0; i < this.dato2.length; i++) {
             const val =this.dato2[i].getAst();

@@ -44,7 +44,7 @@ class Case extends Instruccion{
             s.agregarSalida(datos2[encon][0].expresion.valor);
         }
     
-        s.add_Simbolo(new Simb(dato.valor,"Case","Simple",entorno.nombre,this.linea,this.columna)); 
+        s.add_Simbolo(new Simb(dato.valor,"Case","Simple",entornoif.nombre,this.linea,this.columna)); 
     }
     getAst(){
         let nodo = {

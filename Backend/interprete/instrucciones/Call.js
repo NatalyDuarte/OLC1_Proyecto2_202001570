@@ -13,11 +13,10 @@ class Call extends Instruccion {
     }
 
     ejecutar(entorno){
-        let expresion = this.expresion.ejecutar(entorno);
-        console.log(expresion.valor);
         let s = Informacion.getInstance();
-        s.add_Simbolo(new Simb(this.expresion.valor,"Print",expresion.tipo,entorno.nombre,this.linea,this.columna));
-        s.agregarSalida(expresion.valor);
+        s.add_Simbolo(new Simb(this.nombre.nombre,"Llamado","Funcion",entorno.nombre,this.linea,this.columna));
+        var val = entorno.obtenerFuncion(this.nombre.nombre);
+        console.log(val)
     }
     getAst(){
         let nodo = {
@@ -26,13 +25,20 @@ class Call extends Instruccion {
         }
 
         const aleatorio = Math.floor(Math.random() * (100-0)+0);
-        nodo.padre = "nodoprint"+aleatorio.toString();
-        const val =this.expresion.getAst();
+        nodo.padre = "nodopcall"+aleatorio.toString();
         nodo.cadena =` 
-        ${nodo.padre}[label ="Imprimir"];
-        ${val.cadena}
-        ${nodo.padre}->${val.padre};
+        ${nodo.padre}[label ="LLAMADOFUNCION"];
+        nodoIDS${nodo.padre}[label="Nombre"];
+        nodoid${nodo.padre}[label="${this.nombre.nombre}"];
+        ${nodo.padre} ->nodoIDS${nodo.padre} ->nodoid${nodo.padre};
         `;
+        for (let i = 0; i < this.parametros.length; i++) {
+            const val =this.parametros[i].getAst();
+            nodo.cadena += ` 
+            ${val.cadena}
+            ${nodo.padre}->${val.padre};
+            `;
+        }
         
         return nodo;
     }

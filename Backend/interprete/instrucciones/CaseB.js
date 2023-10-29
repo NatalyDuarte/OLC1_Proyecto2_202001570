@@ -19,21 +19,24 @@ class CaseB extends Instruccion{
         var defau = [];
         for (let i = 0; i < this.instrucciones.length; i++) {
             if (this.instrucciones[i].dato1!= undefined){
-                datos1.push(this.instrucciones[i].dato1.valor);
-                datos2.push(this.instrucciones[i].dato2);
+                var resu = this.instrucciones[i].dato1.ejecutar(entornoif);
+                if(resu.valor === true){
+                    for (let u = 0; u < this.instrucciones[i].dato2.length; u++) {
+                       this.instrucciones[i].dato2[u].ejecutar(entornoif);
+                    }
+                }
             }else if ( this.instrucciones[i].Instruccion != undefined){
-                defau.push(this.instrucciones[i].Instruccion)
+                for (let o = 0; o < this.instrucciones[i].Instruccion.length; o++) {
+                    this.instrucciones[i].Instruccion[o].ejecutar(entornoif);
+                }
+                
             }
         }
-        if(datos1.length>0){
-            for (let i = 0; i < datos1.length; i++) {
-                console.log(datos1[i])
-            }
-        }
-       
-    
+        
+
+
         let s = Informacion.getInstance();
-        s.add_Simbolo(new Simb(dato.valor,"Case","Buscado",entorno.nombre,this.linea,this.columna)); 
+        s.add_Simbolo(new Simb("Case","Case","Buscado",entornoif.nombre,this.linea,this.columna)); 
     }
     getAst(){
         let nodo = {
@@ -43,12 +46,16 @@ class CaseB extends Instruccion{
 
         const aleatorio = Math.floor(Math.random() * (100-0)+0);
         nodo.padre = "nodocaseb"+aleatorio.toString();
-        const val =this.instrucciones.getAst();
         nodo.cadena =` 
-        ${nodo.padre}[label ="CaseB"];
-        ${val.cadena}
-        ${nodo.padre}->${val.padre};
+        ${nodo.padre}[label ="CASEBUSCADO"];
         `;
+        for (let i = 0; i < this.instrucciones.length; i++) {
+            const val =this.instrucciones[i].getAst();
+            nodo.cadena += ` 
+            ${val.cadena}
+            ${nodo.padre}->${val.padre};
+            `;
+        }
         
         return nodo;
     }

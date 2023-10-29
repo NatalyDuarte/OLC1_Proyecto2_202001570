@@ -23,13 +23,14 @@ class SelectT extends Instruccion {
         }
 
         const aleatorio = Math.floor(Math.random() * (100-0)+0);
-        nodo.padre = "nodoif"+aleatorio.toString();
+        nodo.padre = "nodosel"+aleatorio.toString();
         nodo.cadena =` 
         ${nodo.padre}[label ="SelectT"];
-        nodoIDS${nodo.padre}[label="Tabla"];
-        nodoid${nodo.padre}[label="${this.lugar}"];
-        ${nodo.padre} ->nodoIDS${nodo.padre} ->nodoid${nodo.padre};
+        nodoSA${nodo.padre}[label="Tabla"];
+        nodoAS${nodo.padre}[label="${this.lugar}"];
+        ${nodo.padre} ->nodoSA${nodo.padre} ->nodoAS${nodo.padre};
         `;
+        return nodo;
     }
 }
 

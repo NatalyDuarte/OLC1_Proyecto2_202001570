@@ -17,8 +17,11 @@ class InsertarF extends Instruccion{
         let s = Informacion.getInstance();
         s.add_Simbolo(new Simb(this.id,"Agregar Fila",this.filas.id,entorno.nombre,this.linea,this.columna));
         entorno.agregarTablaF(this.id, this.colum ,this.filas);
-        console.log("Se agrego correctamentela la fila "+ this.filas.id +" a la tabla "+this.id);
-        s.agregarSalida("Se agrego correctamentela la fila "+ this.filas.id +" a la tabla "+this.id);
+        for (let i = 0; i < this.filas.length; i++) {
+            console.log("Se agrego correctamentela la fila "+ this.filas[i].id +" a la tabla "+this.id);
+            s.agregarSalida("Se agrego correctamente la la fila "+ this.filas[i].id +" a la tabla "+this.id);
+        }
+        
     }
     getAst(){
         let nodo = {
@@ -28,16 +31,24 @@ class InsertarF extends Instruccion{
 
         const aleatorio = Math.floor(Math.random() * (100-0)+0);
         nodo.padre = "nodoinsertarf"+aleatorio.toString();
-        const val =this.colum.getAst();
-        const valf =this.filas.getAst();
         nodo.cadena =` 
         ${nodo.padre}[label ="InsertarF"];
-        nodoIDS${nodo.padre}[label="Columna"];
-        nodoid${nodo.padre}[label="${this.colum.id}"];
-        ${valf.cadena}
-        ${nodo.padre} ->nodoIDS${nodo.padre} ->nodoid${nodo.padre};
-        ${nodo.padre}->${valf.padre};
         `;
+        for (let i = 0; i < this.colum.length; i++) {
+            const val =this.colum[i].getAst();
+            nodo.cadena += ` 
+            ${val.cadena}
+            ${nodo.padre}->${val.padre};
+            `;
+        }
+        for (let i = 0; i < this.filas.length; i++) {
+            const val =this.filas[i].getAst();
+            nodo.cadena += ` 
+            ${val.cadena}
+            ${nodo.padre}->${val.padre};
+            `;
+        }
+        
         
         return nodo;
     }
